@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('otp_codes', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->id();
-            $table->string('mobile', 15);
+            $table->string('full_mobile', 15);
             $table->integer('code');
+            $table->timestamp('expires_at')->nullable();
+            $table->boolean('is_used')->default(false);
             $table->timestamps();
         });
     }

@@ -13,14 +13,23 @@ class CarBrandLocaleFactory extends Factory
 {
     public function definition(): array
     {
-        $locale = Locale::inRandomOrder()->first();
-        $faker = Faker::create($locale->locale);
-        $faker->addProvider(new FakeCar($this->faker));
+        $this->faker->addProvider(new FakeCar($this->faker));
+
+        do {
+            $localeId = Locale::inRandomOrder()->first()->id ?? 1;
+            $carBrandId = CarBrand::inRandomOrder()->first()->id ?? 1;
+            $name = $this->faker->unique()->vehicleBrand;
+
+            $exists = CarBrandLocale::where('locale_id', $localeId)
+                ->where('car_brand_id', $carBrandId)
+                ->where('name', $name)
+                ->exists();
+        } while ($exists);
 
         return [
-            'locale_id' => $locale->id ?? 1,
-            'car_brand_id' => CarBrand::inRandomOrder()->first()->id ?? 1,
-            'name' => $faker->unique()->vehicleBrand,
+            'locale_id' => $localeId,
+            'car_brand_id' => $carBrandId,
+            'name' => $name,
         ];
     }
 }

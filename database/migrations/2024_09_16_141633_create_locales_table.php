@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('locale', 10)->unique();
             $table->string('name', 100)->nullable();
+            $table->boolean('is_default')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

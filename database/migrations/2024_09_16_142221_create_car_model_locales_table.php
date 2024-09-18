@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('car_model_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('locale_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('name', 50)->unique();
+            $table->string('name', 50);
             $table->timestamps();
         });
     }

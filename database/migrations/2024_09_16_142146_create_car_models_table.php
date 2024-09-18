@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('car_models', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->id();
+            $table->foreignId('car_brand_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

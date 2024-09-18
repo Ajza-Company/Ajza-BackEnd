@@ -16,11 +16,14 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
         $this->call([
+            RoleSeeder::class,
             LocaleSeeder::class,
             CarBrandSeeder::class,
             CarBrandLocaleSeeder::class,
             CarModelSeeder::class,
-            CarModelLocaleSeeder::class
+            CarModelLocaleSeeder::class,
+            CarTypeSeeder::class,
+            CarTypeLocaleSeeder::class
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
