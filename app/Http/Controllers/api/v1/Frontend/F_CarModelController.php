@@ -16,6 +16,6 @@ class F_CarModelController extends Controller
     public function __invoke(string $car_brand)
     {
         $car_brand_id = decodeString($car_brand, EncodingMethodsEnum::HASHID);
-        return F_CarModelResource::collection(CarModel::whereCarBrandId($car_brand_id)->whereHas('localized')->with(['localized'])->paginate());
+        return F_CarModelResource::collection(CarModel::whereCarBrandId($car_brand_id)->whereHas('localized')->with(['localized'])->get());
     }
 }

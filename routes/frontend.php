@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\api\v1\Frontend\F_AuthenticateController;
+use App\Http\Controllers\api\v1\Frontend\F_AuthController;
 use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
 use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
@@ -20,9 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:sanctum')->group(function () {
     Route::prefix('auth')->group(function () {
-        Route::post('send-otp', [F_AuthenticateController::class, 'sendOtp']);
-        Route::post('verify-otp', [F_AuthenticateController::class, 'verifyOtp']);
-        Route::post('create-account', [F_AuthenticateController::class, 'createAccount']);
+        Route::post('send-otp', [F_AuthController::class, 'sendOtp']);
+        Route::post('verify-otp', [F_AuthController::class, 'verifyOtp']);
+        Route::post('create-account', [F_AuthController::class, 'createAccount']);
+        Route::post('setup-account', [F_AuthController::class, 'setupAccount']);
     });
 
     Route::prefix('car-brands')->group(function () {
@@ -33,5 +34,8 @@ Route::middleware('guest:sanctum')->group(function () {
     Route::get('car-types', F_CarTypeController::class);
 });
 
-/*Route::middleware('auth:sanctum')->group(function () {
-});*/
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('user')->group(function () {
+        Route::post('setup-account', [F_AuthController::class, 'setupAccount']);
+    });
+});

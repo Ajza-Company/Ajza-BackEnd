@@ -15,6 +15,6 @@ class F_CarTypeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return F_CarTypeResource::collection(CarType::whereHas('localized')->with(['localized'])->paginate());
+        return F_CarTypeResource::collection(CarType::whereHas('localized')->with(['localized'])->get());
     }
 }

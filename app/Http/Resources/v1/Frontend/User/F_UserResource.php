@@ -19,7 +19,6 @@ class F_UserResource extends JsonResource
             'id' => encodeString($this->id, EncodingMethodsEnum::CRYPT),
             'name' => $this->name,
             'full_mobile' => $this->full_mobile,
-            'is_active' => (bool)$this->is_active,
             'is_registered' => (bool)$this->is_registered
         ];
     }

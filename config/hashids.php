@@ -39,7 +39,7 @@ return [
 
         'main' => [
             'salt' => 'yGPMa8oZc7PEJXxEnOIAhZscjujizzCPt028vCSG',
-            'length' => 10,
+            'length' => 20,
             'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
         ],
 

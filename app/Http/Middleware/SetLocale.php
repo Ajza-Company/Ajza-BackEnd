@@ -18,13 +18,16 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Set the default locale from configuration
-        $defaultLocale = config('app.locale', Locale::where('is_default', true)->first()->locale);
+        // Retrieve default locale from cache or configuration
+        $defaultLocale = Cache::remember('default_locale', now()->addDay(), function () {
+            return config('app.locale') ?? Locale::where('is_default', true)->value('locale');
+        });
+
         app()->setLocale($defaultLocale);
 
-        // Retrieve supported locales from cache or configuration
-        $supportedLocales = Cache::remember('supported_locales', Carbon::now()->addDay(), function () {
-            return Locale::where('is_default', true)->pluck('locale')->toArray();
+        // Retrieve supported locales from cache
+        $supportedLocales = Cache::remember('supported_locales', now()->addDay(), function () {
+            return Locale::pluck('locale')->toArray();
         });
 
         // Get the locale from the request header

@@ -8,6 +8,7 @@ use App\Http\Resources\v1\Frontend\User\F_UserResource;
 use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class F_CreateAccountService
 {
@@ -22,7 +23,6 @@ class F_CreateAccountService
     }
 
     /**
-     * Send OTP Function
      *
      * @param array $data
      *
@@ -30,15 +30,23 @@ class F_CreateAccountService
      */
     public function create(array $data): JsonResponse
     {
+        \DB::beginTransaction();
         try {
             if (!isValidPhone($data['full_mobile'])) {
                 return response()->json(errorResponse(message: 'Invalid phone number'),Response::HTTP_BAD_REQUEST);
             }
 
+            $data['is_registered'] = true;
+
             $user = $this->createAccount->create($data);
+            $token = $user->createToken('auth_token')->plainTextToken;
+
             //TODO:: Send Welcome Email
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED, data: F_UserResource::make($user)));
+
+            \DB::commit();
+            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED, data: F_UserResource::make($user), token: $token));
         } catch (\Exception $ex) {
+            \DB::rollBack();
             return response()->json(errorResponse(
                 message: ErrorMessageEnum::CREATE,
                 error: $ex->getMessage()),

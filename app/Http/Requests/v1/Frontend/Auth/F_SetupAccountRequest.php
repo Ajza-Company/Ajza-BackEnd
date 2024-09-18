@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Requests\v1\Frontend\Auth;
+
+use App\Enums\EncodingMethodsEnum;
+use Illuminate\Foundation\Http\FormRequest;
+
+class F_SetupAccountRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'car_brand_id' => 'required|integer|exists:car_brands,id',
+            'car_model_id' => 'required|integer|exists:car_models,id',
+            'car_year' => 'required|integer|between:1900,' . date('Y'),
+            'car_type_id' => 'required|integer|exists:car_types,id',
+            'vin' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric'
+        ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->decodeInput('car_brand_id');
+        $this->decodeInput('car_model_id');
+        $this->decodeInput('car_type_id');
+    }
+
+    /**
+     * Decode the encoded input value.
+     *
+     * @param string $inputKey
+     */
+    private function decodeInput(string $inputKey): void
+    {
+        $value = $this->input($inputKey);
+
+        if ($value && decodeString($value, EncodingMethodsEnum::HASHID)) {
+            $this->merge([$inputKey => decodeString($value, EncodingMethodsEnum::HASHID)]);
+        }
+    }
+}
