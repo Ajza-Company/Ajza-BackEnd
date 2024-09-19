@@ -5,6 +5,7 @@ use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
 use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
 use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,12 +28,15 @@ Route::middleware('guest:sanctum')->group(function () {
         Route::post('setup-account', [F_AuthController::class, 'setupAccount']);
     });
 
-    Route::prefix('car-brands')->group(function () {
-        Route::get('/', F_CarBrandController::class);
-        Route::get('{car_brand}/car-models', F_CarModelController::class);
+    Route::middleware(SetLocale::class)->group(function () {
+        Route::prefix('car-brands')->group(function () {
+            Route::get('/', F_CarBrandController::class);
+            Route::get('{car_brand}/car-models', F_CarModelController::class);
+        });
+
+        Route::get('car-types', F_CarTypeController::class);
     });
 
-    Route::get('car-types', F_CarTypeController::class);
     Route::get('locales', F_LocaleController::class);
 });
 
