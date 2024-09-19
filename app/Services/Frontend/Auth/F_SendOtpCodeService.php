@@ -5,6 +5,7 @@ namespace App\Services\Frontend\Auth;
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -31,14 +32,22 @@ class F_SendOtpCodeService
     {
         try {
             if (!isValidPhone($data['full_mobile'])) {
-                return response()->json(errorResponse(message: 'Invalid phone number'),Response::HTTP_BAD_REQUEST);
+                return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
             }
 
             $data['code'] = rand(1000, 9999);
             $data['expires_at'] = now()->addMinutes(10);
             $this->createOtp->create($data);
 
-            return response()->json(successResponse(message: SuccessMessagesEnum::SENT, data: ['code' => $data['code']]));
+            return response()->json(
+                successResponse(
+                    message: SuccessMessagesEnum::SENT,
+                    data: [
+                        'code' => $data['code'],
+                        'expiresAt' => Carbon::parse($data['expires_at'])->longRelativeToNowDiffForHumans()
+                    ]
+                )
+            );
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
                 message: ErrorMessageEnum::SEND,

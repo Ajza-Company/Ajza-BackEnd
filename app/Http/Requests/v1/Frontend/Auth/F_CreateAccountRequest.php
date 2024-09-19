@@ -25,7 +25,7 @@ class F_CreateAccountRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'full_mobile' => 'required|unique:users,full_mobile',
+            'full_mobile' => 'required|string|unique:users,full_mobile',
             'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()->symbols()],
             'password_confirmation' => 'required|same:password',
             'gender' => 'required|string|in:male,female'

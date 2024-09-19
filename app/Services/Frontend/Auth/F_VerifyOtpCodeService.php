@@ -23,16 +23,16 @@ class F_VerifyOtpCodeService
         \DB::beginTransaction();
         try {
             if (!isValidPhone($data['full_mobile'])) {
-                return response()->json(errorResponse(message: 'Invalid phone number'),Response::HTTP_BAD_REQUEST);
+                return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
             }
 
             $verificationCode = OtpCode::where(['full_mobile' => $data['full_mobile'], 'code' => $data['code']])->first();
 
             $now = Carbon::now();
             if (!$verificationCode) {
-                return response()->json(errorResponse(message: 'Your OTP is invalid'), Response::HTTP_BAD_REQUEST);
+                return response()->json(errorResponse(message: 'Looks like your OTP didn’t pass the test. Give it another shot!'), Response::HTTP_BAD_REQUEST);
             }elseif($now->isAfter($verificationCode->expires_at)){
-                return response()->json(errorResponse(message: 'Your OTP is expired'), Response::HTTP_BAD_REQUEST);
+                return response()->json(errorResponse(message: 'Your OTP expired, but don’t worry, we’ve got plenty more where that came from!'), Response::HTTP_BAD_REQUEST);
             }
 
             $verificationCode->update([

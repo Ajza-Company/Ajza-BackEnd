@@ -33,7 +33,7 @@ class F_CreateAccountService
         \DB::beginTransaction();
         try {
             if (!isValidPhone($data['full_mobile'])) {
-                return response()->json(errorResponse(message: 'Invalid phone number'),Response::HTTP_BAD_REQUEST);
+                return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
             }
 
             $data['is_registered'] = true;

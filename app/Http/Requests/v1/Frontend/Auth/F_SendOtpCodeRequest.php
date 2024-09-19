@@ -22,7 +22,7 @@ class F_SendOtpCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_mobile' => 'required'
+            'full_mobile' => 'required|string'
         ];
     }
 }

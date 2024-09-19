@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\v1\Frontend\User;
+namespace App\Http\Resources\v1\Frontend\Locale;
 
-use App\Enums\EncodingMethodsEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class F_UserResource extends JsonResource
+class F_LocaleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +15,9 @@ class F_UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => encodeString($this->id, EncodingMethodsEnum::HASHID),
             'name' => $this->name,
-            'fullMobile' => $this->full_mobile,
-            'isRegistered' => (bool)$this->is_registered
+            'locale' => $this->locale,
+            'isDefault' => (bool) $this->is_default
         ];
     }
 }
