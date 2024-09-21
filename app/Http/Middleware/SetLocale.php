@@ -19,14 +19,14 @@ class SetLocale
     public function handle(Request $request, Closure $next): Response
     {
         // Retrieve default locale from cache or configuration
-        $defaultLocale = Cache::remember('default_locale', now()->addDay(), function () {
+        $defaultLocale = Cache::rememberForever('default_locale', function () {
             return config('app.locale') ?? Locale::where('is_default', true)->value('locale');
         });
 
         app()->setLocale($defaultLocale);
 
         // Retrieve supported locales from cache
-        $supportedLocales = Cache::remember('supported_locales', now()->addDay(), function () {
+        $supportedLocales = Cache::rememberForever('supported_locales', function () {
             return Locale::pluck('locale')->toArray();
         });
 

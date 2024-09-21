@@ -23,7 +23,12 @@ class DatabaseSeeder extends Seeder
             CarModelSeeder::class,
             CarModelLocaleSeeder::class,
             CarTypeSeeder::class,
-            CarTypeLocaleSeeder::class
+            CarTypeLocaleSeeder::class,
+            CategorySeeder::class,
+            CategoryLocaleSeeder::class,
+            CountrySeeder::class,
+            StoreSeeder::class,
+            StoreLocaleSeeder::class,
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');

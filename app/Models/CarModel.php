@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasLocalized;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CarModel extends Model
 {
-    use HasFactory;
+    use HasFactory, HasLocalized;
 
     /**
      * The attributes that are mass assignable.
@@ -22,21 +23,10 @@ class CarModel extends Model
 
     /**
      *
-     * @return HasMany
-     */
-    public function CarModelLocales(): HasMany
-    {
-        return $this->hasMany(CarModelLocale::class);
-    }
-
-    /**
-     *
      * @return HasOne
      */
     public function localized(): HasOne
     {
-        return $this->hasOne(CarModelLocale::class)->whereHas('Locale', function ($query) {
-            $query->where('locale', app()->getLocale());
-        });
+        return $this->localizedRelation(CarModelLocale::class);
     }
 }

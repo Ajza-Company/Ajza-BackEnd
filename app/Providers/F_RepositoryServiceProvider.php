@@ -2,8 +2,22 @@
 
 namespace App\Providers;
 
+use App\Repositories\Frontend\Area\Fetch\F_FetchAreaInterface;
+use App\Repositories\Frontend\Area\Fetch\F_FetchAreaRepository;
+use App\Repositories\Frontend\CarBrand\Fetch\F_FetchCarBrandInterface;
+use App\Repositories\Frontend\CarBrand\Fetch\F_FetchCarBrandRepository;
+use App\Repositories\Frontend\CarModel\Fetch\F_FetchCarModelInterface;
+use App\Repositories\Frontend\CarModel\Fetch\F_FetchCarModelRepository;
+use App\Repositories\Frontend\CarType\Fetch\F_FetchCarTypeInterface;
+use App\Repositories\Frontend\CarType\Fetch\F_FetchCarTypeRepository;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeRepository;
+use App\Repositories\Frontend\State\Fetch\F_FetchStateInterface;
+use App\Repositories\Frontend\State\Fetch\F_FetchStateRepository;
+use App\Repositories\Frontend\Store\Fetch\F_FetchStoreInterface;
+use App\Repositories\Frontend\Store\Fetch\F_FetchStoreRepository;
+use App\Repositories\Frontend\Store\Find\F_FindStoreInterface;
+use App\Repositories\Frontend\Store\Find\F_FindStoreRepository;
 use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 use App\Repositories\Frontend\User\Create\F_CreateUserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +36,34 @@ class F_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             F_CreateUserInterface::class,
             F_CreateUserRepository::class);
+
+        $this->app->bind(
+            F_FetchStoreInterface::class,
+            F_FetchStoreRepository::class);
+
+        $this->app->bind(
+            F_FetchCarBrandInterface::class,
+            F_FetchCarBrandRepository::class);
+
+        $this->app->bind(
+            F_FetchCarModelInterface::class,
+            F_FetchCarModelRepository::class);
+
+        $this->app->bind(
+            F_FetchCarTypeInterface::class,
+            F_FetchCarTypeRepository::class);
+
+        $this->app->bind(
+            F_FetchStateInterface::class,
+            F_FetchStateRepository::class);
+
+        $this->app->bind(
+            F_FetchAreaInterface::class,
+            F_FetchAreaRepository::class);
+
+        $this->app->bind(
+            F_FindStoreInterface::class,
+            F_FindStoreRepository::class);
     }
 
     /**

@@ -23,7 +23,7 @@ class CarModelLocaleFactory extends Factory
     {
         $locale = Locale::inRandomOrder()->first();
         $faker = Faker::create($locale->locale);
-        $faker->addProvider(new FakeCar($this->faker));
+        $faker->addProvider(new FakeCar(fake()));
 
         return [
             'locale_id' => $locale->id ?? 1,

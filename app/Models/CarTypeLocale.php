@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasLocale;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CarTypeLocale extends Model
 {
-    use HasFactory;
+    use HasFactory, HasLocale;
 
     /**
      * The attributes that are mass assignable.
@@ -20,14 +21,4 @@ class CarTypeLocale extends Model
         'name',
         'locale_id'
     ];
-
-    /**
-     * Get Contact Numbers
-     *
-     * @return BelongsTo
-     */
-    public function Locale(): BelongsTo
-    {
-        return $this->belongsTo(Locale::class);
-    }
 }

@@ -13,6 +13,6 @@ class CarTypeLocaleSeeder extends Seeder
      */
     public function run(): void
     {
-        CarTypeLocale::factory()->count(5)->create();
+        CarTypeLocale::factory()->count(7)->create();
     }
 }
