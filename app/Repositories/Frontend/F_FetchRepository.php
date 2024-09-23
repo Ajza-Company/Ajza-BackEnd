@@ -38,7 +38,7 @@ class F_FetchRepository
         }
 
         if ($paginate) {
-            return $query->paginate();
+            return $query->adaptivePaginate();
         }
 
         return $query->get();
