@@ -18,12 +18,23 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             LocaleSeeder::class,
+            UserSeeder::class,
             CarBrandSeeder::class,
             CarBrandLocaleSeeder::class,
             CarModelSeeder::class,
             CarModelLocaleSeeder::class,
             CarTypeSeeder::class,
-            CarTypeLocaleSeeder::class
+            CarTypeLocaleSeeder::class,
+            CategorySeeder::class,
+            CategoryLocaleSeeder::class,
+            CountrySeeder::class,
+            StoreSeeder::class,
+            StoreLocaleSeeder::class,
+            StoreCategorySeeder::class,
+            ProductSeeder::class,
+            ProductLocaleSeeder::class,
+            StoreProductSeeder::class,
+            StoreProductOfferSeeder::class
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');

@@ -15,12 +15,12 @@ class CarTypeLocaleFactory extends Factory
 
     public function definition(): array
     {
-        $this->faker->addProvider(new FakeCar($this->faker));
+        fake()->addProvider(new FakeCar(fake()));
 
         do {
             $localeId = Locale::inRandomOrder()->first()->id ?? 1;
             $carTypeId = CarType::inRandomOrder()->first()->id ?? 1;
-            $name = $this->faker->unique()->vehicleType;
+            $name = fake()->unique()->vehicleType;
 
             $exists = CarTypeLocale::where('locale_id', $localeId)
                 ->where('car_type_id', $carTypeId)

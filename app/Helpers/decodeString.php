@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EncodingMethodsEnum;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Crypt;
@@ -8,7 +9,7 @@ if (!function_exists('decodeString')) {
     /**
      * Returns decoded Item
      */
-    function decodeString(string $encodedValue, string $method): ?string
+    function decodeString(string $encodedValue, string $method = EncodingMethodsEnum::HASHID): ?string
     {
         return match ($method) {
             'hashid' => decodeHashid($encodedValue),
