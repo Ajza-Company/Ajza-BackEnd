@@ -41,7 +41,7 @@ class F_StoreController extends Controller
      */
     public function show(string $store_id)
     {
-        $store_id = decodeString($store_id, EncodingMethodsEnum::HASHID);
+        $store_id = decodeString($store_id);
         return F_StoreResource::make($this->findStore->find($store_id, with: ['categories']));
     }
 }

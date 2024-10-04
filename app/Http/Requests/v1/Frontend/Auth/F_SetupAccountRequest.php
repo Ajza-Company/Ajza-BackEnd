@@ -52,8 +52,8 @@ class F_SetupAccountRequest extends FormRequest
     {
         $value = $this->input($inputKey);
 
-        if ($value && decodeString($value, EncodingMethodsEnum::HASHID)) {
-            $this->merge([$inputKey => decodeString($value, EncodingMethodsEnum::HASHID)]);
+        if ($value && decodeString($value)) {
+            $this->merge([$inputKey => decodeString($value)]);
         }
     }
 }

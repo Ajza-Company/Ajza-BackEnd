@@ -16,7 +16,7 @@ class CityFilter
      */
     public function filter(Builder $builder, $value): Builder
     {
-        $state_id = decodeString($value, EncodingMethodsEnum::HASHID);
+        $state_id = decodeString($value);
         return $builder->whereHas('area', function ($query) use ($state_id) {
             $query->where('state_id', $state_id);
         });

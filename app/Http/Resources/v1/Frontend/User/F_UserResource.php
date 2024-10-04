@@ -16,7 +16,7 @@ class F_UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => encodeString($this->id, EncodingMethodsEnum::HASHID),
+            'id' => encodeString($this->id),
             'name' => $this->name,
             'fullMobile' => $this->full_mobile,
             'isRegistered' => (bool)$this->is_registered
