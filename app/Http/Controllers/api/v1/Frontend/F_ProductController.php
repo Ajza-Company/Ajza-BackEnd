@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\Frontend\Product\F_ProductResource;
 use App\Http\Resources\v1\Frontend\Product\F_ShortProductResource;
 use App\Models\Product;
-use App\Repositories\Frontend\Store\Find\F_FindStoreInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class F_ProductController extends Controller
 {
-    public function __construct(private F_FindStoreInterface $findStore)
+    public function __construct()
     {
     }
 
@@ -23,9 +21,10 @@ class F_ProductController extends Controller
     public function __invoke(string $store_id)
     {
         $decoded_store_id = decodeString($store_id);
-        $store = $this->findStore->find($decoded_store_id);
 
-        $products = $store->products()->whereHas('localized')->with(['localized', 'offer'])->filter(\request())->adaptivePaginate();
+        $products = Product::whereHas('storeProduct', function ($q) use ($decoded_store_id) {
+            $q->where('store_id', $decoded_store_id);
+        })->whereHas('localized')->with(['localized', 'offer'])->filter(\request())->adaptivePaginate();
 
         return F_ShortProductResource::collection($products);
     }

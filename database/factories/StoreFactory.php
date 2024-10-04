@@ -15,7 +15,7 @@ class StoreFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'user_id' => User::inRandomOrder()->first()->id ?? 1,
+            'user_id' => User::inRandomOrder()->first()->id ?? 1,
             'area_id' => Area::inRandomOrder()->first()->id ?? 1,
             'parent_id' => Store::inRandomOrder()->first()->id ?? null,
             'image' => fake()->imageUrl,
