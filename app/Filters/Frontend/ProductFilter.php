@@ -12,6 +12,6 @@ class ProductFilter extends FilterClass
 {
     protected array $filters = [
         'category' => CategoryFilter::class,
-        'has-offers' => OffersFilter::class,
+        'has-discount' => OffersFilter::class,
     ];
 }
