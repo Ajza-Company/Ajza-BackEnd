@@ -1,12 +1,13 @@
 <?php
 
+use App\Enums\EncodingMethodsEnum;
 use Vinkla\Hashids\Facades\Hashids;
 
 if (!function_exists('encodeString')) {
     /**
      * Returns decoded Item
      */
-    function encodeString(string $value, string $method): string
+    function encodeString(string $value, string $method = EncodingMethodsEnum::HASHID): string
     {
         return match ($method) {
             'hashid' => Hashids::encode($value),

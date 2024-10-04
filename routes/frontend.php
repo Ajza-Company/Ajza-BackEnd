@@ -5,7 +5,9 @@ use App\Http\Controllers\api\v1\Frontend\F_AuthController;
 use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
 use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
+use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
 use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
+use App\Http\Controllers\api\v1\Frontend\F_ProductController;
 use App\Http\Controllers\api\v1\Frontend\F_StateController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreController;
 use App\Http\Middleware\SetLocale;
@@ -39,11 +41,18 @@ Route::middleware('guest:sanctum')->group(function () {
         });
 
         Route::get('car-types', F_CarTypeController::class);
-        Route::get('stores', F_StoreController::class);
+        Route::get('categories', F_CategoryController::class);
 
-        Route::prefix('stores')->controller(F_StoreController::class)->group(function () {
-            Route::get('/', '__invoke');
-            Route::get('{store_id}/details', 'show');
+        Route::prefix('stores')->group(function () {
+            Route::controller(F_StoreController::class)->group(function () {
+                Route::get('/', '__invoke');
+                Route::get('{store_id}/details', 'show');
+            });
+
+            Route::prefix('{store_id}/products')->controller(F_ProductController::class)->group(function () {
+                Route::get('/', '__invoke');
+                Route::get('{product_id}', 'show');
+            });
         });
 
         Route::prefix('cities')->group(function () {

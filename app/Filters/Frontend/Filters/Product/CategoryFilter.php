@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\Frontend\Filters\Store;
+namespace App\Filters\Frontend\Filters\Product;
 
 use App\Enums\EncodingMethodsEnum;
 use Illuminate\Database\Eloquent\Builder;
 
-class StateFilter
+class CategoryFilter
 {
     /**
      * Filter Function
@@ -16,9 +16,7 @@ class StateFilter
      */
     public function filter(Builder $builder, $value): Builder
     {
-        $state_id = decodeString($value, EncodingMethodsEnum::HASHID);
-        return $builder->whereHas('area', function ($query) use ($state_id) {
-            $query->where('state_id', $state_id);
-        });
+        $id = decodeString($value);
+        return $builder->where('category_id', $id);
     }
 }

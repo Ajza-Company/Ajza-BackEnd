@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Repositories\Frontend\Store\Find;
+namespace App\Repositories\Frontend\Product\Find;
 
-use App\Models\Store;
+use App\Models\Product;
 
-class F_FindStoreRepository implements F_FindStoreInterface
+class F_FindProductRepository implements F_FindProductInterface
 {
     /**
      * Create a new instance.
      *
-     * @param Store $model
+     * @param Product $model
      */
-    public function __construct(private Store $model)
+    public function __construct(private Product $model)
     {
     }
 

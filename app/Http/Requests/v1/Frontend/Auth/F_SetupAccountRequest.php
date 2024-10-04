@@ -23,11 +23,11 @@ class F_SetupAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'car_brand_id' => 'required|integer|exists:car_brands,id',
-            'car_model_id' => 'required|integer|exists:car_models,id',
-            'car_year' => 'required|integer|between:1900,' . date('Y'),
-            'car_type_id' => 'required|integer|exists:car_types,id',
-            'vin' => 'required|string',
+            'personal.car_brand_id' => 'required|integer|exists:car_brands,id',
+            'personal.car_model_id' => 'required|integer|exists:car_models,id',
+            'personal.car_year' => 'required|integer|between:1900,' . date('Y'),
+            'personal.car_type_id' => 'required|integer|exists:car_types,id',
+            'personal.vin' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric'
         ];

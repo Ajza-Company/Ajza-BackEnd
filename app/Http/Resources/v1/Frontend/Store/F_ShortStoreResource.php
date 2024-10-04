@@ -24,8 +24,9 @@ class F_ShortStoreResource extends JsonResource
             'timeUnit' => trans('general.min'),             // Value for :timeUnit
         ]);
         return [
-            'id' => encodeString($this->id, EncodingMethodsEnum::HASHID),
+            'id' => encodeString($this->id),
             'name' => $this->localized?->name,
+            'rate' => 4.3,
             'image' => $this->image,
             'distanceAndTime' => $localizedDistanceTime,
             'address' => $this->area?->localized?->name . ', ' . $this->area?->state?->localized?->name

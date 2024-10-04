@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\v1\Frontend\Auth;
 
+use App\Enums\EncodingMethodsEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
@@ -26,7 +27,35 @@ class F_CreateAccountRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'full_mobile' => 'required|string|unique:users,full_mobile',
-            'gender' => 'required|string|in:male,female'
+            'personal.gender' => 'required|string|in:male,female',
+            'workshop.data.name' => 'required|string',
+            'workshop.data.city_id' => 'required|integer|exists:cities,id',
+            'workshop.data.commercial_registration' => 'required|string',
+            'workshop.data.national_identity' => 'required|string',
+            'workshop.data.added_tax' => 'required|string',
+            'workshop.commercial_registration_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->decodeInput('city_id');
+    }
+
+    /**
+     * Decode the encoded input value.
+     *
+     * @param string $inputKey
+     */
+    private function decodeInput(string $inputKey): void
+    {
+        $value = $this->input($inputKey);
+
+        if ($value && decodeString($value, EncodingMethodsEnum::HASHID)) {
+            $this->merge([$inputKey => decodeString($value, EncodingMethodsEnum::HASHID)]);
+        }
     }
 }

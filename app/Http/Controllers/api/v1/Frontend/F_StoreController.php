@@ -28,7 +28,12 @@ class F_StoreController extends Controller
      */
     public function __invoke()
     {
-        return F_ShortStoreResource::collection($this->fetchStore->fetch(with: ['area', 'area.localized', 'area.state', 'area.state.localized']));
+        return F_ShortStoreResource::collection(
+            $this->fetchStore->fetch(
+                with: ['area', 'area.localized', 'area.state', 'area.state.localized'],
+                paginate: true
+            )
+        );
     }
 
     /**
@@ -37,6 +42,6 @@ class F_StoreController extends Controller
     public function show(string $store_id)
     {
         $store_id = decodeString($store_id, EncodingMethodsEnum::HASHID);
-        return F_StoreResource::make($this->findStore->find($store_id));
+        return F_StoreResource::make($this->findStore->find($store_id, with: ['categories']));
     }
 }

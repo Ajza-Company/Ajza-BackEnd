@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
 
         Builder::macro('adaptivePaginate', function ($defaultPageSize = 15) {
             $request = request();
-            if ($request->isMethod('GET') && $request->has('page')) {
+            if ($request->isMethod('GET')) {
                 return $this->paginate($request->getPageSize($defaultPageSize));
             }
             return $this->get();

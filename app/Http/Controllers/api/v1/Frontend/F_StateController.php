@@ -24,6 +24,6 @@ class F_StateController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return F_StateResource::collection($this->fetchState->fetch(data: ['country_id' => 1], paginate: false));
+        return F_StateResource::collection($this->fetchState->fetch(data: ['country_id' => 1]));
     }
 }

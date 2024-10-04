@@ -10,8 +10,12 @@ use App\Repositories\Frontend\CarModel\Fetch\F_FetchCarModelInterface;
 use App\Repositories\Frontend\CarModel\Fetch\F_FetchCarModelRepository;
 use App\Repositories\Frontend\CarType\Fetch\F_FetchCarTypeInterface;
 use App\Repositories\Frontend\CarType\Fetch\F_FetchCarTypeRepository;
+use App\Repositories\Frontend\Category\Fetch\F_FetchCategoryInterface;
+use App\Repositories\Frontend\Category\Fetch\F_FetchCategoryRepository;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeRepository;
+use App\Repositories\Frontend\Product\Find\F_FindProductInterface;
+use App\Repositories\Frontend\Product\Find\F_FindProductRepository;
 use App\Repositories\Frontend\State\Fetch\F_FetchStateInterface;
 use App\Repositories\Frontend\State\Fetch\F_FetchStateRepository;
 use App\Repositories\Frontend\Store\Fetch\F_FetchStoreInterface;
@@ -64,6 +68,14 @@ class F_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             F_FindStoreInterface::class,
             F_FindStoreRepository::class);
+
+        $this->app->bind(
+            F_FindProductInterface::class,
+            F_FindProductRepository::class);
+
+        $this->app->bind(
+            F_FetchCategoryInterface::class,
+            F_FetchCategoryRepository::class);
     }
 
     /**

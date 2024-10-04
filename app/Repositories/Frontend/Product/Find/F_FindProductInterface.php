@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Repositories\Frontend\Store\Find;
+namespace App\Repositories\Frontend\Product\Find;
 
-interface F_FindStoreInterface
+interface F_FindProductInterface
 {
     /**
-     * Create new resource
      *
      * @param int $id
      * @param array $with
