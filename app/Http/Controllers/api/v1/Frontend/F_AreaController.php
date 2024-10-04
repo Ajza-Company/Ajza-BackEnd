@@ -25,7 +25,7 @@ class F_AreaController extends Controller
      */
     public function __invoke(string $city_id)
     {
-        $city_id = decodeString($city_id, EncodingMethodsEnum::HASHID);
+        $city_id = decodeString($city_id);
         return F_AreaResource::collection($this->fetchArea->fetch(data: ['state_id' => $city_id]));
     }
 }

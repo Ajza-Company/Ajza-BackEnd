@@ -25,7 +25,7 @@ class F_CarModelController extends Controller
      */
     public function __invoke(string $car_brand)
     {
-        $car_brand_id = decodeString($car_brand, EncodingMethodsEnum::HASHID);
+        $car_brand_id = decodeString($car_brand);
         return F_CarModelResource::collection($this->fetchCarModel->fetch(data: ['car_brand_id' => $car_brand_id], paginate: false));
     }
 }

@@ -16,8 +16,8 @@ class F_CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => encodeString($this->id, EncodingMethodsEnum::HASHID),
-            'name' => $this->localized->name
+            'id' => encodeString($this->id),
+            'name' => $this->localized?->name
         ];
     }
 }

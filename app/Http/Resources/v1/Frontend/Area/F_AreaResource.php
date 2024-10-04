@@ -17,7 +17,7 @@ class F_AreaResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => encodeString($this->id, EncodingMethodsEnum::HASHID),
+            'id' => encodeString($this->id),
             'name' => $this->localized?->name,
             'city' => $this->whenLoaded('state', function (){
                 return F_StateResource::make($this->state);

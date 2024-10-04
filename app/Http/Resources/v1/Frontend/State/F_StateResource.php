@@ -16,7 +16,7 @@ class F_StateResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => encodeString($this->id, EncodingMethodsEnum::HASHID),
+            'id' => encodeString($this->id),
             'name' => $this->localized?->name
         ];
     }
