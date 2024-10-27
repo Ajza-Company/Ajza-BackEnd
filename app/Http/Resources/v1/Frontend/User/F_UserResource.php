@@ -18,7 +18,9 @@ class F_UserResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'name' => $this->name,
+            'email' => $this->email,
             'fullMobile' => $this->full_mobile,
+            'gender' => $this->gender,
             'isRegistered' => (bool)$this->is_registered
         ];
     }

@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\api\v1\Frontend\F_AddressController;
 use App\Http\Controllers\api\v1\Frontend\F_AreaController;
 use App\Http\Controllers\api\v1\Frontend\F_AuthController;
 use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
 use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
 use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
+use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
 use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
 use App\Http\Controllers\api\v1\Frontend\F_StateController;
@@ -63,6 +65,23 @@ Route::middleware('guest:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('favorites')->group(function () {
+        Route::get('/', [F_FavoriteController::class, 'index']);
+        Route::post('/', [F_FavoriteController::class, 'store']);
+        Route::delete('{product_id?}', [F_FavoriteController::class, 'destroy']);
+    });
+
+    Route::prefix('addresses')->group(function () {
+        Route::get('/', [F_AddressController::class, 'index']);
+        Route::post('/', [F_AddressController::class, 'store']);
+        Route::post('{id}', [F_AddressController::class, 'update']);
+        Route::delete('{id}', [F_AddressController::class, 'destroy']);
+    });
+    
+    Route::prefix('auth')->group(function () {
+        Route::get('me', [F_AuthController::class, 'me']);
+    });
+
     Route::prefix('user')->group(function () {
         Route::post('setup-account', [F_AuthController::class, 'setupAccount']);
     });
