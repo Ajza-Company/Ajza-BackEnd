@@ -34,7 +34,9 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ProductLocaleSeeder::class,
             StoreProductSeeder::class,
-            StoreProductOfferSeeder::class
+            StoreProductOfferSeeder::class,
+            ProductFavoriteSeeder::class,
+            AddressSeeder::class
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Frontend\Address\Create\F_CreateAddressInterface;
+use App\Repositories\Frontend\Address\Create\F_CreateAddressRepository;
+use App\Repositories\Frontend\Address\Find\F_FindAddressInterface;
+use App\Repositories\Frontend\Address\Find\F_FindAddressRepository;
 use App\Repositories\Frontend\Area\Fetch\F_FetchAreaInterface;
 use App\Repositories\Frontend\Area\Fetch\F_FetchAreaRepository;
 use App\Repositories\Frontend\CarBrand\Fetch\F_FetchCarBrandInterface;
@@ -16,6 +20,8 @@ use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeRepository;
 use App\Repositories\Frontend\Product\Find\F_FindProductInterface;
 use App\Repositories\Frontend\Product\Find\F_FindProductRepository;
+use App\Repositories\Frontend\ProductFavorite\Create\F_CreateProductFavoriteInterface;
+use App\Repositories\Frontend\ProductFavorite\Create\F_CreateProductFavoriteRepository;
 use App\Repositories\Frontend\State\Fetch\F_FetchStateInterface;
 use App\Repositories\Frontend\State\Fetch\F_FetchStateRepository;
 use App\Repositories\Frontend\Store\Fetch\F_FetchStoreInterface;
@@ -76,6 +82,18 @@ class F_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             F_FetchCategoryInterface::class,
             F_FetchCategoryRepository::class);
+
+        $this->app->bind(
+            F_CreateProductFavoriteInterface::class,
+            F_CreateProductFavoriteRepository::class);
+
+        $this->app->bind(
+            F_CreateAddressInterface::class,
+            F_CreateAddressRepository::class);
+
+        $this->app->bind(
+            F_FindAddressInterface::class,
+            F_FindAddressRepository::class);
     }
 
     /**

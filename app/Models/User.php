@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -74,5 +76,32 @@ class User extends Authenticatable
         //This is the line that we change from the original function
         //We basically removed the `id|` prefix from the token
         return new NewAccessToken($token, $plainTextToken);
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(ProductFavorite::class, 'user_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class, 'user_id');
+    }
+
+    /**
+     *
+     * @return HasManyThrough
+     */
+    public function favoriteProducts(): HasManyThrough
+    {
+        return $this->hasManyThrough(Product::class, ProductFavorite::class, 'user_id', 'id', 'id', 'product_id');
     }
 }
