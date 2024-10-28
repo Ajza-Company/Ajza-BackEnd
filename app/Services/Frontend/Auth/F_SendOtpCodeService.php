@@ -4,6 +4,8 @@ namespace App\Services\Frontend\Auth;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Http\Resources\v1\Frontend\User\F_UserResource;
+use App\Models\User;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -35,6 +37,17 @@ class F_SendOtpCodeService
                 return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
             }
 
+            $user = User::where($data)->first();
+
+            $returnArr = [
+                'code' => $data['code'],
+                'expiresAt' => Carbon::parse($data['expires_at'])->longRelativeToNowDiffForHumans()
+            ];
+
+            if ($user) {
+                $returnArr['data'] = F_UserResource::make($user);
+            }
+
             $data['code'] = rand(1000, 9999);
             $data['expires_at'] = now()->addMinutes(10);
             $this->createOtp->create($data);
@@ -42,10 +55,7 @@ class F_SendOtpCodeService
             return response()->json(
                 successResponse(
                     message: SuccessMessagesEnum::SENT,
-                    data: [
-                        'code' => $data['code'],
-                        'expiresAt' => Carbon::parse($data['expires_at'])->longRelativeToNowDiffForHumans()
-                    ]
+                    data: $returnArr
                 )
             );
         } catch (\Exception $ex) {
