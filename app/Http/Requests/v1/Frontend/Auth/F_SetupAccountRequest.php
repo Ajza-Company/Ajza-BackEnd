@@ -3,10 +3,12 @@
 namespace App\Http\Requests\v1\Frontend\Auth;
 
 use App\Enums\EncodingMethodsEnum;
+use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class F_SetupAccountRequest extends FormRequest
 {
+    use DecodesInputTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -38,22 +40,8 @@ class F_SetupAccountRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        $this->decodeInput('car_brand_id');
-        $this->decodeInput('car_model_id');
-        $this->decodeInput('car_type_id');
-    }
-
-    /**
-     * Decode the encoded input value.
-     *
-     * @param string $inputKey
-     */
-    private function decodeInput(string $inputKey): void
-    {
-        $value = $this->input($inputKey);
-
-        if ($value && decodeString($value)) {
-            $this->merge([$inputKey => decodeString($value)]);
-        }
+        $this->decodeInput('personal.car_brand_id');
+        $this->decodeInput('personal.car_model_id');
+        $this->decodeInput('personal.car_type_id');
     }
 }
