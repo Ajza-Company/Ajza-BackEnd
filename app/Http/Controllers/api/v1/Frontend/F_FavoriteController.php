@@ -37,7 +37,6 @@ class F_FavoriteController extends Controller
                 ->favoriteProducts()
                 ->whereHas('localized')
                 ->with(['localized', 'offer'])
-                ->latest()
                 ->adaptivePaginate()
         );
     }
