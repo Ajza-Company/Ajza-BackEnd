@@ -37,7 +37,7 @@ class F_VerifyOtpCodeService
                 return response()->json(errorResponse(message: 'Your OTP expired, but don’t worry, we’ve got plenty more where that came from!'), Response::HTTP_BAD_REQUEST);
             }
 
-            $user = User::where($data)->first();
+            $user = User::where('full_mobile', $data['full_mobile'])->first();
 
             $returnArr = [];
             $token = null;
