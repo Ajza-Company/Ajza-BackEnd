@@ -4,7 +4,9 @@ namespace App\Services\Frontend\Auth;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Http\Resources\v1\Frontend\User\F_UserResource;
 use App\Models\OtpCode;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -35,13 +37,23 @@ class F_VerifyOtpCodeService
                 return response()->json(errorResponse(message: 'Your OTP expired, but don’t worry, we’ve got plenty more where that came from!'), Response::HTTP_BAD_REQUEST);
             }
 
+            $user = User::where($data)->first();
+
+            $returnArr = [];
+            $token = null;
+
+            if ($user) {
+                $returnArr = F_UserResource::make($user);
+                $token = $user->createToken('auth_token')->plainTextToken;
+            }
+
             $verificationCode->update([
                 'expires_at' => Carbon::now(),
                 'is_verified' => true
             ]);
 
             \DB::commit();
-            return response()->json(successResponse(message: SuccessMessagesEnum::VERIFIED));
+            return response()->json(successResponse(message: SuccessMessagesEnum::VERIFIED, data: $returnArr, token: $token));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(
