@@ -25,10 +25,10 @@ class F_DeleteFavoriteService
             } else {
                 // Remove specific favorite
                 $decoded_product_id = decodeString($product_id);
-                $user->favorites->where('product_id', $decoded_product_id)->delete();
+                $user->favorites()->where('product_id', $decoded_product_id)->delete();
             }
 
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED));
+            return response()->json(successResponse(message: SuccessMessagesEnum::DELETED));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
                 message: ErrorMessageEnum::CREATE,

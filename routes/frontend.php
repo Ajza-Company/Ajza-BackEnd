@@ -77,7 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('{id}', [F_AddressController::class, 'update']);
         Route::delete('{id}', [F_AddressController::class, 'destroy']);
     });
-    
+
     Route::prefix('auth')->group(function () {
         Route::get('me', [F_AuthController::class, 'me']);
     });

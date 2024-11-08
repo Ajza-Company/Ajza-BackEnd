@@ -27,13 +27,14 @@ class F_CreateAccountRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'full_mobile' => 'required|string|unique:users,full_mobile',
-            'personal.gender' => 'required|string|in:male,female',
-            'workshop.data.name' => 'required|string',
-            'workshop.data.city_id' => 'required|integer|exists:cities,id',
-            'workshop.data.commercial_registration' => 'required|string',
-            'workshop.data.national_identity' => 'required|string',
-            'workshop.data.added_tax' => 'required|string',
-            'workshop.commercial_registration_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'account_type' => 'sometimes|string|in:personal,workshop',
+            'personal.gender' => 'required_if:account_type,personal|string|in:male,female',
+            'workshop.data.name' => 'required_if:account_type,workshop|string',
+            'workshop.data.city_id' => 'required_if:account_type,workshop|integer|exists:cities,id',
+            'workshop.data.commercial_registration' => 'required_if:account_type,workshop|string',
+            'workshop.data.national_identity' => 'required_if:account_type,workshop|string',
+            'workshop.data.added_tax' => 'required_if:account_type,workshop|string',
+            'workshop.commercial_registration_image' => 'required_if:account_type,workshop|image|mimes:jpeg,png,jpg,gif,svg',
         ];
     }
 
@@ -43,6 +44,10 @@ class F_CreateAccountRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->decodeInput('city_id');
+
+        $this->merge([
+            'account_type' => $this->account_type ?? 'personal',
+        ]);
     }
 
     /**

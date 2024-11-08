@@ -39,6 +39,9 @@ class F_SendOtpCodeService
 
             $user = User::where($data)->first();
 
+            $data['code'] = rand(1000, 9999);
+            $data['expires_at'] = now()->addMinutes(10);
+
             $returnArr = [
                 'code' => $data['code'],
                 'expiresAt' => Carbon::parse($data['expires_at'])->longRelativeToNowDiffForHumans()
@@ -48,8 +51,6 @@ class F_SendOtpCodeService
                 $returnArr['data'] = F_UserResource::make($user);
             }
 
-            $data['code'] = rand(1000, 9999);
-            $data['expires_at'] = now()->addMinutes(10);
             $this->createOtp->create($data);
 
             return response()->json(

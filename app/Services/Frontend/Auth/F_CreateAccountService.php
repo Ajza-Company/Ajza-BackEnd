@@ -3,6 +3,7 @@
 namespace App\Services\Frontend\Auth;
 
 use App\Enums\ErrorMessageEnum;
+use App\Enums\RoleEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\Frontend\User\F_UserResource;
 use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
@@ -40,6 +41,14 @@ class F_CreateAccountService
 
             $user = $this->createAccount->create($data);
             $token = $user->createToken('auth_token')->plainTextToken;
+
+            if(isset($data['personal'])) {
+                $user->assignRole(RoleEnum::CLIENT);
+            }
+
+            if(isset($data['workshop'])) {
+                $user->assignRole(RoleEnum::WORKSHOP);
+            }
 
             //TODO:: Send Welcome Email
 
