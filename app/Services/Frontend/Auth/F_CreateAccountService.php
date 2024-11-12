@@ -37,9 +37,13 @@ class F_CreateAccountService
                 return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
             }
 
-            $data['is_registered'] = true;
-
-            $user = $this->createAccount->create($data);
+            $user = $this->createAccount->create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'full_mobile' => $data['full_mobile'],
+                'is_registered' => true,
+                'gender' => $data['personal']['gender']
+            ]);
             $token = $user->createToken('auth_token')->plainTextToken;
 
             if(isset($data['personal'])) {
