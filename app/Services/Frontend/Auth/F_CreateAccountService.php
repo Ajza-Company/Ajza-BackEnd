@@ -42,7 +42,7 @@ class F_CreateAccountService
                 'email' => $data['email'],
                 'full_mobile' => $data['full_mobile'],
                 'is_registered' => true,
-                'gender' => $data['personal']['gender']
+                'gender' => isset($data['personal']) ? $data['personal']['gender'] : null
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;
 
