@@ -24,7 +24,9 @@ class F_ProductController extends Controller
 
         $products = Product::whereHas('storeProduct', function ($q) use ($decoded_store_id) {
             $q->where('store_id', $decoded_store_id);
-        })->whereHas('localized')->with(['localized', 'offer'])->filter(\request())->adaptivePaginate();
+        })->whereHas('localized')->with(['localized', 'offer', 'favorites' => function ($q) use ($decoded_store_id) {
+            $q->where('user_id', auth('api')->id())->where('store_id', $decoded_store_id);
+        }])->filter(\request())->adaptivePaginate();
 
         return F_ShortProductResource::collection($products);
     }

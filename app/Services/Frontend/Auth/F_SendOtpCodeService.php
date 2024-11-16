@@ -7,6 +7,7 @@ use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\Frontend\User\F_UserResource;
 use App\Models\User;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
+use App\Services\Frontend\SmsService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -18,7 +19,7 @@ class F_SendOtpCodeService
      *
      * @param F_CreateOtpCodeInterface $createOtp
      */
-    public function __construct(private F_CreateOtpCodeInterface $createOtp)
+    public function __construct(private F_CreateOtpCodeInterface $createOtp, private SmsService $smsService)
     {
 
     }
@@ -34,7 +35,10 @@ class F_SendOtpCodeService
     {
         try {
             if (!isValidPhone($data['full_mobile'])) {
-                return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
+                return response()->json(
+                    errorResponse(
+                        message: 'Invalid number detected! Let’s try a different one.'),
+                    status: Response::HTTP_BAD_REQUEST);
             }
 
             $user = User::where($data)->first();
@@ -51,14 +55,15 @@ class F_SendOtpCodeService
                 $returnArr['data'] = F_UserResource::make($user);
             }
 
+            // $this->smsService->send($data['full_mobile']);
+
             $this->createOtp->create($data);
 
-            return response()->json(
-                successResponse(
-                    message: SuccessMessagesEnum::SENT,
-                    data: $returnArr
-                )
-            );
+            /*return response()->json(
+                successResponse(message: SuccessMessagesEnum::SENT, data: $user ? F_UserResource::make($user) : null)
+            );*/
+
+            return response()->json(successResponse(message: SuccessMessagesEnum::SENT, data: $returnArr));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
                 message: ErrorMessageEnum::SEND,

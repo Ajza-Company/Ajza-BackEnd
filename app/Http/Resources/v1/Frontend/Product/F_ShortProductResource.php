@@ -23,6 +23,7 @@ class F_ShortProductResource extends JsonResource
                 return trans('general.product_discount', ['discount' => $this->offer->discount ?? 0]);
             }),
             'image' => $this->image,
+            'is_favorite' => $this->whenLoaded('')
         ];
     }
 }

@@ -7,11 +7,13 @@ use App\Traits\HasLocalized;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, HasLocalized;
+    use HasFactory, HasLocalized, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -62,5 +64,14 @@ class Product extends Model
     public function storeProduct(): HasOne
     {
         return $this->hasOne(StoreProduct::class, 'product_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(ProductFavorite::class, 'product_id');
     }
 }

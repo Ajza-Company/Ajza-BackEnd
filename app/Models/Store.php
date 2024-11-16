@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Store extends Model
 {
-    use HasFactory, HasLocalized;
+    use HasFactory, HasLocalized, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

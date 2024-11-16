@@ -35,4 +35,20 @@ return [
         ],
     ],
 
+    'sms' => [
+        'default' => env('SMS_PROVIDER', 'provider1'),
+
+        'provider1' => [
+            'url' => env('PROVIDER1_SMS_URL'),
+            'secret' => env('PROVIDER1_SMS_SECRET'),
+            // other provider1 specific configs
+        ],
+
+        'provider2' => [
+            'username' => env('PROVIDER2_SMS_USERNAME'),
+            'password' => env('PROVIDER2_SMS_PASSWORD'),
+            // other provider2 specific configs
+        ],
+    ],
+
 ];

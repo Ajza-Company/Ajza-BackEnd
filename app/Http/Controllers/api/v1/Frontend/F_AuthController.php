@@ -69,6 +69,6 @@ class F_AuthController extends Controller
      */
     public function me()
     {
-        return F_UserResource::make(auth('api')->user());
+        return F_UserResource::make(auth('api')->user()->load('roles'));
     }
 }

@@ -21,7 +21,10 @@ class F_UserResource extends JsonResource
             'email' => $this->email,
             'fullMobile' => $this->full_mobile,
             'gender' => $this->gender,
-            'isRegistered' => (bool)$this->is_registered
+            'isRegistered' => (bool)$this->is_registered,
+            'role' => $this->whenLoaded('roles', function () {
+                return $this->roles->first()->name;
+            })
         ];
     }
 }
