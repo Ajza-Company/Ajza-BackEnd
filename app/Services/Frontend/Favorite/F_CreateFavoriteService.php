@@ -4,6 +4,7 @@ namespace App\Services\Frontend\Favorite;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Models\StoreProduct;
 use App\Models\User;
 use App\Repositories\Frontend\ProductFavorite\Create\F_CreateProductFavoriteInterface;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +32,10 @@ class F_CreateFavoriteService
     public function create(User $user, array $data): JsonResponse
     {
         try {
+            $product_id = $data['product_id'];
+            unset($data['product_id']);
             $data['user_id'] = $user->id;
+            $data['store_product_id'] = $product_id;
             $this->createProductFavorite->create($data, $data);
 
             return response()->json(successResponse(message: SuccessMessagesEnum::CREATED));

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->engine = "InnoDB";
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('city_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('state_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('image', 255)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

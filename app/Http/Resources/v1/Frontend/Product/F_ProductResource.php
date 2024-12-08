@@ -16,8 +16,8 @@ class F_ProductResource extends JsonResource
     {
         return [
             $this->merge(F_ShortProductResource::make($this)),
-            'partNumber' => $this->part_number,
-            'description' => $this->localized?->description
+            'partNumber' => $this->product?->part_number,
+            'description' => $this->product?->localized?->description
         ];
     }
 }

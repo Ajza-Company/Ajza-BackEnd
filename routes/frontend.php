@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('guest:sanctum')->group(function () {
+Route::group([], function () {
     Route::get('locales', F_LocaleController::class);
     Route::prefix('auth')->group(function () {
         Route::post('send-otp', [F_AuthController::class, 'sendOtp']);
@@ -51,10 +51,8 @@ Route::middleware('guest:sanctum')->group(function () {
                 Route::get('{store_id}/details', 'show');
             });
 
-            Route::prefix('{store_id}/products')->controller(F_ProductController::class)->group(function () {
-                Route::get('/', '__invoke');
-                Route::get('{product_id}', 'show');
-            });
+            Route::get('{store_id}/products', [F_ProductController::class, '__invoke']);
+            Route::get('products/{product_id}', [F_ProductController::class, 'show']);
         });
 
         Route::prefix('cities')->group(function () {

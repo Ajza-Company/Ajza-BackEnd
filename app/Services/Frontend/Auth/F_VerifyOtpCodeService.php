@@ -4,7 +4,7 @@ namespace App\Services\Frontend\Auth;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
-use App\Http\Resources\v1\Frontend\User\F_UserResource;
+use App\Http\Resources\v1\User\UserResource;
 use App\Models\OtpCode;
 use App\Models\User;
 use Carbon\Carbon;
@@ -43,7 +43,7 @@ class F_VerifyOtpCodeService
             $token = null;
 
             if ($user) {
-                $returnArr = F_UserResource::make($user);
+                $returnArr = UserResource::make($user);
                 $token = $user->createToken('auth_token')->plainTextToken;
             }
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('price')->default(0);
             $table->integer('quantity')->default(0);
             $table->double('discount')->default(0);
+            $table->double('amount')->default(0);
             $table->timestamps();
         });
     }

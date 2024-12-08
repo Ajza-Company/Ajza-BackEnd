@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('store_product_offers', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->id();
-            $table->foreignId('store_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('store_product_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->enum('type', ['fixed', 'percentage']);
             $table->double('discount');
             $table->timestamps();
         });

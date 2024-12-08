@@ -9,5 +9,5 @@ use BenSampo\Enum\Enum;
 final class DiscountTypeEnum extends Enum
 {
     const PERCENTAGE = 'percentage';
-    const AMOUNT = 'amount';
+    const FIXED = 'fixed';
 }

@@ -4,7 +4,7 @@ namespace App\Services\Frontend\Auth;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
-use App\Http\Resources\v1\Frontend\User\F_UserResource;
+use App\Http\Resources\v1\User\UserResource;
 use App\Models\User;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
 use App\Services\Frontend\SmsService;
@@ -52,7 +52,7 @@ class F_SendOtpCodeService
             ];
 
             if ($user) {
-                $returnArr['data'] = F_UserResource::make($user);
+                $returnArr['data'] = UserResource::make($user);
             }
 
             // $this->smsService->send($data['full_mobile']);

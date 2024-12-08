@@ -28,18 +28,6 @@ class Product extends Model
     ];
 
     /**
-     * Filter Scope
-     *
-     * @param Builder $builder
-     * @param $request
-     * @return Builder
-     */
-    public function scopeFilter(Builder $builder, $request): Builder
-    {
-        return (new ProductFilter($request))->filter($builder);
-    }
-
-    /**
      *
      * @return HasOne
      */
@@ -73,5 +61,14 @@ class Product extends Model
     public function favorites(): HasMany
     {
         return $this->hasMany(ProductFavorite::class, 'product_id');
+    }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function favorite(): HasOne
+    {
+        return $this->hasOne(ProductFavorite::class, 'product_id');
     }
 }

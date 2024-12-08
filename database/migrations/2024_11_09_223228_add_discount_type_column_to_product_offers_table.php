@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('product_offers', function (Blueprint $table) {
+        Schema::table('store_product_offers', function (Blueprint $table) {
             $table->enum('discount_type', DiscountTypeEnum::asArray())->default('percentage');
         });
     }
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('product_offers', function (Blueprint $table) {
+        Schema::table('store_product_offers', function (Blueprint $table) {
             $table->dropColumn('discount_type');
         });
     }

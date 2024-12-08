@@ -5,11 +5,10 @@ namespace App\Services\Frontend\Auth;
 use App\Enums\ErrorMessageEnum;
 use App\Enums\RoleEnum;
 use App\Enums\SuccessMessagesEnum;
-use App\Http\Resources\v1\Frontend\User\F_UserResource;
+use App\Http\Resources\v1\User\UserResource;
 use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class F_CreateAccountService
 {
@@ -57,7 +56,7 @@ class F_CreateAccountService
             //TODO:: Send Welcome Email
 
             \DB::commit();
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED, data: F_UserResource::make($user), token: $token));
+            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED, data: UserResource::make($user), token: $token));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(

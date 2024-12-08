@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -78,5 +79,32 @@ class Store extends Model
     public function products(): HasManyThrough
     {
         return $this->hasManyThrough(Product::class, StoreProduct::class, 'store_id', 'id', 'id', 'product_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function storeProducts(): HasMany
+    {
+        return $this->hasMany(StoreProduct::class, 'store_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'store_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

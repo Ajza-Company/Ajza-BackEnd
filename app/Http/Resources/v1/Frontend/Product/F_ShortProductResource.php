@@ -16,14 +16,16 @@ class F_ShortProductResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'name' => $this->localized?->name,
+            'name' => $this->product?->localized?->name,
             'price' => $this->price,
             'currency' => '',
             'discount' => $this->whenLoaded('offer', function (){
                 return trans('general.product_discount', ['discount' => $this->offer->discount ?? 0]);
             }),
-            'image' => $this->image,
-            'is_favorite' => $this->whenLoaded('')
+            'image' => $this->product?->image,
+            'is_favorite' => $this->when($this->relationLoaded('favorite'), function () {
+                return $this->favorite !== null;
+            })
         ];
     }
 }

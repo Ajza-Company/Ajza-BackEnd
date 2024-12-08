@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\Services\Messaging\Sms\Send\SmsProvider1;
+use App\Repositories\SMS\Providers\Provider1;
 use App\Services\Frontend\SmsService;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +16,7 @@ class SmsServiceProvider extends ServiceProvider
     {
         $this->app->singleton(SmsService::class, function ($app) {
             $providers = [
-                'provider1' => new SmsProvider1(config('services.sms.provider1'))
+                'provider1' => new Provider1()
             ];
 
             return new SmsService(

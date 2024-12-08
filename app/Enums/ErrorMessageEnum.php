@@ -19,4 +19,5 @@ final class ErrorMessageEnum extends Enum
     const INITIATE = 'Unable to initiate resource';
     const SERVERERROR = 'Server error';
     const SEND = 'Unable to send resource';
+    const LOGIN = 'Unable to login';
 }

@@ -32,9 +32,6 @@ class SmsProvider1 implements SmsInterface
             'is_fallback_on' => false
         ]);
 
-        if ($response->ok()) {
-            return true;
-        }
-        return false;
+        return $response->ok();
     }
 }

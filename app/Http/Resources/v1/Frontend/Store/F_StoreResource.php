@@ -17,6 +17,7 @@ class F_StoreResource extends JsonResource
     {
         return [
             $this->merge(F_ShortStoreResource::make($this)),
+            'products_count' => $this->whenCounted('products'),
             'categories' => F_CategoryResource::collection($this->whenLoaded('categories'))
         ];
     }

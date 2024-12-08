@@ -18,8 +18,10 @@ class F_FindStoreRepository implements F_FindStoreInterface
     /**
      * @inheritDoc
      */
-    public function find(int $id, array $with = []): mixed
+    public function find(int $id): mixed
     {
-        return $this->model->with($with)->findOrFail($id);
+        return $this->model->with(['categories' => function ($q) {
+            $q->whereHas('localized');
+        }])->withCount('products')->findOrFail($id);
     }
 }
