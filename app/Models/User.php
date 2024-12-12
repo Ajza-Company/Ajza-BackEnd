@@ -93,6 +93,15 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class, 'user_id');

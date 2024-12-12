@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\v1\Supplier\StoreProduct;
+namespace App\Http\Resources\v1\Frontend\Order;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class S_ShortStoreProductResource extends JsonResource
+class F_OrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,9 @@ class S_ShortStoreProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => encodeString($this->id),
-            'name' => $this->product?->localized?->name,
-            'image' => $this->product?->image,
+            $this->merge(F_ShortOrderResource::make($this)),
+            'amount' => $this->amount,
+            'delivery_method' => $this->delivery_method
         ];
     }
 }

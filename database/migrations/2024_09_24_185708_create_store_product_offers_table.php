@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DiscountTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->foreignId('store_product_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->enum('type', ['fixed', 'percentage']);
             $table->double('discount');
+            $table->enum('discount_type', DiscountTypeEnum::asArray())->default('percentage');
             $table->timestamps();
         });
     }

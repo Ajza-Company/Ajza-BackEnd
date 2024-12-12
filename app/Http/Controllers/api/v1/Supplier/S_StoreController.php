@@ -4,10 +4,12 @@ namespace App\Http\Controllers\api\v1\Supplier;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Supplier\Store\S_CreateStoreRequest;
+use App\Http\Requests\v1\Supplier\Store\S_UpdateStoreRequest;
 use App\Http\Resources\v1\Supplier\Store\S_ShortStoreResource;
 use App\Http\Resources\v1\Supplier\Store\S_StoreResource;
 use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
 use App\Services\Supplier\Store\S_CreateStoreService;
+use App\Services\Supplier\Store\S_UpdateStoreService;
 use Illuminate\Http\Request;
 
 class S_StoreController extends Controller
@@ -16,8 +18,13 @@ class S_StoreController extends Controller
      * Create a new instance.
      *
      * @param S_CreateStoreService $createStore
+     * @param S_FindStoreInterface $findStore
+     * @param S_UpdateStoreService $updateStore
      */
-    public function __construct(private S_CreateStoreService $createStore, private S_FindStoreInterface $findStore)
+    public function __construct(
+        private S_CreateStoreService $createStore,
+        private S_FindStoreInterface $findStore,
+        private S_UpdateStoreService $updateStore)
     {
 
     }
@@ -52,9 +59,10 @@ class S_StoreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(S_UpdateStoreRequest $request, string $store_id)
     {
-        //
+        $store = $this->findStore->find(decodeString($store_id));
+        return $this->updateStore->update($request->validated(), $store);
     }
 
     /**

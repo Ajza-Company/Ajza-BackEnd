@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('quantity')->default(0);
             $table->double('discount')->default(0);
             $table->double('amount')->default(0);
+            $table->boolean('is_available')->default(true);
             $table->timestamps();
         });
     }

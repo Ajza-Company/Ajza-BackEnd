@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\v1\Supplier\StoreProduct;
+namespace App\Http\Resources\v1\Supplier\Transaction;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class S_ShortStoreProductResource extends JsonResource
+class S_ShortTransactionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,7 @@ class S_ShortStoreProductResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'name' => $this->product?->localized?->name,
-            'image' => $this->product?->image,
+            'amount' => $this->amount
         ];
     }
 }

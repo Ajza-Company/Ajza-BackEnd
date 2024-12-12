@@ -54,6 +54,15 @@ class Order extends Model
 
     /**
      *
+     * @return HasMany
+     */
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(TransactionAttempt::class, 'order_id');
+    }
+
+    /**
+     *
      * @param Builder $builder
      * @param $request
      * @return Builder

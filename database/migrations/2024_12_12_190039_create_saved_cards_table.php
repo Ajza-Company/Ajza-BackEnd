@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('saved_cards', function (Blueprint $table) {
             $table->engine = "InnoDB";
+
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('store_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('delivery_method', 20);
-            $table->string('status', 20);
-            $table->double('amount')->default(0);
+            $table->integer('gateway_card_id')->nullable();
+            $table->string('card_number');
+            $table->string('card_type', 50);
+            $table->string('expiry_date', 10)->nullable();
+            $table->string('identifier', 255)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('saved_cards');
     }
 };

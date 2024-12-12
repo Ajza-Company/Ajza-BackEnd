@@ -30,7 +30,11 @@ class Store extends Model
         'parent_id',
         'address',
         'area_id',
-        'parent_id'
+        'parent_id',
+        'company_id',
+        'is_active',
+        'address_url',
+        'phone_number'
     ];
 
     /**
