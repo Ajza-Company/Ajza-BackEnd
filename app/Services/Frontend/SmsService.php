@@ -2,36 +2,50 @@
 
 namespace App\Services\Frontend;
 use App\Repositories\Services\Messaging\Sms\SmsInterface;
+use App\Repositories\SMS\OTPProviderInterface;
+use App\Repositories\SMS\SMSProviderInterface;
 use InvalidArgumentException;
 
 class SmsService
 {
-    protected array $providers = [];
-    protected string $defaultProvider;
+    private SMSProviderInterface $currentProvider;
 
-    public function __construct(array $providers, string $defaultProvider)
-    {
-        $this->providers = $providers;
-        $this->defaultProvider = $defaultProvider;
+    public function __construct(
+        private array $providers,
+        private string $defaultProvider
+    ) {
+        $this->setProvider($this->defaultProvider);
     }
 
-    public function send(string $to, ?string $message = null, ?string $provider = null, ?array $options = []): bool
+    public function setProvider(string $provider): void
     {
-        $provider = $provider ?? $this->defaultProvider;
-
         if (!isset($this->providers[$provider])) {
-            throw new InvalidArgumentException("SMS provider [{$provider}] not configured.");
+            throw new InvalidArgumentException("SMS provider '{$provider}' not found");
         }
 
-        return $this->providers[$provider]->send($to, $message, $options);
+        $this->currentProvider = $this->providers[$provider];
     }
 
-    public function provider(string $name): SmsInterface
+    public function sendMessage(string $phone, string $message): bool
     {
-        if (!isset($this->providers[$name])) {
-            throw new InvalidArgumentException("SMS provider [{$name}] not configured.");
+        return $this->currentProvider->sendMessage($phone, $message);
+    }
+
+    public function generateAndSendOTP(string $phone): array
+    {
+        if (!$this->currentProvider instanceof OTPProviderInterface) {
+            throw new InvalidArgumentException("Current provider does not support OTP operations");
         }
 
-        return $this->providers[$name];
+        return $this->currentProvider->generateAndSendOTP($phone);
+    }
+
+    public function verifyOTP(string $phone, string $code): bool
+    {
+        if (!$this->currentProvider instanceof OTPProviderInterface) {
+            throw new InvalidArgumentException("Current provider does not support OTP operations");
+        }
+
+        return $this->currentProvider->verifyOTP($phone, $code);
     }
 }

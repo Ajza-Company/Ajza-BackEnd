@@ -111,4 +111,18 @@ class Store extends Model
     {
         return $this->belongsTo(Company::class, 'company_id');
     }
+
+    /**
+     * Get the query to fetch stores with all required relations.
+     */
+    public static function getLocalizedStores()
+    {
+        return static::query()
+            ->whereHas('company.localized')
+            ->with([
+                'area.localized',
+                'area.state.localized',
+                'company.localized'
+            ]);
+    }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
 use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
 use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
 use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
+use App\Http\Controllers\api\v1\Frontend\F_OrderController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
 use App\Http\Controllers\api\v1\Frontend\F_StateController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreController;
@@ -55,9 +56,10 @@ Route::group([], function () {
             Route::get('products/{product_id}', [F_ProductController::class, 'show']);
         });
 
-        Route::prefix('cities')->group(function () {
-            Route::get('/', F_StateController::class);
-            Route::get('{state}/areas', F_AreaController::class);
+        Route::prefix('orders')->group(function () {
+            Route::get('/', [F_OrderController::class, 'index']);
+            Route::post('create', [F_OrderController::class, 'store']);
+            Route::get('{order_id}/show', [F_OrderController::class, 'show']);
         });
     });
 });

@@ -4,5 +4,5 @@ namespace App\Repositories\SMS;
 
 interface SMSProviderInterface
 {
-    public function send(string $to, string $message): bool;
+    public function sendMessage(string $to, string $message): bool;
 }

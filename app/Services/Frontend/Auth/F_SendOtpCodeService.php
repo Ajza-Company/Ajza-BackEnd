@@ -17,9 +17,9 @@ class F_SendOtpCodeService
     /**
      * Create a new instance.
      *
-     * @param F_CreateOtpCodeInterface $createOtp
+     * @param SmsService $smsService
      */
-    public function __construct(private F_CreateOtpCodeInterface $createOtp, private SmsService $smsService)
+    public function __construct(private SmsService $smsService)
     {
 
     }
@@ -41,27 +41,22 @@ class F_SendOtpCodeService
                     status: Response::HTTP_BAD_REQUEST);
             }
 
+            $isSent = $this->smsService->generateAndSendOTP($data['full_mobile']);
+
+            if (!$isSent) {
+                return response()->json(
+                    errorResponse(
+                        message: ErrorMessageEnum::SEND),
+                    status: Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
             $user = User::where($data)->first();
 
-            $data['code'] = rand(1000, 9999);
-            $data['expires_at'] = now()->addMinutes(10);
-
-            $returnArr = [
-                'code' => $data['code'],
-                'expiresAt' => Carbon::parse($data['expires_at'])->longRelativeToNowDiffForHumans()
-            ];
+            $returnArr = [];
 
             if ($user) {
                 $returnArr['data'] = UserResource::make($user);
             }
-
-            // $this->smsService->send($data['full_mobile']);
-
-            $this->createOtp->create($data);
-
-            /*return response()->json(
-                successResponse(message: SuccessMessagesEnum::SENT, data: $user ? F_UserResource::make($user) : null)
-            );*/
 
             return response()->json(successResponse(message: SuccessMessagesEnum::SENT, data: $returnArr));
         } catch (\Exception $ex) {

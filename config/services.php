@@ -39,8 +39,8 @@ return [
         'default' => env('SMS_PROVIDER', 'provider1'),
 
         'provider1' => [
-            'url' => env('PROVIDER1_SMS_URL'),
-            'secret' => env('PROVIDER1_SMS_SECRET'),
+            'url' => env('PROVIDER1_BASE_URL'),
+            'secret' => env('PROVIDER1_SECRET'),
             // other provider1 specific configs
         ],
 
