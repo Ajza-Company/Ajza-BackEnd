@@ -62,10 +62,8 @@ class Provider1 implements SMSProviderInterface, OTPProviderInterface
             'otp' => $code
         ]);
 
-        if ($response->ok()) {
-            return $response['status'];
-        }
+        \Log::info($response->json());
 
-        return false;
+        return $response->ok();
     }
 }

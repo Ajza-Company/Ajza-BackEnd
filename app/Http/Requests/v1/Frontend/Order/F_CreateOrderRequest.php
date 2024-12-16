@@ -3,11 +3,13 @@
 namespace App\Http\Requests\v1\Frontend\Order;
 
 use App\Enums\OrderDeliveryMethodEnum;
+use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class F_CreateOrderRequest extends FormRequest
 {
+    use DecodesInputTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -30,5 +32,14 @@ class F_CreateOrderRequest extends FormRequest
             'order_products.*.product_id' => 'required|integer|exists:store_products,id',
             'order_products.*.quantity' => 'required|integer|min:1'
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->decodeInput('address_id');
+        $this->decodeInput('order_products.*.product_id');
     }
 }

@@ -16,7 +16,7 @@ class F_ShortOrderProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            $this->whenLoaded('storeProduct', F_ShortStoreProductResource::make($this->storeProduct)),
+            $this->merge($this->whenLoaded('storeProduct', F_ShortStoreProductResource::make($this->storeProduct))),
             'price' => $this->price,
             'quantity' => $this->quantity,
         ];

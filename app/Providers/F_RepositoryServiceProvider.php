@@ -18,6 +18,8 @@ use App\Repositories\Frontend\Order\Create\F_CreateOrderInterface;
 use App\Repositories\Frontend\Order\Create\F_CreateOrderRepository;
 use App\Repositories\Frontend\Order\Find\F_FindOrderInterface;
 use App\Repositories\Frontend\Order\Find\F_FindOrderRepository;
+use App\Repositories\Frontend\OrderProduct\Insert\F_InsertOrderProductInterface;
+use App\Repositories\Frontend\OrderProduct\Insert\F_InsertOrderProductRepository;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeRepository;
 use App\Repositories\Frontend\Product\Find\F_FindProductInterface;
@@ -106,6 +108,10 @@ class F_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             F_FindOrderInterface::class,
             F_FindOrderRepository::class);
+
+        $this->app->bind(
+            F_InsertOrderProductInterface::class,
+            F_InsertOrderProductRepository::class);
     }
 
     /**

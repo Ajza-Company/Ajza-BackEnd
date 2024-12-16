@@ -55,16 +55,10 @@ Route::group([], function () {
             Route::get('{store_id}/products', [F_ProductController::class, '__invoke']);
             Route::get('products/{product_id}', [F_ProductController::class, 'show']);
         });
-
-        Route::prefix('orders')->group(function () {
-            Route::get('/', [F_OrderController::class, 'index']);
-            Route::post('create', [F_OrderController::class, 'store']);
-            Route::get('{order_id}/show', [F_OrderController::class, 'show']);
-        });
     });
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::prefix('favorites')->group(function () {
         Route::get('/', [F_FavoriteController::class, 'index']);
         Route::post('/', [F_FavoriteController::class, 'store']);
@@ -84,5 +78,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('user')->group(function () {
         Route::post('setup-account', [F_AuthController::class, 'setupAccount']);
+    });
+
+    Route::post('stores/{store_id}/orders/create', [F_OrderController::class, 'store']);
+
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [F_OrderController::class, 'index']);
+        Route::get('{order_id}/show', [F_OrderController::class, 'show']);
     });
 });
