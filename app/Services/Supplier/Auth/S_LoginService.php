@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Store\Auth;
+namespace App\Services\Supplier\Auth;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
@@ -26,7 +26,7 @@ class S_LoginService
                 return response()->json(successResponse(message: SuccessMessagesEnum::LOGGEDIN, data: UserResource::make($user), token: $token));
             }
 
-            return response()->json(errorResponse(message: 'The mobile and/or password used for authentication are invalid'), Response::HTTP_UNAUTHORIZED);
+            return response()->json(errorResponse(message: 'The mobile and/or password used for authentication are invalid'), Response::HTTP_BAD_REQUEST);
         } catch (\Exception $exception) {
             return response()->json(errorResponse(message: ErrorMessageEnum::LOGIN, error: $exception->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }

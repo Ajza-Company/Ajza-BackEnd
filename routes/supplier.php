@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
+use App\Http\Controllers\api\v1\Supplier\S_AuthController;
 use App\Http\Controllers\api\v1\Supplier\S_CompanyController;
 use App\Http\Controllers\api\v1\Supplier\S_OrderController;
 use App\Http\Controllers\api\v1\Supplier\S_StatisticsController;
@@ -19,7 +20,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum', 'role:Store Owner,Store Employee'])->group(function () {
+
+Route::middleware('guest:sanctum')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('login', [S_AuthController::class, 'login']);
+    });
+});
+
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('store-details', S_CompanyController::class);
     Route::prefix('{store_id}')->group(function () {
         Route::get('transactions', S_TransactionController::class);
