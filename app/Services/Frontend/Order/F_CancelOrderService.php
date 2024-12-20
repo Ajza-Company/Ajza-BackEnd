@@ -18,17 +18,14 @@ class F_CancelOrderService
      */
     public function cancel(Order $order): JsonResponse
     {
-        \DB::beginTransaction();
         try {
             $order->update([
                 'status' => OrderStatusEnum::CANCELLED
             ]);
-            \DB::commit();
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CANCELLED)));
         } catch (\Exception $ex) {
-            \DB::rollBack();
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::CREATE,
+                message: trans(ErrorMessageEnum::CREATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }

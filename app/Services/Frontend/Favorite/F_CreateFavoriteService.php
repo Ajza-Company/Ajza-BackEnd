@@ -38,10 +38,10 @@ class F_CreateFavoriteService
             $data['store_product_id'] = $product_id;
             $this->createProductFavorite->create($data, $data);
 
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::CREATE,
+                message: trans(ErrorMessageEnum::CREATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }

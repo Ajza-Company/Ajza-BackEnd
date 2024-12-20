@@ -3,22 +3,24 @@
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
+use Illuminate\Support\Facades\Lang;
 
 /**
  */
 final class SuccessMessagesEnum extends Enum
 {
-    const CREATED = 'Created Successfully';
-    const UPDATED = 'Updated Successfully';
-    const DELETED = 'Deleted Successfully';
-    const IMPORTED = 'Imported Successfully';
-    const REQUESTED = 'Requested Successfully';
-    const VERIFIED = 'Verified Successfully';
-    const LOGGEDOUT = 'LoggedOut Successfully';
-    const LOGGEDIN = 'LoggedIn Successfully';
-    const REPORTED = 'Reported Successfully';
-    const CONNECTED = 'Connected Successfully';
-    const FOUND = 'Resource Found';
-    const INITIATED = 'Initiated Successfully';
-    const SENT = 'Sent Successfully';
+    const CREATED = 'success.created';
+    const CANCELLED = 'success.cancelled';
+    const UPDATED = 'success.updated';
+    const DELETED = 'success.deleted';
+    const IMPORTED = 'success.imported';
+    const REQUESTED = 'success.requested';
+    const VERIFIED = 'success.verified';
+    const LOGGEDOUT = 'success.logged_out';
+    const LOGGEDIN = 'success.logged_in';
+    const REPORTED = 'success.reported';
+    const CONNECTED = 'success.connected';
+    const FOUND = 'success.found';
+    const INITIATED = 'success.initiated';
+    const SENT = 'success.sent';
 }

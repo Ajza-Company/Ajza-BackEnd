@@ -34,8 +34,12 @@ use App\Repositories\Frontend\Store\Fetch\F_FetchStoreInterface;
 use App\Repositories\Frontend\Store\Fetch\F_FetchStoreRepository;
 use App\Repositories\Frontend\Store\Find\F_FindStoreInterface;
 use App\Repositories\Frontend\Store\Find\F_FindStoreRepository;
+use App\Repositories\Frontend\StoreReview\Create\F_CreateStoreReviewInterface;
+use App\Repositories\Frontend\StoreReview\Create\F_CreateStoreReviewRepository;
 use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 use App\Repositories\Frontend\User\Create\F_CreateUserRepository;
+use App\Repositories\Frontend\Wallet\Create\F_CreateWalletInterface;
+use App\Repositories\Frontend\Wallet\Create\F_CreateWalletRepository;
 use Illuminate\Support\ServiceProvider;
 
 class F_RepositoryServiceProvider extends ServiceProvider
@@ -112,6 +116,14 @@ class F_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             F_InsertOrderProductInterface::class,
             F_InsertOrderProductRepository::class);
+
+        $this->app->bind(
+            F_CreateStoreReviewInterface::class,
+            F_CreateStoreReviewRepository::class);
+
+        $this->app->bind(
+            F_CreateWalletInterface::class,
+            F_CreateWalletRepository::class);
     }
 
     /**

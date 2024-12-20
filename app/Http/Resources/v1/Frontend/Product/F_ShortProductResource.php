@@ -18,7 +18,7 @@ class F_ShortProductResource extends JsonResource
             'id' => encodeString($this->id),
             'name' => $this->product?->localized?->name,
             'price' => $this->price,
-            'currency' => '',
+            'currency' => $this->store->company->country->localized->currency_code,
             'discount' => $this->whenLoaded('offer', function (){
                 return trans('general.product_discount', ['discount' => $this->offer->discount ?? 0]);
             }),

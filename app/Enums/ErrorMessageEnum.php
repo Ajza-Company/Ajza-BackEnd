@@ -8,16 +8,18 @@ use BenSampo\Enum\Enum;
  */
 final class ErrorMessageEnum extends Enum
 {
-    const DELETE = 'Unable to delete resource';
-    const CREATE = 'Unable to create resource';
-    const IMPORT = 'Unable to import resource';
-    const VERIFY = 'Unable to verify resource';
-    const UPDATE = 'Unable to update resource';
-    const CONNECT = 'Unable to connect resource';
-    const FIND = 'Unable to find resource';
-    const NOTFOUND = 'Resource not found';
-    const INITIATE = 'Unable to initiate resource';
-    const SERVERERROR = 'Server error';
-    const SEND = 'Unable to send resource';
-    const LOGIN = 'Unable to login';
+    const DELETE = 'error.delete';
+    const UPDATE = 'error.update';
+    const CREATE = 'error.create';
+    const CANCEL = 'error.cancel';
+    const IMPORT = 'error.import';
+    const REQUEST = 'error.request';
+    const VERIFY = 'error.verify';
+    const LOGOUT = 'error.logout';
+    const LOGIN = 'error.login';
+    const REPORT = 'error.report';
+    const CONNECT = 'error.connect';
+    const FOUND = 'error.found';
+    const INITIATE = 'error.initiate';
+    const SEND = 'error.send';
 }

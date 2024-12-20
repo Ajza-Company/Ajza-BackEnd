@@ -45,7 +45,8 @@ class CountrySeeder extends Seeder
                 CountryLocale::create([
                     'country_id' => $createdCountry->id,
                     'locale_id' => $locale,
-                    'name' => $country['name']
+                    'name' => $country['name'],
+                    'currency_code' => $country['currency']
                 ]);
                 foreach ($states as $state) {
                     $createdState = State::create([

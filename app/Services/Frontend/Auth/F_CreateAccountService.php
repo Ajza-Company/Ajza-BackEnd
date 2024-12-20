@@ -5,8 +5,10 @@ namespace App\Services\Frontend\Auth;
 use App\Enums\ErrorMessageEnum;
 use App\Enums\RoleEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Events\v1\Frontend\F_UserCreatedEvent;
 use App\Http\Resources\v1\User\UserResource;
 use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
+use App\Repositories\Frontend\Wallet\Create\F_CreateWalletInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -41,7 +43,8 @@ class F_CreateAccountService
                 'email' => $data['email'],
                 'full_mobile' => $data['full_mobile'],
                 'is_registered' => true,
-                'gender' => isset($data['personal']) ? $data['personal']['gender'] : null
+                'gender' => isset($data['personal']) ? $data['personal']['gender'] : null,
+                'preferred_language' => app()->getLocale()
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -53,14 +56,14 @@ class F_CreateAccountService
                 $user->assignRole(RoleEnum::WORKSHOP);
             }
 
-            //TODO:: Send Welcome Email
+            event(new F_UserCreatedEvent($user));
 
             \DB::commit();
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED, data: UserResource::make($user), token: $token));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: UserResource::make($user), token: $token));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::CREATE,
+                message: trans(ErrorMessageEnum::CREATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }

@@ -37,7 +37,7 @@ class F_SendOtpCodeService
             if (!isValidPhone($data['full_mobile'])) {
                 return response()->json(
                     errorResponse(
-                        message: 'Invalid number detected! Let’s try a different one.'),
+                        message: trans('validation.invalid_number')),
                     status: Response::HTTP_BAD_REQUEST);
             }
 
@@ -46,7 +46,7 @@ class F_SendOtpCodeService
             if (!$isSent) {
                 return response()->json(
                     errorResponse(
-                        message: ErrorMessageEnum::SEND),
+                        message: trans(ErrorMessageEnum::SEND)),
                     status: Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
@@ -58,7 +58,7 @@ class F_SendOtpCodeService
                 $returnArr['data'] = UserResource::make($user);
             }
 
-            return response()->json(successResponse(message: SuccessMessagesEnum::SENT, data: $returnArr));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::SENT), data: $returnArr));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
                 message: ErrorMessageEnum::SEND,

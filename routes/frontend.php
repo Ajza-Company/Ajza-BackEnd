@@ -13,6 +13,8 @@ use App\Http\Controllers\api\v1\Frontend\F_OrderController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
 use App\Http\Controllers\api\v1\Frontend\F_StateController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreController;
+use App\Http\Controllers\api\v1\Frontend\F_StoreReviewController;
+use App\Http\Controllers\api\v1\Frontend\F_WalletController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +61,7 @@ Route::group([], function () {
 });
 
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
+
     Route::prefix('favorites')->group(function () {
         Route::get('/', [F_FavoriteController::class, 'index']);
         Route::post('/', [F_FavoriteController::class, 'store']);
@@ -78,6 +81,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
 
     Route::prefix('user')->group(function () {
         Route::post('setup-account', [F_AuthController::class, 'setupAccount']);
+        Route::get('wallet-transactions', F_WalletController::class);
     });
 
     Route::post('stores/{store_id}/orders/create', [F_OrderController::class, 'store']);
@@ -85,5 +89,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::prefix('orders')->group(function () {
         Route::get('/', [F_OrderController::class, 'index']);
         Route::get('{order_id}/show', [F_OrderController::class, 'show']);
+        Route::get('{order_id}/cancel', [F_OrderController::class, 'cancel']);
+        Route::post('{order_id}/submit-review', F_StoreReviewController::class);
     });
 });

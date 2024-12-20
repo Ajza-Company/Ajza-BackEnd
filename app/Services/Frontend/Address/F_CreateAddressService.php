@@ -35,13 +35,17 @@ class F_CreateAddressService
                 $user->addresses()->update(['is_default' => false]);
             }
 
-            $data['user_id'] = $user->id;
+            $data = [
+                'user_id' => $user->id,
+                ...$data
+            ];
+
             $this->createAddress->create($data);
 
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::CREATE,
+                message: trans(ErrorMessageEnum::CREATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }

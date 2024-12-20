@@ -15,6 +15,7 @@ return new class extends Migration
             $table->engine = "InnoDB";
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('country_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('email', 50)->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('logo', 100)->nullable();

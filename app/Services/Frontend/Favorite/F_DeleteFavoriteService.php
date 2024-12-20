@@ -13,7 +13,7 @@ class F_DeleteFavoriteService
     /**
      *
      * @param User $user
-     * @param string|null $product_id
+     * @param string|null $store_product_id
      * @return JsonResponse
      */
     public function delete(User $user, ?string $store_product_id = null): JsonResponse
@@ -28,10 +28,10 @@ class F_DeleteFavoriteService
                 $user->favorites()->where('store_product_id', $decoded_store_product_id)->delete();
             }
 
-            return response()->json(successResponse(message: SuccessMessagesEnum::DELETED));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::DELETED)));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::CREATE,
+                message: trans(ErrorMessageEnum::CREATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }

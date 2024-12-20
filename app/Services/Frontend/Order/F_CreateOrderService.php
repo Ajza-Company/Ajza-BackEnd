@@ -51,11 +51,11 @@ class F_CreateOrderService
             $this->insertOrderProduct->insert($this->prepareOrderProductsBulkInsert($data['order_products'], $order));
 
             \DB::commit();
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::CREATE,
+                message: trans(ErrorMessageEnum::CREATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }

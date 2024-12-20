@@ -34,7 +34,8 @@ class User extends Authenticatable
         'password',
         'avatar',
         'is_active',
-        'is_registered'
+        'is_registered',
+        'gender'
     ];
 
     /**
@@ -56,7 +57,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password' => 'hashed'
         ];
     }
 
@@ -123,5 +124,14 @@ class User extends Authenticatable
     public function company(): HasOne
     {
         return $this->hasOne(Company::class, 'user_id');
+    }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class, 'user_id');
     }
 }

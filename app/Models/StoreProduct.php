@@ -35,6 +35,15 @@ class StoreProduct extends Model
 
     /**
      *
+     * @return BelongsTo
+     */
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
+
+    /**
+     *
      * @return HasOne
      */
     public function favorite(): HasOne

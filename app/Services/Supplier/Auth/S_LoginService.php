@@ -5,8 +5,12 @@ namespace App\Services\Supplier\Auth;
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\User\UserResource;
+use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 
 class S_LoginService
 {
@@ -17,18 +21,30 @@ class S_LoginService
     public function login(array $data): JsonResponse
     {
         try {
-            $data['is_registered'] = true;
-            $data['is_active'] = true;
+            $credentials = [
+                'is_registered' => true,
+                'is_active' => true,
+                ...$data
+            ];
 
-            if (auth()->attempt($data)) {
-                $user = auth()->user();
-                $token = $user->createToken('auth_token')->plainTextToken;
-                return response()->json(successResponse(message: SuccessMessagesEnum::LOGGEDIN, data: UserResource::make($user), token: $token));
+            $user = $this->authenticate($credentials);
+
+            if ($user) {
+                return response()->json(successResponse(
+                    message: trans('general.km'),
+                    data: UserResource::make($user),
+                    token: $user->createToken('auth_token')->plainTextToken
+                ));
             }
 
-            return response()->json(errorResponse(message: 'The mobile and/or password used for authentication are invalid'), Response::HTTP_BAD_REQUEST);
+            return response()->json(errorResponse(message: 'Invalid mobile number and/or password'), Response::HTTP_UNAUTHORIZED);
         } catch (\Exception $exception) {
             return response()->json(errorResponse(message: ErrorMessageEnum::LOGIN, error: $exception->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private function authenticate(array $credentials): ?User
+    {
+        return auth()->attempt($credentials) ? auth()->user() : null;
     }
 }
