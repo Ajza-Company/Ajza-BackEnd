@@ -35,7 +35,7 @@ class S_StoreController extends Controller
     public function index()
     {
         return S_ShortStoreResource::collection(
-            userCompany()->stores()->with(['company' => ['localized']])->adaptivePaginate()
+            userCompany()->stores()->with(['company' => ['localized'], 'area' => ['localized']])->adaptivePaginate()
         );
     }
 
