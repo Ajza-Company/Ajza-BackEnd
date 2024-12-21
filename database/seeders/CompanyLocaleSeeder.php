@@ -14,6 +14,6 @@ class CompanyLocaleSeeder extends Seeder
      */
     public function run(): void
     {
-        CompanyLocale::factory()->count(30)->create();
+        CompanyLocale::factory()->count(2)->create();
     }
 }
