@@ -7,4 +7,6 @@ return [
     'product_discount' => 'Discount :discount%',
     'percentage_discount' => 'Percentage',
     'fixed_discount' => 'Fixed',
+    'fixed' => 'Fixed',
+    'percentage' => 'Percentage',
 ];

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Requests\v1\Supplier\Store;
+namespace App\Http\Requests\v1\Supplier\Offer;
 
 use App\Traits\DecodesInputTrait;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class S_CreateStoreRequest extends FormRequest
+class S_CreateOfferRequest extends FormRequest
 {
     use DecodesInputTrait;
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -21,14 +19,15 @@ class S_CreateStoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'area_id' => 'required|integer|exists:areas,id',
-            'address_url' => 'required|string|url',
-            'phone_number' => 'required|string',
+            'product_id' => 'nullable|integer|exists:store_products,id',
+            'type' => 'required|string|in:fixed,percentage',
+            'discount' => 'required|numeric',
+            'expires_at' => 'nullable|date|after:now'
         ];
     }
 
@@ -37,6 +36,6 @@ class S_CreateStoreRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        $this->decodeInput('area_id');
+        $this->decodeInput('product_id');
     }
 }

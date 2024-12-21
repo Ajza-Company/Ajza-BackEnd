@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\api\v1\Frontend\F_AddressController;
-use App\Http\Controllers\api\v1\Frontend\F_AreaController;
 use App\Http\Controllers\api\v1\Frontend\F_AuthController;
 use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
@@ -11,10 +10,11 @@ use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
 use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
 use App\Http\Controllers\api\v1\Frontend\F_OrderController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
-use App\Http\Controllers\api\v1\Frontend\F_StateController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreReviewController;
 use App\Http\Controllers\api\v1\Frontend\F_WalletController;
+use App\Http\Controllers\api\v1\General\G_AreaController;
+use App\Http\Controllers\api\v1\General\G_StateController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 

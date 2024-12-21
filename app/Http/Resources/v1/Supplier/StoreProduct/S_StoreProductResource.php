@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\v1\Supplier\StoreProduct;
 
-use App\Http\Resources\v1\Supplier\Product\S_ShortProductResource;
+use App\Http\Resources\v1\Supplier\Offer\S_ShortOfferResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class S_ShortStoreProductResource extends JsonResource
+class S_StoreProductResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,8 @@ class S_ShortStoreProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => encodeString($this->id),
-            $this->merge(S_ShortProductResource::make($this->product)),
-            'price' => $this->price,
+            $this->merge(S_ShortStoreProductResource::make($this)),
+            'offer' => $this->whenLoaded('offer', S_ShortOfferResource::make($this->offer)),
         ];
     }
 }

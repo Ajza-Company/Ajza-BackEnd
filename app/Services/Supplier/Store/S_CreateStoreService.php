@@ -33,10 +33,10 @@ class S_CreateStoreService
             $data['company_id'] = userCompany()->id;
             $this->createStore->create($data);
 
-            return response()->json(successResponse(message: SuccessMessagesEnum::CREATED));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::CREATE,
+                message: trans(ErrorMessageEnum::CREATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }

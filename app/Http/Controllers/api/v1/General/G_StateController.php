@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\api\v1\Frontend;
+namespace App\Http\Controllers\api\v1\General;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\Frontend\State\F_StateResource;
 use App\Repositories\Frontend\State\Fetch\F_FetchStateInterface;
 use Illuminate\Http\Request;
 
-class F_StateController extends Controller
+class G_StateController extends Controller
 {
     /**
      * Create a new instance.

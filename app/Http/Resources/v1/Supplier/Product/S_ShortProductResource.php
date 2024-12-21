@@ -15,7 +15,8 @@ class S_ShortProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
+            'name' => $this->localized?->name,
+            'image' => $this->image,
         ];
     }
 }

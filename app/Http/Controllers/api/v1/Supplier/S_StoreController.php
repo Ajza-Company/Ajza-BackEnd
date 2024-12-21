@@ -52,8 +52,7 @@ class S_StoreController extends Controller
      */
     public function show(string $store_id)
     {
-        $store = $this->findStore->find(decodeString($store_id));
-        return S_StoreResource::make($store->load('company', 'company.localized'));
+        return S_StoreResource::make(userCompany()->stores()->find(decodeString($store_id))->load('company', 'company.localized'));
     }
 
     /**

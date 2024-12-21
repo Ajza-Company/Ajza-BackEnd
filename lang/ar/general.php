@@ -7,4 +7,6 @@ return [
     'product_discount' => 'خصم :discount%',
     'percentage_discount' => 'نسبة',
     'fixed_discount' => 'خصم علي السعر',
+    'fixed' => 'خصم علي السعر',
+    'percentage' => 'نسبة',
 ];
