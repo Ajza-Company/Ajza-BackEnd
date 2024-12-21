@@ -6,6 +6,7 @@ use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\Favorite\F_CreateFavoriteRequest;
+use App\Http\Resources\v1\Frontend\Favorite\F_FavoriteResource;
 use App\Http\Resources\v1\Frontend\Product\F_ShortProductResource;
 use App\Services\Frontend\Favorite\F_CreateFavoriteService;
 use App\Services\Frontend\Favorite\F_DeleteFavoriteService;
@@ -32,11 +33,18 @@ class F_FavoriteController extends Controller
      */
     public function index()
     {
-        return F_ShortProductResource::collection(
+        return F_FavoriteResource::collection(
             auth('api')->user()
-                ->favoriteProducts()
-                ->whereHas('localized')
-                ->with(['localized', 'offer'])
+                ->favorites()
+                ->whereHas('storeProduct.product.localized')
+                ->with(['storeProduct' => function ($query) {
+                    $query->with(['product' => function ($q) {
+                        $q->whereHas('localized')->with(['localized']);
+                    }, 'offer', 'favorite' => function ($q) {
+                        $q->where('user_id', auth('api')->id());
+                    }]);
+                }])
+                ->latest()
                 ->adaptivePaginate()
         );
     }
@@ -52,8 +60,8 @@ class F_FavoriteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(?string $product_id = null)
+    public function destroy(?string $store_product_id = null)
     {
-        return $this->deleteProductFavorite->delete(auth('api')->user(), $product_id);
+        return $this->deleteProductFavorite->delete(auth('api')->user(), $store_product_id);
     }
 }

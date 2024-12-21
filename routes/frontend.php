@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\api\v1\Frontend\F_AddressController;
-use App\Http\Controllers\api\v1\Frontend\F_AreaController;
 use App\Http\Controllers\api\v1\Frontend\F_AuthController;
 use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
@@ -9,9 +8,13 @@ use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
 use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
 use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
 use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
+use App\Http\Controllers\api\v1\Frontend\F_OrderController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
-use App\Http\Controllers\api\v1\Frontend\F_StateController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreController;
+use App\Http\Controllers\api\v1\Frontend\F_StoreReviewController;
+use App\Http\Controllers\api\v1\Frontend\F_WalletController;
+use App\Http\Controllers\api\v1\General\G_AreaController;
+use App\Http\Controllers\api\v1\General\G_StateController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('guest:sanctum')->group(function () {
+Route::group([], function () {
     Route::get('locales', F_LocaleController::class);
     Route::prefix('auth')->group(function () {
         Route::post('send-otp', [F_AuthController::class, 'sendOtp']);
@@ -51,20 +54,14 @@ Route::middleware('guest:sanctum')->group(function () {
                 Route::get('{store_id}/details', 'show');
             });
 
-            Route::prefix('{store_id}/products')->controller(F_ProductController::class)->group(function () {
-                Route::get('/', '__invoke');
-                Route::get('{product_id}', 'show');
-            });
-        });
-
-        Route::prefix('cities')->group(function () {
-            Route::get('/', F_StateController::class);
-            Route::get('{state}/areas', F_AreaController::class);
+            Route::get('{store_id}/products', [F_ProductController::class, '__invoke']);
+            Route::get('products/{product_id}', [F_ProductController::class, 'show']);
         });
     });
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
+
     Route::prefix('favorites')->group(function () {
         Route::get('/', [F_FavoriteController::class, 'index']);
         Route::post('/', [F_FavoriteController::class, 'store']);
@@ -84,5 +81,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('user')->group(function () {
         Route::post('setup-account', [F_AuthController::class, 'setupAccount']);
+        Route::get('wallet-transactions', F_WalletController::class);
+    });
+
+    Route::post('stores/{store_id}/orders/create', [F_OrderController::class, 'store']);
+
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [F_OrderController::class, 'index']);
+        Route::get('{order_id}/show', [F_OrderController::class, 'show']);
+        Route::get('{order_id}/cancel', [F_OrderController::class, 'cancel']);
+        Route::post('{order_id}/submit-review', F_StoreReviewController::class);
     });
 });

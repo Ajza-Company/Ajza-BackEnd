@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Store extends Model
 {
-    use HasFactory, HasLocalized;
+    use HasFactory, HasLocalized, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +30,11 @@ class Store extends Model
         'parent_id',
         'address',
         'area_id',
-        'parent_id'
+        'parent_id',
+        'company_id',
+        'is_active',
+        'address_url',
+        'phone_number'
     ];
 
     /**
@@ -77,5 +83,46 @@ class Store extends Model
     public function products(): HasManyThrough
     {
         return $this->hasManyThrough(Product::class, StoreProduct::class, 'store_id', 'id', 'id', 'product_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function storeProducts(): HasMany
+    {
+        return $this->hasMany(StoreProduct::class, 'store_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'store_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    /**
+     * Get the query to fetch stores with all required relations.
+     */
+    public static function getLocalizedStores()
+    {
+        return static::query()
+            ->whereHas('company.localized')
+            ->with([
+                'area.localized',
+                'area.state.localized',
+                'company.localized'
+            ]);
     }
 }

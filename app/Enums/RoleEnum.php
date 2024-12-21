@@ -11,5 +11,6 @@ final class RoleEnum extends Enum
     const ADMIN = 'Admin';
     const CLIENT = 'Client';
     const WORKSHOP = 'Workshop';
-    const SUPPLIER = 'Supplier';
+    const STORE_OWNER = 'Store Owner';
+    const STORE_EMPLOYEE = 'Store Employee';
 }

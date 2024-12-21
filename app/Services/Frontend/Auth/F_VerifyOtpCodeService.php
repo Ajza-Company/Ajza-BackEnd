@@ -4,9 +4,10 @@ namespace App\Services\Frontend\Auth;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
-use App\Http\Resources\v1\Frontend\User\F_UserResource;
+use App\Http\Resources\v1\User\UserResource;
 use App\Models\OtpCode;
 use App\Models\User;
+use App\Services\Frontend\SmsService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -14,10 +15,17 @@ use Illuminate\Http\Response;
 class F_VerifyOtpCodeService
 {
     /**
-     * Verify OTP
+     * Create a new instance.
+     *
+     * @param SmsService $smsService
+     */
+    public function __construct(private SmsService $smsService)
+    {
+
+    }
+    /**
      *
      * @param array $data
-     *
      * @return JsonResponse
      */
     public function verify(array $data): JsonResponse
@@ -28,32 +36,25 @@ class F_VerifyOtpCodeService
                 return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
             }
 
-            $verificationCode = OtpCode::where(['full_mobile' => $data['full_mobile'], 'code' => $data['code']])->first();
+            $isValid = $this->smsService->verifyOTP($data['full_mobile'], $data['code']);
 
-            $now = Carbon::now();
-            if (!$verificationCode) {
-                return response()->json(errorResponse(message: 'Looks like your OTP didn’t pass the test. Give it another shot!'), Response::HTTP_BAD_REQUEST);
-            }elseif($now->isAfter($verificationCode->expires_at)){
-                return response()->json(errorResponse(message: 'Your OTP expired, but don’t worry, we’ve got plenty more where that came from!'), Response::HTTP_BAD_REQUEST);
+            if ($isValid) {
+                $user = User::where('full_mobile', $data['full_mobile'])->first();
+
+                $returnArr = [];
+                $token = null;
+
+                if ($user) {
+                    $returnArr = UserResource::make($user);
+                    $token = $user->createToken('auth_token')->plainTextToken;
+                }
+
+                \DB::commit();
+                return response()->json(successResponse(message: SuccessMessagesEnum::VERIFIED, data: $returnArr, token: $token));
             }
 
-            $user = User::where('full_mobile', $data['full_mobile'])->first();
+            return response()->json(errorResponse(message: ErrorMessageEnum::VERIFY));
 
-            $returnArr = [];
-            $token = null;
-
-            if ($user) {
-                $returnArr = F_UserResource::make($user);
-                $token = $user->createToken('auth_token')->plainTextToken;
-            }
-
-            $verificationCode->update([
-                'expires_at' => Carbon::now(),
-                'is_verified' => true
-            ]);
-
-            \DB::commit();
-            return response()->json(successResponse(message: SuccessMessagesEnum::VERIFIED, data: $returnArr, token: $token));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(

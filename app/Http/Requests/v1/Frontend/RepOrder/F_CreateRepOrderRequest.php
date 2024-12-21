@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Requests\v1\Frontend\RepOrder;
+
+use App\Traits\DecodesInputTrait;
+use Illuminate\Foundation\Http\FormRequest;
+
+class F_CreateRepOrderRequest extends FormRequest
+{
+    use DecodesInputTrait;
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'data.description' => 'required|string',
+            'data.city_id' => 'required|integer|exists:states,id',
+        ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->decodeInput('data.city_id');
+    }
+}

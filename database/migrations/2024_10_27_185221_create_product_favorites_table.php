@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('product_favorites', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->id();
-            $table->foreignId('product_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('store_product_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('avatar', 255)->nullable();
+            $table->string('preferred_language', 5)->default('en');
             $table->enum('gender', GenderEnum::asArray())->nullable();
             $table->boolean('is_registered')->default(false);
             $table->boolean('is_active')->default(true);

@@ -7,11 +7,13 @@ use App\Traits\HasLocalized;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, HasLocalized;
+    use HasFactory, HasLocalized, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -24,18 +26,6 @@ class Product extends Model
         'price',
         'part_number'
     ];
-
-    /**
-     * Filter Scope
-     *
-     * @param Builder $builder
-     * @param $request
-     * @return Builder
-     */
-    public function scopeFilter(Builder $builder, $request): Builder
-    {
-        return (new ProductFilter($request))->filter($builder);
-    }
 
     /**
      *
@@ -62,5 +52,23 @@ class Product extends Model
     public function storeProduct(): HasOne
     {
         return $this->hasOne(StoreProduct::class, 'product_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(ProductFavorite::class, 'product_id');
+    }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function favorite(): HasOne
+    {
+        return $this->hasOne(ProductFavorite::class, 'product_id');
     }
 }

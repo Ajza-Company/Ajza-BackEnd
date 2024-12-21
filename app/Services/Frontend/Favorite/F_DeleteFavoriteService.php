@@ -13,25 +13,25 @@ class F_DeleteFavoriteService
     /**
      *
      * @param User $user
-     * @param string|null $product_id
+     * @param string|null $store_product_id
      * @return JsonResponse
      */
-    public function delete(User $user, ?string $product_id = null): JsonResponse
+    public function delete(User $user, ?string $store_product_id = null): JsonResponse
     {
         try {
-            if ($product_id === null) {
+            if ($store_product_id === null) {
                 // Remove all favorites for the user
                 $user->favorites()->delete();
             } else {
                 // Remove specific favorite
-                $decoded_product_id = decodeString($product_id);
-                $user->favorites()->where('product_id', $decoded_product_id)->delete();
+                $decoded_store_product_id = decodeString($store_product_id);
+                $user->favorites()->where('store_product_id', $decoded_store_product_id)->delete();
             }
 
-            return response()->json(successResponse(message: SuccessMessagesEnum::DELETED));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::DELETED)));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::CREATE,
+                message: trans(ErrorMessageEnum::CREATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }

@@ -4,9 +4,10 @@ namespace App\Services\Frontend\Auth;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
-use App\Http\Resources\v1\Frontend\User\F_UserResource;
+use App\Http\Resources\v1\User\UserResource;
 use App\Models\User;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
+use App\Services\Frontend\SmsService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -16,9 +17,9 @@ class F_SendOtpCodeService
     /**
      * Create a new instance.
      *
-     * @param F_CreateOtpCodeInterface $createOtp
+     * @param SmsService $smsService
      */
-    public function __construct(private F_CreateOtpCodeInterface $createOtp)
+    public function __construct(private SmsService $smsService)
     {
 
     }
@@ -34,31 +35,30 @@ class F_SendOtpCodeService
     {
         try {
             if (!isValidPhone($data['full_mobile'])) {
-                return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
+                return response()->json(
+                    errorResponse(
+                        message: trans('validation.invalid_number')),
+                    status: Response::HTTP_BAD_REQUEST);
+            }
+
+            $isSent = $this->smsService->generateAndSendOTP($data['full_mobile']);
+
+            if (!$isSent) {
+                return response()->json(
+                    errorResponse(
+                        message: trans(ErrorMessageEnum::SEND)),
+                    status: Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             $user = User::where($data)->first();
 
-            $data['code'] = rand(1000, 9999);
-            $data['expires_at'] = now()->addMinutes(10);
-
-            $returnArr = [
-                'code' => $data['code'],
-                'expiresAt' => Carbon::parse($data['expires_at'])->longRelativeToNowDiffForHumans()
-            ];
+            $returnArr = [];
 
             if ($user) {
-                $returnArr['data'] = F_UserResource::make($user);
+                $returnArr['data'] = UserResource::make($user);
             }
 
-            $this->createOtp->create($data);
-
-            return response()->json(
-                successResponse(
-                    message: SuccessMessagesEnum::SENT,
-                    data: $returnArr
-                )
-            );
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::SENT), data: $returnArr));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
                 message: ErrorMessageEnum::SEND,

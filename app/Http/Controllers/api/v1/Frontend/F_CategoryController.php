@@ -22,7 +22,7 @@ class F_CategoryController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke()
     {
         return F_CategoryResource::collection($this->fetchCategory->fetch(paginate: false));
     }

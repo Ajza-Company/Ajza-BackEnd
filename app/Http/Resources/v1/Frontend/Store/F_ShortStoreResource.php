@@ -25,7 +25,7 @@ class F_ShortStoreResource extends JsonResource
         ]);
         return [
             'id' => encodeString($this->id),
-            'name' => $this->localized?->name,
+            'name' => $this->company?->localized?->name,
             'rate' => 4.3,
             'image' => $this->image,
             'distanceAndTime' => $localizedDistanceTime,

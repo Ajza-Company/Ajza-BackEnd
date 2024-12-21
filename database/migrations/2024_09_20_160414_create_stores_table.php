@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('company_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('area_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('parent_id')->nullable()->constrained('stores')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('image')->nullable();
             $table->string('address')->nullable();
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

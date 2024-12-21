@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Product;
 use App\Models\Store;
+use App\Models\StoreProduct;
 use App\Models\StoreProductOffer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -14,8 +15,8 @@ class StoreProductOfferFactory extends Factory
     public function definition(): array
     {
         return [
-            'store_id' => Store::inRandomOrder()->first()->id ?? 1,
-            'product_id' => Product::inRandomOrder()->first()->id ?? 1,
+            'store_product_id' => StoreProduct::inRandomOrder()->first()->id ?? 1,
+            'type' => fake()->randomElement(['fixed', 'percentage']),
             'discount' => fake()->numberBetween(0, 100)
         ];
     }

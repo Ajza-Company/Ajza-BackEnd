@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name', 100)->nullable();
-            $table->string('house_number', 10)->nullable();
+            $table->string('house_number', 20)->nullable();
             $table->integer('level')->nullable();
-            $table->string('apartment_number', 10)->nullable();
+            $table->string('apartment_number', 20)->nullable();
             $table->string('zip_code', 20)->nullable();
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();

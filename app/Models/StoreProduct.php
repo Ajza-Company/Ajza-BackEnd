@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Filters\Frontend\ProductFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class StoreProduct extends Model
 {
@@ -19,4 +23,52 @@ class StoreProduct extends Model
         'price',
         'store_id'
     ];
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function favorite(): HasOne
+    {
+        return $this->hasOne(ProductFavorite::class, 'store_product_id');
+    }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function offer(): HasOne
+    {
+        return $this->hasOne(StoreProductOffer::class, 'store_product_id');
+    }
+
+    /**
+     * Filter Scope
+     *
+     * @param Builder $builder
+     * @param $request
+     * @return Builder
+     */
+    public function scopeFilter(Builder $builder, $request): Builder
+    {
+        return (new ProductFilter($request))->filter($builder);
+    }
 }

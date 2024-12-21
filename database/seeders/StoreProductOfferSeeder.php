@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\StoreLocale;
+use App\Models\StoreProductOffer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,6 @@ class StoreProductOfferSeeder extends Seeder
      */
     public function run(): void
     {
-        StoreLocale::factory()->count(30)->create();
+        StoreProductOffer::factory()->count(30)->create();
     }
 }

@@ -2,18 +2,21 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Arr;
-
 trait DecodesInputTrait
 {
     /**
-     * Decode input value for a given field, handling nested keys.
+     * Decode input value for a given field, handling nested keys and arrays.
      *
      * @param string $field The field name (can be nested using dot notation)
      * @return void
      */
     protected function decodeInput(string $field): void
     {
+        if (str_contains($field, '.*')) {
+            $this->decodeArrayInput($field);
+            return;
+        }
+
         // For nested keys like 'personal.car_brand_id', use the full path to get value
         $value = $this->input($field);
 
@@ -42,5 +45,35 @@ trait DecodesInputTrait
                 $this->merge([$field => $decoded]);
             }
         }
+    }
+
+    /**
+     * Decode input values for array fields with wildcards.
+     *
+     * @param string $field The field name with wildcard (e.g., 'sentences.*.voice_id')
+     * @return void
+     */
+    protected function decodeArrayInput(string $field): void
+    {
+        // Split the field path into parts
+        $parts = explode('.*.', $field);
+        $arrayKey = $parts[0]; // e.g., 'sentences'
+        $fieldKey = $parts[1]; // e.g., 'voice_id'
+
+        // Get the array from input
+        $array = $this->input($arrayKey, []);
+
+        // Process each item in the array
+        foreach ($array as $index => $item) {
+            $value = $item[$fieldKey] ?? null;
+
+            if ($value && decodeString($value)) {
+                $decoded = decodeString($value);
+                $array[$index][$fieldKey] = $decoded;
+            }
+        }
+
+        // Update the request with the modified array
+        $this->merge([$arrayKey => $array]);
     }
 }

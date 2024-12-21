@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('country_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('locale_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name', 50)->unique();
+            $table->string('currency_code', 10)->nullable();
             $table->timestamps();
         });
     }

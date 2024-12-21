@@ -7,7 +7,7 @@ use App\Http\Requests\v1\Frontend\Auth\F_CreateAccountRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_SendOtpCodeRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_SetupAccountRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_VerifyOtpCodeRequest;
-use App\Http\Resources\v1\Frontend\User\F_UserResource;
+use App\Http\Resources\v1\User\UserResource;
 use App\Services\Frontend\Auth\F_CreateAccountService;
 use App\Services\Frontend\Auth\F_SendOtpCodeService;
 use App\Services\Frontend\Auth\F_SetupAccountService;
@@ -69,6 +69,6 @@ class F_AuthController extends Controller
      */
     public function me()
     {
-        return F_UserResource::make(auth('api')->user());
+        return UserResource::make(auth('api')->user()->load('roles'));
     }
 }
