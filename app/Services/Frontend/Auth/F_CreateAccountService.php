@@ -44,6 +44,7 @@ class F_CreateAccountService
                 'full_mobile' => $data['full_mobile'],
                 'is_registered' => true,
                 'gender' => isset($data['personal']) ? $data['personal']['gender'] : null,
+                'password' => '12345678',
                 'preferred_language' => app()->getLocale()
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;

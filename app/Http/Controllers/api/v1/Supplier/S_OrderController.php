@@ -33,8 +33,8 @@ class S_OrderController extends Controller
     public function orders(string $store_id)
     {
         $store = $this->findStore->find(decodeString($store_id));
-        $orders = $store->orders()->with(['orderProducts' => ['storeProduct']])->paginate();
-        return response()->json(S_ShortOrderResource::collection($orders));
+        $orders = $store->orders()->with(['orderProducts' => ['storeProduct']])->latest()->adaptivePaginate();
+        return S_ShortOrderResource::collection($orders);
     }
 
     /**

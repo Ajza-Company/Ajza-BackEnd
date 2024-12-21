@@ -37,9 +37,9 @@ class S_LoginService
                 ));
             }
 
-            return response()->json(errorResponse(message: 'Invalid mobile number and/or password'), Response::HTTP_UNAUTHORIZED);
+            return response()->json(errorResponse(message: 'Invalid mobile number and/or password'), Response::HTTP_BAD_REQUEST);
         } catch (\Exception $exception) {
-            return response()->json(errorResponse(message: ErrorMessageEnum::LOGIN, error: $exception->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(errorResponse(message: trans(ErrorMessageEnum::LOGIN), error: $exception->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
