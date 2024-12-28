@@ -33,30 +33,40 @@ class F_SendOtpCodeService
      */
     public function send(array $data): JsonResponse
     {
-        if (!isValidPhone($data['full_mobile'])) {
-            return response()->json(
-                errorResponse(
-                    message: trans('validation.invalid_number')),
-                status: Response::HTTP_BAD_REQUEST);
+        \DB::beginTransaction();
+        try {
+            if (!isValidPhone($data['full_mobile'])) {
+                return response()->json(
+                    errorResponse(
+                        message: trans('validation.invalid_number')),
+                    status: Response::HTTP_BAD_REQUEST);
+            }
+
+            $isSent = $this->smsService->generateAndSendOTP($data['full_mobile']);
+
+            if (!$isSent) {
+                return response()->json(
+                    errorResponse(
+                        message: trans(ErrorMessageEnum::SEND)),
+                    status: Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            $user = User::where($data)->first();
+
+            $returnArr = [];
+
+            if ($user) {
+                $returnArr['data'] = UserResource::make($user);
+            }
+
+            \DB::commit();
+            return response()->json(successResponse(message: trans(trans(SuccessMessagesEnum::SENT)), data: $returnArr));
+        } catch (\Exception $ex) {
+            \DB::rollBack();
+            return response()->json(errorResponse(
+                message: trans(ErrorMessageEnum::SEND),
+                error: $ex->getMessage()),
+                Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        $isSent = $this->smsService->generateAndSendOTP($data['full_mobile']);
-
-        if (!$isSent) {
-            return response()->json(
-                errorResponse(
-                    message: trans(ErrorMessageEnum::SEND)),
-                status: Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        $user = User::where($data)->first();
-
-        $returnArr = [];
-
-        if ($user) {
-            $returnArr['data'] = UserResource::make($user);
-        }
-
-        return response()->json(successResponse(message: trans(trans(SuccessMessagesEnum::SENT)), data: $returnArr));
     }
 }
