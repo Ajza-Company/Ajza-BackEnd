@@ -30,7 +30,7 @@ class F_ProductController extends Controller
                     $q->whereHas('localized')->with(['localized']);
                 }, 'favorite' => function ($q) {
                     $q->where('user_id', auth('api')->id());
-                }, 'offer'])
+                }, 'offer', 'store.company.country.localized'])
             ->filter(\request())
             ->adaptivePaginate();
 
