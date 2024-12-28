@@ -56,7 +56,7 @@ class F_SendOtpCodeService
             $returnArr = [];
 
             if ($user) {
-                $returnArr['data'] = UserResource::make($user);
+                $returnArr[] = UserResource::make($user);
             }
 
             \DB::commit();
