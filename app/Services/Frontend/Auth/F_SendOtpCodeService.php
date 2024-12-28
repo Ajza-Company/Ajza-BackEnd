@@ -53,14 +53,8 @@ class F_SendOtpCodeService
 
             $user = User::where($data)->first();
 
-            $returnArr = [];
-
-            if ($user) {
-                $returnArr[] = UserResource::make($user);
-            }
-
             \DB::commit();
-            return response()->json(successResponse(message: trans(trans(SuccessMessagesEnum::SENT)), data: $returnArr));
+            return response()->json(successResponse(message: trans(trans(SuccessMessagesEnum::SENT)), data: $user ? UserResource::make($user) : null));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(
