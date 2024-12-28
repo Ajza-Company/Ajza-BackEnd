@@ -50,15 +50,15 @@ class F_VerifyOtpCodeService
                 }
 
                 \DB::commit();
-                return response()->json(successResponse(message: SuccessMessagesEnum::VERIFIED, data: $returnArr, token: $token));
+                return response()->json(successResponse(message: trans(SuccessMessagesEnum::VERIFIED), data: $returnArr, token: $token));
             }
 
-            return response()->json(errorResponse(message: ErrorMessageEnum::VERIFY));
+            return response()->json(errorResponse(message: trans(ErrorMessageEnum::VERIFY)));
 
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::VERIFY,
+                message: trans(ErrorMessageEnum::VERIFY),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
