@@ -42,7 +42,8 @@ class F_SendOtpCodeService
                     status: Response::HTTP_BAD_REQUEST);
             }
 
-            $isSent = $this->smsService->generateAndSendOTP($data['full_mobile']);
+            $isSent = true;
+            // $isSent = $this->smsService->generateAndSendOTP($data['full_mobile']);
 
             if (!$isSent) {
                 return response()->json(
