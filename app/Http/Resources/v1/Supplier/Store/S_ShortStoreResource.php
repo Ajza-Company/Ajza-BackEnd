@@ -21,8 +21,7 @@ class S_ShortStoreResource extends JsonResource
             'name' => $this->company?->localized?->name,
             'phone' => $this->phone_number,
             'address_url' => $this->address_url,
-            'isActive' => (bool)$this->is_active,
-            'address' => $this->area?->localized?->name . ', ' . $this->area?->state?->localized?->name
+            'isActive' => (bool)$this->is_active
         ];
     }
 }
