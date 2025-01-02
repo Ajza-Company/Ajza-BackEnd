@@ -16,6 +16,7 @@ class F_ShortProductResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
+            'store_id' => encodeString($this->store_id),
             'name' => $this->product?->localized?->name,
             'price' => $this->price,
             'currency' => $this->store?->company?->country?->localized?->currency_code,

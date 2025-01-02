@@ -51,13 +51,23 @@ class F_ProductController extends Controller
      */
     public function show(string $product_id)
     {
-        $decoded_store_product_id = decodeString($product_id);
+        $decoded_id = decodeString($product_id);
 
-        $product = StoreProduct::whereHas('product.localized')->with(['product' => function ($q) {
-            $q->whereHas('localized')->with(['localized']);
-        }, 'favorite' => function ($q) {
-            $q->where('user_id', auth('api')->id());
-        }, 'offer'])->findOrFail($decoded_store_product_id);
+        $product = StoreProduct::query()
+            ->whereHas('product.localized')
+            ->with([
+                'product' => fn($q) => $q->whereHas('localized')->with('localized'),
+                'favorite' => fn($q) => $q->where('user_id', auth('api')->id()),
+                'offer',
+                'store' => [
+                    'company' => ['localized'],
+                    'area' => [
+                        'localized',
+                        'state' => ['localized']
+                    ]
+                ]
+            ])
+            ->findOrFail($decoded_id);
 
         return F_ProductResource::make($product);
     }
