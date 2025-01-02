@@ -57,7 +57,7 @@ class F_CreateAccountService
                 $user->assignRole(RoleEnum::WORKSHOP);
             }
 
-            event(new F_UserCreatedEvent($user));
+            event(new F_UserCreatedEvent($user, $data['fcm_token'] ?? null));
 
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: UserResource::make($user), token: $token));

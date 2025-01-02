@@ -18,7 +18,7 @@ class F_UserCreatedEvent
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user)
+    public function __construct(public User $user, public ?string $token = null)
     {
         //
     }
@@ -26,7 +26,7 @@ class F_UserCreatedEvent
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array<int, Channel>
      */
     public function broadcastOn(): array
     {
