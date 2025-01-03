@@ -18,6 +18,7 @@ class F_ProductResource extends JsonResource
         return [
             $this->merge(F_ShortProductResource::make($this)),
             'partNumber' => $this->product?->part_number,
+            'is_original' => (bool)$this->product?->is_original,
             'description' => $this->product?->localized?->description,
             'store' => $this->whenLoaded('store', new F_ShortStoreResource($this->store))
         ];

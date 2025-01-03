@@ -22,10 +22,10 @@ class F_SetupAccountService
     {
         try {
             Personal::updateOrCreate(['user_id' => $user->id], $data);
-            return response()->json(successResponse(message: SuccessMessagesEnum::UPDATED));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
-                message: ErrorMessageEnum::UPDATE,
+                message: trans(ErrorMessageEnum::UPDATE),
                 error: $ex->getMessage()),
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
