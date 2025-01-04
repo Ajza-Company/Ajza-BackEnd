@@ -37,4 +37,23 @@ class F_CreateRepOrderRequest extends FormRequest
     {
         $this->decodeInput('data.city_id');
     }
+
+    /**
+     * Get the validated data from the request.
+     *
+     * @param null $key
+     * @param null $default
+     * @return array
+     */
+    public function validated($key = null, $default = null): array
+    {
+        $validated = parent::validated();
+
+        if (isset($validated['data']['city_id'])) {
+            $validated['data']['state_id'] = $validated['data']['city_id'];
+            unset($validated['data']['city_id']);
+        }
+
+        return $validated;
+    }
 }

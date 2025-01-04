@@ -10,6 +10,7 @@ use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
 use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
 use App\Http\Controllers\api\v1\Frontend\F_OrderController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
+use App\Http\Controllers\api\v1\Frontend\F_RepOrderController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreReviewController;
 use App\Http\Controllers\api\v1\Frontend\F_WalletController;
@@ -91,5 +92,9 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('{order_id}/show', [F_OrderController::class, 'show']);
         Route::get('{order_id}/cancel', [F_OrderController::class, 'cancel']);
         Route::post('{order_id}/submit-review', F_StoreReviewController::class);
+    });
+
+    Route::prefix('rep-orders')->group(function () {
+        Route::post('create', [F_RepOrderController::class, 'createOrder']);
     });
 });
