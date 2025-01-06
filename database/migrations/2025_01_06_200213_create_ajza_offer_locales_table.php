@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ajza_offers', function (Blueprint $table) {
+        Schema::create('ajza_offer_locales', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->id();
-            $table->foreignId('store_id')->constrained()->cascadeOnDelete();
-            $table->decimal('price', 10);
-            $table->decimal('old_price', 10)->nullable();
-            $table->string('image', 150)->nullable();
-            $table->softDeletes();
+            $table->foreignId('ajza_offer_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('locale_id')->constrained()->cascadeOnDelete();
+            $table->string('title', 50);
+            $table->string('description', 100)->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ajza_offers');
+        Schema::dropIfExists('ajza_offer_locales');
     }
 };

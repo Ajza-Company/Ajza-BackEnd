@@ -15,8 +15,10 @@ class NameFilter
      */
     public function filter(Builder $builder, $value): Builder
     {
-        return $builder->whereHas('localized', function ($query) use ($value) {
-            $query->where('name', 'LIKE', "%{$value}%");
+        return $builder->whereHas('company', function ($query) use ($value) {
+            $query->whereHas('localized', function ($query) use ($value) {
+                $query->where('name', 'LIKE', "%{$value}%");
+            });
         });
     }
 }

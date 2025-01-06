@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\Frontend\F_AddressController;
+use App\Http\Controllers\api\v1\Frontend\F_AjzaOfferController;
 use App\Http\Controllers\api\v1\Frontend\F_AuthController;
 use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
 use App\Http\Controllers\api\v1\Frontend\F_OrderController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
 use App\Http\Controllers\api\v1\Frontend\F_RepOrderController;
+use App\Http\Controllers\api\v1\Frontend\F_SliderImageController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreReviewController;
 use App\Http\Controllers\api\v1\Frontend\F_WalletController;
@@ -41,6 +43,8 @@ Route::group([], function () {
     });
 
     Route::middleware(SetLocale::class)->group(function () {
+        Route::get('ajza-offers', F_AjzaOfferController::class);
+
         Route::prefix('car-brands')->group(function () {
             Route::get('/', F_CarBrandController::class);
             Route::get('{car_brand}/car-models', F_CarModelController::class);
@@ -48,6 +52,7 @@ Route::group([], function () {
 
         Route::get('car-types', F_CarTypeController::class);
         Route::get('categories', F_CategoryController::class);
+        Route::get('slider-images', F_SliderImageController::class);
 
         Route::prefix('stores')->group(function () {
             Route::controller(F_StoreController::class)->group(function () {

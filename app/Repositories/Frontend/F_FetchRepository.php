@@ -19,11 +19,16 @@ class F_FetchRepository
      * @param array|null $data
      * @param bool $paginate
      * @param array|null $with
+     * @param bool $isLocalized
      * @return mixed
      */
-    public function fetch(array $data = null, bool $paginate = true, array $with = null): mixed
+    public function fetch(array $data = null, bool $paginate = true, array $with = null, bool $isLocalized = true): mixed
     {
-        $query = $this->model->whereHas('localized')->with('localized');
+        $query = $this->model->query();
+
+        if ($isLocalized) {
+            $query->whereHas('localized')->with('localized');
+        }
 
         if ($data) {
             $query->where($data);

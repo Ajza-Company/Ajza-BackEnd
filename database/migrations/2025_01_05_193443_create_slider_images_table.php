@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ajza_offers', function (Blueprint $table) {
+        Schema::create('slider_images', function (Blueprint $table) {
             $table->engine = "InnoDB";
+
             $table->id();
-            $table->foreignId('store_id')->constrained()->cascadeOnDelete();
-            $table->decimal('price', 10);
-            $table->decimal('old_price', 10)->nullable();
+            $table->foreignId('locale_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('image', 150)->nullable();
-            $table->softDeletes();
+            $table->integer('order')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ajza_offers');
+        Schema::dropIfExists('slider_images');
     }
 };

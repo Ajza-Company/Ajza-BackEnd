@@ -28,7 +28,7 @@ class F_StoreController extends Controller
      */
     public function __invoke()
     {
-        return F_ShortStoreResource::collection(Store::getLocalizedStores()->adaptivePaginate());
+        return F_ShortStoreResource::collection(Store::getLocalizedStores()->filter(\request())->adaptivePaginate());
     }
 
     /**

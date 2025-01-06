@@ -32,7 +32,7 @@ class S_LoginService
             if ($user) {
                 return response()->json(successResponse(
                     message: trans('general.km'),
-                    data: UserResource::make($user),
+                    data: UserResource::make($user->load('stores', 'roles')),
                     token: $user->createToken('auth_token')->plainTextToken
                 ));
             }

@@ -134,4 +134,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(Wallet::class, 'user_id');
     }
+
+    /**
+     *
+     * @return HasManyThrough
+     */
+    public function stores(): HasManyThrough
+    {
+        return $this->hasManyThrough(Store::class, StoreUser::class, 'user_id', 'id', 'id', 'store_id');
+    }
 }

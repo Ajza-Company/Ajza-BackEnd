@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\AjzaOfferLocale;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -37,8 +38,10 @@ class DatabaseSeeder extends Seeder
             ProductLocaleSeeder::class,
             StoreProductSeeder::class,
             StoreProductOfferSeeder::class,
-            // ProductFavoriteSeeder::class,
-            // AddressSeeder::class
+            SliderImageSeeder::class,
+            NotificationSeeder::class,
+            AjzaOfferSeeder::class,
+            AjzaOfferLocaleSeeder::class
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');

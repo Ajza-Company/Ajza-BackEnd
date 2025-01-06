@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Frontend\Address\Create\F_CreateAddressInterface;
 use App\Repositories\Frontend\Address\Create\F_CreateAddressRepository;
+use App\Repositories\Frontend\AjzaOffer\Fetch\F_FetchAjzaOfferInterface;
+use App\Repositories\Frontend\AjzaOffer\Fetch\F_FetchAjzaOfferRepository;
 use App\Repositories\Frontend\Area\Fetch\F_FetchAreaInterface;
 use App\Repositories\Frontend\Area\Fetch\F_FetchAreaRepository;
 use App\Repositories\Frontend\CarBrand\Fetch\F_FetchCarBrandInterface;
@@ -28,6 +30,8 @@ use App\Repositories\Frontend\ProductFavorite\Create\F_CreateProductFavoriteInte
 use App\Repositories\Frontend\ProductFavorite\Create\F_CreateProductFavoriteRepository;
 use App\Repositories\Frontend\RepOrder\Create\F_CreateRepOrderInterface;
 use App\Repositories\Frontend\RepOrder\Create\F_CreateRepOrderRepository;
+use App\Repositories\Frontend\SliderImage\Fetch\F_FetchSliderImageInterface;
+use App\Repositories\Frontend\SliderImage\Fetch\F_FetchSliderImageRepository;
 use App\Repositories\Frontend\State\Fetch\F_FetchStateInterface;
 use App\Repositories\Frontend\State\Fetch\F_FetchStateRepository;
 use App\Repositories\Frontend\Store\Fetch\F_FetchStoreInterface;
@@ -124,6 +128,14 @@ class F_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             F_CreateWalletInterface::class,
             F_CreateWalletRepository::class);
+
+        $this->app->bind(
+            F_FetchSliderImageInterface::class,
+            F_FetchSliderImageRepository::class);
+
+        $this->app->bind(
+            F_FetchAjzaOfferInterface::class,
+            F_FetchAjzaOfferRepository::class);
     }
 
     /**
