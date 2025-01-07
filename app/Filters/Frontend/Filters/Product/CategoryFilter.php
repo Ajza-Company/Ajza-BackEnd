@@ -17,6 +17,8 @@ class CategoryFilter
     public function filter(Builder $builder, $value): Builder
     {
         $id = decodeString($value);
-        return $builder->where('category_id', $id);
+        return $builder->whereHas('product', function ($q) use ($id) {
+            $q->where('category_id', $id);
+        });
     }
 }
