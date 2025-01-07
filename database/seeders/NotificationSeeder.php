@@ -23,6 +23,7 @@ class NotificationSeeder extends Seeder
                 'data' => json_encode([
                     'title' => __('notifications.order_confirmed.title', [], 'en'),
                     'description' => __('notifications.order_confirmed.description', [], 'en'),
+                    'icon' => $this->getIcon('order_confirmed'),
                 ]),
                 'read_at' => null,
                 'created_at' => now(),
@@ -36,6 +37,7 @@ class NotificationSeeder extends Seeder
                 'data' => json_encode([
                     'title' => __('notifications.discount_code.title', [], 'en'),
                     'description' => __('notifications.discount_code.description', [], 'en'),
+                    'icon' => $this->getIcon('discount_code'),
                 ]),
                 'read_at' => now(),
                 'created_at' => now(),
@@ -49,6 +51,7 @@ class NotificationSeeder extends Seeder
                 'data' => json_encode([
                     'title' => __('notifications.app_update.title', [], 'ar'),
                     'description' => __('notifications.app_update.description', [], 'ar'),
+                    'icon' => $this->getIcon('app_update'),
                 ]),
                 'read_at' => null,
                 'created_at' => now(),
@@ -57,5 +60,15 @@ class NotificationSeeder extends Seeder
         ];
 
         DB::table('notifications')->insert($notifications);
+    }
+
+    private function getIcon($type): string
+    {
+        return [
+            'order_confirmed' => 'check-circle',
+            'discount_code' => 'tag',
+            'order_shipped' => 'truck',
+            'app_update' => 'sync-alt',
+        ][$type];
     }
 }

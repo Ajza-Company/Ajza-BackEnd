@@ -18,7 +18,10 @@ class G_NotificationResource extends JsonResource
         return [
             'title' => $this->data['title'],
             'description' => $this->data['description'],
+            'icon' => $this->data['icon'],
             'date' => Carbon::parse($this->created_at)->locale(app()->getLocale())->translatedFormat('d M, Y h:i A'),
+            'created_at' => $this->created_at,
+            'read_at' => $this->read_at
         ];
     }
 }

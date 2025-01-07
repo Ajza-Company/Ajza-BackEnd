@@ -17,7 +17,7 @@ class S_ShortOfferResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'type' => trans('general.' . $this->type),
+            'type' => $this->type,
             'discount' => $this->discount,
             'expires_at' => Carbon::parse($this->expires_at)->locale(app()->getLocale())->translatedFormat('d M, Y h:i A'),
         ];

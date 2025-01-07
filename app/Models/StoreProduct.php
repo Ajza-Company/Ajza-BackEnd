@@ -51,13 +51,14 @@ class StoreProduct extends Model
         return $this->hasOne(ProductFavorite::class, 'store_product_id');
     }
 
-    /**
-     *
-     * @return HasOne
-     */
     public function offer(): HasOne
     {
-        return $this->hasOne(StoreProductOffer::class, 'store_product_id');
+        return $this->hasOne(StoreProductOffer::class, 'store_product_id')
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                    ->orWhere('expires_at', '>', now());
+            })
+            ->latest();
     }
 
     /**
@@ -70,5 +71,22 @@ class StoreProduct extends Model
     public function scopeFilter(Builder $builder, $request): Builder
     {
         return (new ProductFilter($request))->filter($builder);
+    }
+
+    protected $appends = ['price_after_discount'];
+
+    public function getPriceAfterDiscountAttribute()
+    {
+        if (!$this->offer) {
+            return $this->price;
+        }
+
+        if ($this->offer->type === 'fixed') {
+            return (double)number_format(max(0, $this->price - $this->offer->discount), 2, '.', '');
+        }
+
+        // For percentage discount
+        $discountAmount = ($this->price * $this->offer->discount) / 100;
+        return (double)number_format(max(0, $this->price - $discountAmount), 2, '.', '');
     }
 }
