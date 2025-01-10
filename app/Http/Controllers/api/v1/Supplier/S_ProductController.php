@@ -31,6 +31,7 @@ class S_ProductController extends Controller
                 ->storeProducts()
                 ->whereHas('product.localized')
                 ->with(['product' => ['localized']])
+                ->filter(\request())
                 ->adaptivePaginate());
     }
 
