@@ -3,6 +3,7 @@
 namespace App\Http\Resources\v1\User;
 
 use App\Http\Resources\v1\Frontend\Store\F_ShortStoreResource;
+use App\Http\Resources\v1\Supplier\Store\S_ShortStoreResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,7 +26,7 @@ class UserResource extends JsonResource
             'role' => $this->whenLoaded('roles', function () {
                 return $this->roles->first()->name;
             }),
-            'stores' => $this->whenLoaded('stores', F_ShortStoreResource::collection($this->stores))
+            'stores' => $this->whenLoaded('stores', S_ShortStoreResource::collection($this->stores))
         ];
     }
 }
