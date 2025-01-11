@@ -2,10 +2,9 @@
 
 namespace App\Filters\Frontend\Filters\Product;
 
-use App\Enums\EncodingMethodsEnum;
 use Illuminate\Database\Eloquent\Builder;
 
-class CategoryFilter
+class StoreFilter
 {
     /**
      * Filter Function
@@ -16,6 +15,6 @@ class CategoryFilter
      */
     public function filter(Builder $builder, $value): Builder
     {
-        return $builder->whereRelation('product', 'category_id', decodeString($value));
+        return $builder->where('store_id', decodeString($value));
     }
 }

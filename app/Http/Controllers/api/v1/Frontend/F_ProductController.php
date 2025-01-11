@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\api\v1\Frontend;
 
+use App\Enums\ErrorMessageEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\Frontend\Product\F_ProductResource;
 use App\Http\Resources\v1\Frontend\Product\F_ShortProductResource;
 use App\Models\Product;
 use App\Models\StoreProduct;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class F_ProductController extends Controller
 {
@@ -16,33 +20,39 @@ class F_ProductController extends Controller
     }
 
     /**
-     * @param string $store_id
-     * @return AnonymousResourceCollection
+     * @param string|null $store_id
+     * @return AnonymousResourceCollection|JsonResponse
      */
-    public function __invoke(string $store_id)
+    public function __invoke(string $store_id = null)
     {
-        $decoded_store_id = decodeString($store_id);
+        try {
+            $products = StoreProduct::query()
+                ->when($store_id, function ($query) use ($store_id) {
+                    $query->where('store_id', decodeString($store_id));
+                })
+                ->whereHas('product.localized')
+                ->with([
+                    'product' => function ($query) {
+                        $query->whereHas('localized')->with(['localized']);
+                    },
+                    'favorite' => function ($query) {
+                        $query->where('user_id', auth('api')->id());
+                    },
+                    'store',
+                    'offer',
+                    'store.company.country.localized'
+                ])
+                ->filter(\request())
+                ->adaptivePaginate();
 
-        $products = StoreProduct::query()
-            ->where('store_id', $decoded_store_id)
-            ->whereHas('product.localized')
-            ->with(['product' => function ($q) {
-                    $q->whereHas('localized')->with(['localized']);
-                }, 'favorite' => function ($q) {
-                    $q->where('user_id', auth('api')->id());
-                }, 'offer', 'store.company.country.localized'])
-            ->filter(\request())
-            ->adaptivePaginate();
-
-     /*   $products = Product::whereHas('storeProduct', function ($q) use ($decoded_store_id) {
-            $q->where('store_id', $decoded_store_id);
-        })->whereHas('localized')->with(['localized', 'offer' => function ($q) use ($decoded_store_id) {
-            $q->where('store_id', $decoded_store_id);
-        }, 'favorite' => function ($q) use ($decoded_store_id) {
-            $q->where('user_id', auth('api')->id())->where('store_id', $decoded_store_id);
-        }])->filter(\request())->adaptivePaginate();*/
-
-        return F_ShortProductResource::collection($products);
+            return F_ShortProductResource::collection($products);
+        } catch (\Exception $ex) {
+            \Log::error('Error fetching products for store: ' . $ex->getMessage());
+            return response()->json(errorResponse(
+                message: trans(ErrorMessageEnum::FETCH),
+                error: $ex->getMessage()),
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

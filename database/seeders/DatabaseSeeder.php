@@ -41,7 +41,8 @@ class DatabaseSeeder extends Seeder
             SliderImageSeeder::class,
             NotificationSeeder::class,
             AjzaOfferSeeder::class,
-            AjzaOfferLocaleSeeder::class
+            AjzaOfferLocaleSeeder::class,
+            ProductCarAttributeSeeder::class
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');

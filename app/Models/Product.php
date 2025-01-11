@@ -81,4 +81,13 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function carAttributes(): HasMany
+    {
+        return $this->hasMany(ProductCarAttribute::class, 'product_id');
+    }
 }

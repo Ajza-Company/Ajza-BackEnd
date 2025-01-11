@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -24,7 +25,8 @@ class Order extends Model
         'user_id',
         'status',
         'amount',
-        'delivery_method'
+        'delivery_method',
+        'cancel_reason'
     ];
 
     /**
@@ -52,6 +54,15 @@ class Order extends Model
     public function orderProducts(): HasMany
     {
         return $this->hasMany(OrderProduct::class, 'order_id');
+    }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function review(): HasOne
+    {
+        return $this->hasOne(StoreReview::class, 'order_id');
     }
 
     /**
