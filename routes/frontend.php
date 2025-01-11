@@ -8,6 +8,7 @@ use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
 use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
 use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
 use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
+use App\Http\Controllers\api\v1\Frontend\F_HomeController;
 use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
 use App\Http\Controllers\api\v1\Frontend\F_OrderController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
@@ -60,6 +61,7 @@ Route::group([], function () {
                 Route::get('{store_id}/details', 'show');
             });
 
+            Route::get('products', [F_ProductController::class, '__invoke']);
             Route::get('{store_id}/products', [F_ProductController::class, '__invoke']);
             Route::get('products/{product_id}', [F_ProductController::class, 'show']);
         });
@@ -67,6 +69,8 @@ Route::group([], function () {
 });
 
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
+
+    Route::get('home', F_HomeController::class);
 
     Route::prefix('favorites')->group(function () {
         Route::get('/', [F_FavoriteController::class, 'index']);

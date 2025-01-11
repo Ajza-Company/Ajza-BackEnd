@@ -9,8 +9,9 @@ use BenSampo\Enum\Enum;
 final class OrderStatusEnum extends Enum
 {
     const PENDING = 'pending';
-    const PLACED = 'placed';
+    const SHIPPED = 'shipped';
     const ACCEPTED = 'accepted';
     const CANCELLED = 'cancelled';
     const REJECTED = 'rejected';
+    const COMPLETED = 'completed';
 }

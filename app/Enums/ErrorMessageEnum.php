@@ -8,6 +8,7 @@ use BenSampo\Enum\Enum;
  */
 final class ErrorMessageEnum extends Enum
 {
+    const FETCH = 'error.fetch';
     const DELETE = 'error.delete';
     const UPDATE = 'error.update';
     const CREATE = 'error.create';

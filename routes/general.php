@@ -1,19 +1,7 @@
 <?php
 
-use App\Http\Controllers\api\v1\Frontend\F_AddressController;
-use App\Http\Controllers\api\v1\Frontend\F_AuthController;
-use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
-use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
-use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
-use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
-use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
-use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
-use App\Http\Controllers\api\v1\Frontend\F_OrderController;
-use App\Http\Controllers\api\v1\Frontend\F_ProductController;
-use App\Http\Controllers\api\v1\Frontend\F_StoreController;
-use App\Http\Controllers\api\v1\Frontend\F_StoreReviewController;
-use App\Http\Controllers\api\v1\Frontend\F_WalletController;
 use App\Http\Controllers\api\v1\General\G_AreaController;
+use App\Http\Controllers\api\v1\General\G_CancelOrderController;
 use App\Http\Controllers\api\v1\General\G_NotificationController;
 use App\Http\Controllers\api\v1\General\G_RepChatController;
 use App\Http\Controllers\api\v1\General\G_StateController;
@@ -44,6 +32,9 @@ Route::middleware('guest:sanctum')->group(function () {
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::middleware(SetLocale::class)->group(function () {
         Route::get('notifications', G_NotificationController::class);
+    });
+    Route::prefix('orders')->group(function () {
+        Route::post('{order_id}/cancel', G_CancelOrderController::class);
     });
     Route::prefix('rep-orders')->group(function () {
         Route::get('/chats', [G_RepChatController::class, 'index']);
