@@ -19,6 +19,7 @@ class S_OfferController extends Controller
      * @param S_CreateOfferService $createOffer
      * @param S_FindStoreInterface $findStore
      * @param S_DeleteOfferService $deleteOffer
+     * @param S_FindOfferInterface $findOffer
      */
     public function __construct(
         private S_CreateOfferService $createOffer,
