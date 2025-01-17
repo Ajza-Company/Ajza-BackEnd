@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\api\v1\Supplier;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Store\Order\S_TakeActionRequest;
+use App\Http\Requests\v1\Supplier\Order\S_TakeActionRequest;
 use App\Http\Resources\v1\Supplier\Order\S_ShortOrderResource;
 use App\Repositories\Supplier\Order\Find\S_FindOrderInterface;
 use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
