@@ -43,7 +43,9 @@ class S_OfferController extends Controller
                 ->storeProducts()
                 ->whereHas('product.localized')
                 ->whereHas('offer')
-                ->with('offer')
+                ->with(['offer' => function ($query) {
+                    $query->latest();
+                }])
                 ->adaptivePaginate());
     }
 

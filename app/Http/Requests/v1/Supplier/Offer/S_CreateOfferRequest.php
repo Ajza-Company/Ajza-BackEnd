@@ -24,7 +24,7 @@ class S_CreateOfferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => 'nullable|integer|exists:store_products,id',
+            'product_id' => 'required|integer|exists:store_products,id',
             'type' => 'required|string|in:fixed,percentage',
             'discount' => 'required|numeric',
             'expires_at' => 'nullable|date|after:now'
