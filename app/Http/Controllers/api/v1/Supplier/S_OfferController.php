@@ -36,6 +36,7 @@ class S_OfferController extends Controller
     public function index(string $store_id)
     {
         \Log::info('store_id : ' . decodeString($store_id));
+        \Log::info('store_id encoded : ' . $store_id);
         $store = $this->findStore->find(decodeString($store_id));
         return S_StoreProductResource::collection(
             $store
