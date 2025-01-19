@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class StoreProduct extends Model
@@ -54,6 +55,11 @@ class StoreProduct extends Model
     public function offer(): HasOne
     {
         return $this->hasOne(StoreProductOffer::class, 'store_product_id');
+    }
+
+    public function offers(): HasMany
+    {
+        return $this->hasMany(StoreProductOffer::class, 'store_product_id');
     }
 
     /**
