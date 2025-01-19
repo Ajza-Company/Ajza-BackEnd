@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api\v1\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\Address\F_CreateAddressRequest;
 use App\Http\Requests\v1\Frontend\Address\F_UpdateAddressRequest;
-use App\Http\Resources\v1\Frontend\Address\F_ShortAddressResource;
+use App\Http\Resources\v1\Frontend\Address\F_AddressResource;
 use App\Services\Frontend\Address\F_CreateAddressService;
 use App\Services\Frontend\Address\F_DeleteAddressService;
 use App\Services\Frontend\Address\F_UpdateAddressService;
@@ -33,7 +33,7 @@ class F_AddressController extends Controller
      */
     public function index()
     {
-        return F_ShortAddressResource::collection(auth('api')->user()->addresses);
+        return F_AddressResource::collection(auth('api')->user()->addresses);
     }
 
     /**
