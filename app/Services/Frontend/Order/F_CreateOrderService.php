@@ -3,6 +3,7 @@
 namespace App\Services\Frontend\Order;
 
 use App\Enums\ErrorMessageEnum;
+use App\Enums\OrderDeliveryMethodEnum;
 use App\Enums\OrderStatusEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Models\Order;
@@ -45,7 +46,8 @@ class F_CreateOrderService
                 'store_id' => $store->id,
                 'status' => OrderStatusEnum::PENDING,
                 'delivery_method' => $data['delivery_method'],
-                'amount' => 0
+                'amount' => 0,
+                'address_id' => $data['delivery_method'] == OrderDeliveryMethodEnum::DELIVERY ? $data['address_id'] : null
             ]);
 
             $this->insertOrderProduct->insert($this->prepareOrderProductsBulkInsert($data['order_products'], $order));

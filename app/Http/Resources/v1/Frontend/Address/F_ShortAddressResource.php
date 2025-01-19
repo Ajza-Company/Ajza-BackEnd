@@ -17,11 +17,6 @@ class F_ShortAddressResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'name' => $this->name,
-            'house_number' => $this->house_number,
-            'level' => $this->level,
-            'apartment_number' => $this->apartment_number,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
             'is_default' => (bool)$this->is_default
         ];
     }

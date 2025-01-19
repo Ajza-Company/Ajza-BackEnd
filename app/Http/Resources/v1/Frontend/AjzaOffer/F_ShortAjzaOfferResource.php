@@ -15,7 +15,7 @@ class F_ShortAjzaOfferResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'id' => encodeString($this->id),
             'title' => $this->localized?->title,
             'price' => $this->price,
             'old_price' => $this->old_price,

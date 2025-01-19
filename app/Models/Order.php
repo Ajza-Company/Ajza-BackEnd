@@ -8,6 +8,7 @@ use App\Filters\Supplier\StatisticsFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -63,6 +64,15 @@ class Order extends Model
     public function review(): HasOne
     {
         return $this->hasOne(StoreReview::class, 'order_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'address_id');
     }
 
     /**

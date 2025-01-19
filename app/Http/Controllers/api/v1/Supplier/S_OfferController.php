@@ -19,6 +19,7 @@ class S_OfferController extends Controller
      * @param S_CreateOfferService $createOffer
      * @param S_FindStoreInterface $findStore
      * @param S_DeleteOfferService $deleteOffer
+     * @param S_FindOfferInterface $findOffer
      */
     public function __construct(
         private S_CreateOfferService $createOffer,
@@ -34,6 +35,7 @@ class S_OfferController extends Controller
      */
     public function index(string $store_id)
     {
+        \Log::info('store_id : ' . json_decode($store_id));
         $store = $this->findStore->find(decodeString($store_id));
         return S_StoreProductResource::collection(
             $store

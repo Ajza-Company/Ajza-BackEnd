@@ -54,7 +54,7 @@ class F_OrderController extends Controller
     public function show(string $order_id)
     {
         $order = $this->findOrder->find(decodeString($order_id));
-        return F_OrderResource::make($order);
+        return F_OrderResource::make($order->load('address'));
     }
 
     /**
