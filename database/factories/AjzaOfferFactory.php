@@ -20,7 +20,7 @@ class AjzaOfferFactory extends Factory
                 // Ensure old_price is always higher than price
                 return $this->faker->randomFloat(2, $attributes['price'], min($attributes['price'] * 1.5, 9999.99));
             },
-            'image' => $this->faker->imageUrl(640, 480)
+            'image' => fake()->imageUrl(category: 'cars')
         ];
     }
 }

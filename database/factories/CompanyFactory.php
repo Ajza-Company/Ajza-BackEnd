@@ -19,8 +19,8 @@ class CompanyFactory extends Factory
             'country_id' => Country::inRandomOrder()->first()->id ?? 1,
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
-            'logo' => $this->faker->imageUrl,
-            'cover_image' => $this->faker->imageUrl,
+            'logo' => fake()->imageUrl(category: 'cars'),
+            'cover_image' => fake()->imageUrl(category: 'cars'),
             'commercial_register' => $this->faker->randomNumber(5),
             'vat_number' => $this->faker->randomNumber(2),
             'commercial_register_file' => $this->faker->filePath()

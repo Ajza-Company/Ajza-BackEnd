@@ -17,7 +17,7 @@ class SliderImageFactory extends Factory
 
         return [
             'locale_id' => $locale->id ?? 1,
-            'image' => $this->faker->imageUrl,
+            'image' => fake()->imageUrl(category: 'cars'),
             'order' => $this->faker->randomNumber(),
             'is_active' => $this->faker->boolean()
         ];

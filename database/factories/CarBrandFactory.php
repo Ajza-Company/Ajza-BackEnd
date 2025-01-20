@@ -18,7 +18,7 @@ class CarBrandFactory extends Factory
     public function definition(): array
     {
         return [
-            'image' => fake()->imageUrl()
+            'image' => fake()->imageUrl(category: 'cars')
         ];
     }
 }
