@@ -40,6 +40,15 @@ class S_OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function details(string $order_id)
+    {
+        $order = $this->findOrder->find(decodeString($order_id));
+        return S_ShortOrderResource::make($order);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
     public function takeAction(S_TakeActionRequest $request, string $order_id)
     {
         $order = $this->findOrder->find(decodeString($order_id));
