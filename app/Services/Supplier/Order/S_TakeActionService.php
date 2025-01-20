@@ -23,11 +23,11 @@ class S_TakeActionService
             DB::beginTransaction();
 
             // Check if order is in pending state
-            if ($order->status == OrderStatusEnum::PENDING) {
+            /*if ($order->status == OrderStatusEnum::PENDING) {
                 return response()->json(errorResponse(
                     message: "Cannot {$data['action']} order. Current status: {$order->status}"),
                     Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
+            }*/
 
             // Update order status
             $newStatus = $data['action'] === 'accept' ? OrderStatusEnum::ACCEPTED : OrderStatusEnum::REJECTED;

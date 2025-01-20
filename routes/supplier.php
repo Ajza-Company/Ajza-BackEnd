@@ -34,6 +34,7 @@ Route::middleware('guest:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('store-details', S_CompanyController::class);
     Route::post('orders/{order_id}/take-action', [S_OrderController::class, 'takeAction']);
+    Route::get('orders/{order_id}/details', [S_OrderController::class, 'details']);
     Route::prefix('stores')->group(function () {
         Route::get('/', [S_StoreController::class, 'index']);
         Route::post('create', [S_StoreController::class, 'store']);
