@@ -23,6 +23,6 @@ class F_AjzaOfferController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return F_AjzaOfferResource::collection($this->fetchAjzaOffer->fetch());
+        return F_AjzaOfferResource::collection($this->fetchAjzaOffer->fetch(with: ['store']));
     }
 }
