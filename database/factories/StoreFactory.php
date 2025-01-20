@@ -18,7 +18,7 @@ class StoreFactory extends Factory
         return [
             'company_id' => Company::inRandomOrder()->first()->id ?? 1,
             'area_id' => Area::inRandomOrder()->first()->id ?? 1,
-            'image' => fake()->imageUrl(category: 'cars'),
+            'image' => randomImage()[rand(0, 10)],
             'address' => fake()->address(),
             'latitude' => fake()->latitude(),
             'longitude' => fake()->longitude()

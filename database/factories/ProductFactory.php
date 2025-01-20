@@ -16,7 +16,7 @@ class ProductFactory extends Factory
         return [
             'category_id' => Category::inRandomOrder()->first()->id ?? 1,
             'part_number' => $this->faker->word(),
-            'image' => fake()->imageUrl(category: 'cars'),
+            'image' => randomImage()[rand(0, 10)],
             'price' => $this->faker->randomFloat(2, 0, 1000)
         ];
     }
