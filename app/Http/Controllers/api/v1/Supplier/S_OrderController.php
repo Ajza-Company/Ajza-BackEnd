@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\Supplier;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Supplier\Order\S_TakeActionRequest;
+use App\Http\Resources\v1\Supplier\Order\S_OrderResource;
 use App\Http\Resources\v1\Supplier\Order\S_ShortOrderResource;
 use App\Repositories\Supplier\Order\Find\S_FindOrderInterface;
 use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
@@ -43,7 +44,7 @@ class S_OrderController extends Controller
     public function details(string $order_id)
     {
         $order = $this->findOrder->find(decodeString($order_id));
-        return S_ShortOrderResource::make($order);
+        return S_OrderResource::make($order);
     }
 
     /**
