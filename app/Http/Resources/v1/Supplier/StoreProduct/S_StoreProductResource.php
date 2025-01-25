@@ -16,8 +16,7 @@ class S_StoreProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            $this->merge(S_ShortStoreProductResource::make($this)),
-            'offer' => $this->whenLoaded('offer', S_ShortOfferResource::make($this->offer)),
+            $this->merge(S_ShortStoreProductResource::make($this))
         ];
     }
 }

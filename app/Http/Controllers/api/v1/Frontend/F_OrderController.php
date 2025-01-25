@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\Frontend\Order\F_CancelOrderRequest;
 use App\Http\Requests\v1\Frontend\Order\F_CreateOrderRequest;
 use App\Http\Resources\v1\Frontend\Order\F_OrderResource;
 use App\Http\Resources\v1\Frontend\Order\F_ShortOrderResource;
@@ -60,9 +61,9 @@ class F_OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function cancel(string $order_id)
+    public function cancel(F_CancelOrderRequest $request, string $order_id)
     {
         $order = $this->findOrder->find(decodeString($order_id));
-        return $this->cancelOrder->cancel($order);
+        return $this->cancelOrder->cancel($request->validated(), $order);
     }
 }

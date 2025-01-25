@@ -99,7 +99,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::prefix('orders')->group(function () {
         Route::get('/', [F_OrderController::class, 'index']);
         Route::get('{order_id}/show', [F_OrderController::class, 'show']);
-        Route::get('{order_id}/cancel', [F_OrderController::class, 'cancel']);
+        Route::post('{order_id}/cancel', [F_OrderController::class, 'cancel']);
         Route::post('{order_id}/submit-review', F_StoreReviewController::class);
     });
 

@@ -57,11 +57,6 @@ class StoreProduct extends Model
         return $this->hasOne(StoreProductOffer::class, 'store_product_id');
     }
 
-    public function offers(): HasMany
-    {
-        return $this->hasMany(StoreProductOffer::class, 'store_product_id');
-    }
-
     /**
      * Filter Scope
      *

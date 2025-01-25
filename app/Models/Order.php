@@ -24,10 +24,11 @@ class Order extends Model
     protected $fillable = [
         'store_id',
         'user_id',
-        'status',
+        'address_id',
         'amount',
-        'delivery_method',
-        'cancel_reason'
+        'status',
+        'cancel_reason',
+        'delivery_method'
     ];
 
     /**

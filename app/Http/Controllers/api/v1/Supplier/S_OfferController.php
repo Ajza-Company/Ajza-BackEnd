@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api\v1\Supplier;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Supplier\Offer\S_CreateOfferRequest;
-use App\Http\Resources\v1\Supplier\StoreProduct\S_StoreProductResource;
+use App\Http\Resources\v1\Supplier\Offer\S_OfferResource;
 use App\Repositories\Supplier\Offer\Find\S_FindOfferInterface;
 use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
 use App\Services\Supplier\Offer\S_CreateOfferService;
@@ -35,18 +35,9 @@ class S_OfferController extends Controller
      */
     public function index(string $store_id)
     {
-        \Log::info('store_id : ' . decodeString($store_id));
-        \Log::info('store_id encoded : ' . $store_id);
         $store = $this->findStore->find(decodeString($store_id));
-        return S_StoreProductResource::collection(
-            $store
-                ->storeProducts()
-                ->whereHas('product.localized')
-                ->whereHas('offers')
-                ->with(['offers' => function ($query) {
-                    $query->latest();
-                }])
-                ->adaptivePaginate());
+        return S_OfferResource::collection(
+            $store->offers()->with(['storeProduct' => ['product.localized']])->latest()->adaptivePaginate());
     }
 
     /**

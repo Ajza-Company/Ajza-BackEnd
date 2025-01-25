@@ -6,7 +6,7 @@ use App\Models\StoreProductOffer;
 use App\Repositories\Frontend\F_CreatingRepository;
 use App\Repositories\Frontend\F_UpdateOrCreateRepository;
 
-class S_CreateOfferRepository extends F_UpdateOrCreateRepository implements S_CreateOfferInterface
+class S_CreateOfferRepository extends F_CreatingRepository implements S_CreateOfferInterface
 {
     /**
      * Create a new instance.
