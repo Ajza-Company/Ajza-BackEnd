@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('guest:sanctum')->group(function () {
+Route::group([], function () {
     Route::middleware(SetLocale::class)->group(function () {
         Route::prefix('cities')->group(function () {
             Route::get('/', G_StateController::class);
