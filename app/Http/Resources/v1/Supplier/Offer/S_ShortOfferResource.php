@@ -20,6 +20,7 @@ class S_ShortOfferResource extends JsonResource
             'type' => $this->type,
             'discount' => $this->discount,
             'expires_at' => Carbon::parse($this->expires_at)->locale(app()->getLocale())->translatedFormat('d M, Y h:i A'),
+            'is_expired' => $this->expires_at < Carbon::now()
         ];
     }
 }

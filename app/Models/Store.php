@@ -98,6 +98,15 @@ class Store extends Model
      *
      * @return HasMany
      */
+    public function offers(): HasMany
+    {
+        return $this->hasMany(StoreProductOffer::class, 'store_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'store_id');

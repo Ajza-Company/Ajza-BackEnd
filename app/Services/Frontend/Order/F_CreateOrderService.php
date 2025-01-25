@@ -19,17 +19,17 @@ use Illuminate\Http\Response;
 class F_CreateOrderService
 {
     /**
-     *
      * @param F_CreateOrderInterface $createOrder
      * @param F_InsertOrderProductInterface $insertOrderProduct
      */
-    public function __construct(private F_CreateOrderInterface $createOrder,
-                                private F_InsertOrderProductInterface $insertOrderProduct)
-    {
-
+    public function __construct(
+        private F_CreateOrderInterface $createOrder,
+        private F_InsertOrderProductInterface $insertOrderProduct
+    ) {
     }
 
     /**
+     * Create a new order.
      *
      * @param array $data
      * @param User $user
@@ -40,51 +40,81 @@ class F_CreateOrderService
     {
         \DB::beginTransaction();
         try {
-
+            // Create the order with an initial amount of 0
             $order = $this->createOrder->create([
                 'user_id' => $user->id,
                 'store_id' => $store->id,
                 'status' => OrderStatusEnum::PENDING,
                 'delivery_method' => $data['delivery_method'],
-                'amount' => 0,
-                'address_id' => $data['delivery_method'] == OrderDeliveryMethodEnum::DELIVERY ? $data['address_id'] : null
+                'amount' => 0, // Initial amount set to 0
+                'address_id' => $data['delivery_method'] == OrderDeliveryMethodEnum::DELIVERY ? $data['address_id'] : null,
             ]);
 
-            $this->insertOrderProduct->insert($this->prepareOrderProductsBulkInsert($data['order_products'], $order));
+            // Prepare and insert order products
+            $orderProducts = $this->prepareOrderProductsBulkInsert($data['order_products'], $order);
+            $this->insertOrderProduct->insert($orderProducts);
+
+            // Calculate the total order amount
+            $totalAmount = array_sum(array_column($orderProducts, 'amount'));
+
+            // Update the order with the total amount
+            $order->update(['amount' => $totalAmount]);
 
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
         } catch (\Exception $ex) {
             \DB::rollBack();
-            return response()->json(errorResponse(
-                message: trans(ErrorMessageEnum::CREATE),
-                error: $ex->getMessage()),
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(
+                errorResponse(
+                    message: trans(ErrorMessageEnum::CREATE),
+                    error: $ex->getMessage()
+                ),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
     /**
+     * Prepare order products for bulk insert.
      *
      * @param array $products
      * @param Order $order
      * @return array
      */
-    function prepareOrderProductsBulkInsert(array $products, Order $order): array
+    private function prepareOrderProductsBulkInsert(array $products, Order $order): array
     {
         $resultArr = [];
 
-
         foreach ($products as $product) {
             $storeProduct = StoreProduct::findOrFail($product['product_id']);
+
+            // Fetch the active offer for the product
+            $offer = $storeProduct->offer;
+
+            $discount = 0;
+            $amount = $storeProduct->price * $product['quantity'];
+
+            if ($offer) {
+                if ($offer->type === 'fixed') {
+                    // Fixed discount: subtract the discount directly from the total amount
+                    $discount = $offer->discount;
+                    $amount -= $discount;
+                } elseif ($offer->type === 'percentage') {
+                    // Percentage discount: calculate the discount based on the product price
+                    $discount = ($storeProduct->price * $offer->discount / 100) * $product['quantity'];
+                    $amount -= $discount;
+                }
+            }
+
             $resultArr[] = [
                 "order_id" => $order->id,
                 'store_product_id' => $product['product_id'],
                 "price" => $storeProduct->price,
                 "quantity" => $product['quantity'],
-                'discount' => 0,
-                'amount' => $storeProduct->price * $product['quantity'],
+                'discount' => round($discount, 2),
+                'amount' => round($amount, 2),
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ];
         }
 

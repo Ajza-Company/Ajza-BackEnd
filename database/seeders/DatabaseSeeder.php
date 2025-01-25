@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ProductLocaleSeeder::class,
             StoreProductSeeder::class,
-            StoreProductOfferSeeder::class,
             SliderImageSeeder::class,
             NotificationSeeder::class,
             AjzaOfferSeeder::class,
