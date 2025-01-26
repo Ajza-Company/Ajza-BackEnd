@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
 use App\Http\Controllers\api\v1\General\G_AreaController;
 use App\Http\Controllers\api\v1\General\G_CancelOrderController;
 use App\Http\Controllers\api\v1\General\G_NotificationController;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([], function () {
     Route::middleware(SetLocale::class)->group(function () {
+        Route::get('categories', F_CategoryController::class);
         Route::prefix('cities')->group(function () {
             Route::get('/', G_StateController::class);
             Route::get('{city_id}/areas', G_AreaController::class);

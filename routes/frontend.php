@@ -52,7 +52,6 @@ Route::group([], function () {
         });
 
         Route::get('car-types', F_CarTypeController::class);
-        Route::get('categories', F_CategoryController::class);
         Route::get('slider-images', F_SliderImageController::class);
 
         Route::prefix('stores')->group(function () {

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\api\v1\Frontend\F_FavoriteController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
 use App\Http\Controllers\api\v1\Supplier\S_CompanyController;
 use App\Http\Controllers\api\v1\Supplier\S_OfferController;
@@ -47,6 +46,6 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
             Route::get('offers', [S_OfferController::class, 'index']);
             Route::post('offers', [S_OfferController::class, 'store']);
         });
-        Route::get('offers/:offer_id', [S_OfferController::class, 'index']);
+        Route::delete('offers/:offer_id', [S_OfferController::class, 'destroy']);
     });
 });
