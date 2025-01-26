@@ -35,6 +35,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::post('orders/{order_id}/take-action', [S_OrderController::class, 'takeAction']);
     Route::get('orders/{order_id}/details', [S_OrderController::class, 'details']);
     Route::prefix('stores')->group(function () {
+        Route::delete('offers/{offer_id}', [S_OfferController::class, 'destroy']);
         Route::get('/', [S_StoreController::class, 'index']);
         Route::post('create', [S_StoreController::class, 'store']);
         Route::prefix('{store_id}')->group(function () {
@@ -46,6 +47,5 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
             Route::get('offers', [S_OfferController::class, 'index']);
             Route::post('offers', [S_OfferController::class, 'store']);
         });
-        Route::delete('offers/:offer_id', [S_OfferController::class, 'destroy']);
     });
 });
