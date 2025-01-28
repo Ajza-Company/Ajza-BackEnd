@@ -35,7 +35,10 @@ class S_StoreController extends Controller
     public function index()
     {
         return S_ShortStoreResource::collection(
-            userCompany()->stores()->with(['company' => ['localized'], 'area' => ['localized', 'state' => ['localized']]])->adaptivePaginate()
+            userCompany()
+                ->stores()
+                ->with(['company' => ['localized'], 'area' => ['localized', 'state' => ['localized']]])
+                ->adaptivePaginate()
         );
     }
 
@@ -52,7 +55,7 @@ class S_StoreController extends Controller
      */
     public function show(string $store_id)
     {
-        return S_StoreResource::make(userCompany()->stores()->find(decodeString($store_id))->load('company', 'company.localized'));
+        return S_StoreResource::make(userCompany()->stores()->find(decodeString($store_id))->load('company', 'company.localized', 'hours'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1\Supplier\Store;
 
+use App\Http\Resources\v1\Supplier\StoreHour\S_StoreHourResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

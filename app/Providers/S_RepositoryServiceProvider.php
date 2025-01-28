@@ -14,6 +14,8 @@ use App\Repositories\Supplier\Store\Create\S_CreateStoreInterface;
 use App\Repositories\Supplier\Store\Create\S_CreateStoreRepository;
 use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
 use App\Repositories\Supplier\Store\Find\S_FindStoreRepository;
+use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
+use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourRepository;
 use Illuminate\Support\ServiceProvider;
 
 class S_RepositoryServiceProvider extends ServiceProvider
@@ -46,6 +48,10 @@ class S_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             S_FindOfferInterface::class,
             S_FindOfferRepository::class);
+
+        $this->app->bind(
+            S_InsertStoreHourInterface::class,
+            S_InsertStoreHourRepository::class);
     }
 
     /**

@@ -26,9 +26,13 @@ class S_CreateStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'area_id' => 'required|integer|exists:areas,id',
-            'address_url' => 'required|string|url',
-            'phone_number' => 'required|string',
+            'data.area_id' => 'required|integer|exists:areas,id',
+            'data.address_url' => 'required|string|url',
+            'data.phone_number' => 'required|string',
+            'hours' => 'required|array',
+            'hours.*.day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+            'hours.*.open_time' => 'nullable|date_format:H:i',
+            'hours.*.close_time' => 'nullable|date_format:H:i|after:hours.*.open_time'
         ];
     }
 
@@ -37,6 +41,6 @@ class S_CreateStoreRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        $this->decodeInput('area_id');
+        $this->decodeInput('data.area_id');
     }
 }
