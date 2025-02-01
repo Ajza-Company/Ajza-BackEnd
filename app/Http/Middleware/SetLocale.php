@@ -37,7 +37,7 @@ class SetLocale
         if ($locale && in_array($locale, $supportedLocales)) {
             app()->setLocale($locale);
             if (auth('api')->check()) {
-                auth('api')->user()->update(['preferred_locale' => $locale]);
+                auth('api')->user()->update(['preferred_language' => $locale]);
             }
         }
 

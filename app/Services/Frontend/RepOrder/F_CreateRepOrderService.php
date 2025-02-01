@@ -31,8 +31,10 @@ class F_CreateRepOrderService
     public function create(User $user, array $data): JsonResponse
     {
         try {
-            $data['data']['user_id'] = $user->id;
-            $order = $this->createRepOrder->create($data['data']);
+            $order = $this->createRepOrder->create([
+                'user_id' => $user->id,
+                ...$data['data']
+            ]);
 
             if (isset($data['image'])) {
                 $path = uploadFile("rep-orders/repOrder-$order->id", $data['image']);
