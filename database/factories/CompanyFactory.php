@@ -19,8 +19,8 @@ class CompanyFactory extends Factory
             'country_id' => Country::inRandomOrder()->first()->id ?? 1,
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
-            'logo' => fake()->imageUrl(category: 'cars'),
-            'cover_image' => fake()->imageUrl(category: 'cars'),
+            'logo' => 'https://image.winudf.com/v2/image1/Y29tLnFhcmF3aS5xYXJhd2lhcHBfaWNvbl8xNTkyMTE1MDE3XzAwMQ/icon.png?w=184&fakeurl=1',
+            'cover_image' => 'https://ich.ma/ar7/wp-content/uploads/2024/10/AF1QipOTdsULmmsfLkupmIrBP1L8y-8LekcgzgOeOdvIw426-h240-k-no.jpeg',
             'commercial_register' => $this->faker->randomNumber(5),
             'vat_number' => $this->faker->randomNumber(2),
             'commercial_register_file' => $this->faker->filePath()

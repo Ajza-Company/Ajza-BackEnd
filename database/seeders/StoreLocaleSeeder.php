@@ -13,6 +13,6 @@ class StoreLocaleSeeder extends Seeder
      */
     public function run(): void
     {
-        StoreLocale::factory()->count(60)->create();
+        StoreLocale::factory()->count(2)->create();
     }
 }

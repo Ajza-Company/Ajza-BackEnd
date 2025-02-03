@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('country_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('email', 50)->nullable();
             $table->string('phone', 20)->nullable();
-            $table->string('logo', 100)->nullable();
-            $table->string('cover_image', 100)->nullable();
+            $table->string('logo', 255)->nullable();
+            $table->string('cover_image', 255)->nullable();
             $table->string('commercial_register', 50)->nullable();
             $table->string('vat_number', 50)->nullable();
             $table->string('commercial_register_file', 100)->nullable();

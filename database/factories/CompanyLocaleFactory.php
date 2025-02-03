@@ -16,7 +16,7 @@ class CompanyLocaleFactory extends Factory
         return [
             'company_id' => Company::inRandomOrder()->first()->id ?? 1,
             'locale_id' => Locale::inRandomOrder()->first()->id ?? 1,
-            'name' => $this->faker->name()
+            'name' => 'متجر القرعاوي لقطع الغيار'
         ];
     }
 }
