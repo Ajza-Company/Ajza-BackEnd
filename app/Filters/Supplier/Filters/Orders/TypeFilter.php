@@ -16,8 +16,13 @@ class TypeFilter
      */
     public function filter(Builder $builder, $value): ?Builder
     {
-        return in_array($value, ['current', 'previous'], true)
-            ? $builder->whereStatus($value === 'current' ? OrderStatusEnum::PENDING : '!='.OrderStatusEnum::PENDING)
-            : null;
+        if (in_array($value, ['current', 'previous'])) {
+            if ($value === 'current') {
+                return $builder->whereStatus(OrderStatusEnum::PENDING);
+            }elseif ($value === 'previous') {
+                return $builder->where('status', '!=', OrderStatusEnum::PENDING);
+            }
+        }
+        return null;
     }
 }
