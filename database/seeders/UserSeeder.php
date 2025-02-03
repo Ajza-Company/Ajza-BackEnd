@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
         $store_owner = User::create([
             "name" => fake()->name(),
             'email' => 'store@ajza.net',
-            'full_mobile' => '+201068936567',
-            'password' => '12345678',
+            'full_mobile' => '+966553275000',
+            'password' => '1Alqarawi1',
             'avatar' => fake()->imageUrl(),
             'is_active' => true,
             'is_registered' => true,
