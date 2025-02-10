@@ -1,0 +1,100 @@
+[
+    {
+        "name": "show-all-permissions",
+        "group_name": "Permissions",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "Show All Permissions"
+    },
+    {
+        "name": "view-orders",
+        "group_name": "Orders",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "View Orders"
+    },
+    {
+        "name": "accept-orders",
+        "group_name": "Orders",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "Accept Orders"
+    },
+    {
+        "name": "view-offers",
+        "group_name": "Offers",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "View Offers"
+    },
+    {
+        "name": "control-offer",
+        "group_name": "Offers",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "Control Offer"
+    },
+    {
+        "name": "view-users",
+        "group_name": "Users",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "View Users"
+    },
+    {
+        "name": "edit-users",
+        "group_name": "Users",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "Edit Users"
+    },
+    {
+        "name": "view-stores",
+        "group_name": "Stores",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "View Stores"
+    },
+    {
+        "name": "edit-stores",
+        "group_name": "Stores",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "Edit Stores"
+    },
+    {
+        "name": "view-categories",
+        "group_name": "Categories",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "View Categories"
+    },
+    {
+        "name": "edit-categories",
+        "group_name": "Categories",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "Edit Categories"
+    },
+    {
+        "name": "view-products",
+        "group_name": "Products",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "View Products"
+    },
+    {
+        "name": "edit-products",
+        "group_name": "Products",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "Edit Products"
+    },
+    {
+        "name": "view-orders-statistics",
+        "group_name": "Orders",
+        "guard_name": "api",
+        "role_name": "Supplier",
+        "friendly_name": "View Orders Statistics"
+    }
+]

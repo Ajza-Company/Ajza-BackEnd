@@ -6,6 +6,7 @@ use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\Supplier\Store\S_StoreResource;
 use App\Models\Store;
+use App\Models\StoreUser;
 use App\Repositories\Supplier\Store\Create\S_CreateStoreInterface;
 use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
 use Carbon\Carbon;
@@ -40,6 +41,13 @@ class S_CreateStoreService
             ]);
 
             $this->insertStoreHour->insert($this->prepareBulkInsert($data['hours'], $store));
+
+            \DB::table('store_users')->insert([
+                'store_id' => $store->id,
+                'user_id' => auth('api')->id(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
 
             return response()->json(
                 successResponse(message: trans(SuccessMessagesEnum::CREATED),

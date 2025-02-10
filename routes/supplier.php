@@ -4,9 +4,11 @@ use App\Http\Controllers\api\v1\Supplier\S_AuthController;
 use App\Http\Controllers\api\v1\Supplier\S_CompanyController;
 use App\Http\Controllers\api\v1\Supplier\S_OfferController;
 use App\Http\Controllers\api\v1\Supplier\S_OrderController;
+use App\Http\Controllers\api\v1\Supplier\S_PermissionController;
 use App\Http\Controllers\api\v1\Supplier\S_ProductController;
 use App\Http\Controllers\api\v1\Supplier\S_StatisticsController;
 use App\Http\Controllers\api\v1\Supplier\S_StoreController;
+use App\Http\Controllers\api\v1\Supplier\S_TeamController;
 use App\Http\Controllers\api\v1\Supplier\S_TransactionController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +33,7 @@ Route::middleware('guest:sanctum')->group(function () {
 });
 
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
+    Route::get('permissions', S_PermissionController::class);
     Route::get('store-details', S_CompanyController::class);
     Route::post('orders/{order_id}/take-action', [S_OrderController::class, 'takeAction']);
     Route::get('orders/{order_id}/details', [S_OrderController::class, 'details']);
@@ -47,5 +50,10 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
             Route::get('offers', [S_OfferController::class, 'index']);
             Route::post('offers', [S_OfferController::class, 'store']);
         });
+    });
+    Route::prefix('team-members')->group(function () {
+        Route::get('/', [S_TeamController::class, 'index']);
+        Route::post('create', [S_TeamController::class, 'store']);
+        Route::post('{user_id}/update', [S_TeamController::class, 'update']);
     });
 });

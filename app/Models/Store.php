@@ -116,6 +116,15 @@ class Store extends Model
      *
      * @return HasMany
      */
+    public function storeUsers(): HasMany
+    {
+        return $this->hasMany(StoreUser::class, 'store_id');
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
     public function hours(): HasMany
     {
         return $this->hasMany(StoreHour::class, 'store_id');

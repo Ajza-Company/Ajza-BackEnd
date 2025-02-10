@@ -110,6 +110,15 @@ class User extends Authenticatable
 
     /**
      *
+     * @return HasMany
+     */
+    public function storeUsers(): HasMany
+    {
+        return $this->hasMany(StoreUser::class, 'user_id');
+    }
+
+    /**
+     *
      * @return HasManyThrough
      */
     public function favoriteProducts(): HasManyThrough
