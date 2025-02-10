@@ -18,8 +18,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => encodeString($this->id),
-            'name' => $this->name,
+            $this->merge(ShortUserResource::make($this)),
             'email' => $this->email,
             'fullMobile' => $this->full_mobile,
             'gender' => $this->gender,

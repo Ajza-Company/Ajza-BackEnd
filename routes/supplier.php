@@ -6,6 +6,7 @@ use App\Http\Controllers\api\v1\Supplier\S_OfferController;
 use App\Http\Controllers\api\v1\Supplier\S_OrderController;
 use App\Http\Controllers\api\v1\Supplier\S_PermissionController;
 use App\Http\Controllers\api\v1\Supplier\S_ProductController;
+use App\Http\Controllers\api\v1\Supplier\S_RepOrderController;
 use App\Http\Controllers\api\v1\Supplier\S_StatisticsController;
 use App\Http\Controllers\api\v1\Supplier\S_StoreController;
 use App\Http\Controllers\api\v1\Supplier\S_TeamController;
@@ -55,5 +56,8 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('/', [S_TeamController::class, 'index']);
         Route::post('create', [S_TeamController::class, 'store']);
         Route::post('{user_id}/update', [S_TeamController::class, 'update']);
+    });
+    Route::prefix('rep-orders/{rep_order_id}')->group(function () {
+        Route::get('accept', [S_RepOrderController::class, 'accept']);
     });
 });

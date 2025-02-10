@@ -12,4 +12,5 @@ final class RoleEnum extends Enum
     const CLIENT = 'Client';
     const WORKSHOP = 'Workshop';
     const SUPPLIER = 'Supplier';
+    const REPRESENTATIVE = 'Representative';
 }

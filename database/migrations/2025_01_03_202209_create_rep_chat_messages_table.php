@@ -15,6 +15,7 @@ return new class extends Migration
             $table->engine = "InnoDB";
 
             $table->id();
+            $table->foreignId('rep_chat_id')->constrained()->cascadeOnDelete();
             $table->foreignId('sender_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('rep_offer_id')->nullable()->constrained()->cascadeOnDelete();
             $table->text('message')->nullable();

@@ -49,5 +49,18 @@ class UserSeeder extends Seeder
         foreach ($permissions as $permission) {
             $store_owner->givePermissionTo($permission);
         }
+
+        // Create representative user
+        $representative = User::create([
+            "name" => fake()->name(),
+            'email' => 'representative@ajza.net',
+            'full_mobile' => '+966553275000',
+            'password' => '1Alqarawi1',
+            'avatar' => fake()->imageUrl(),
+            'is_active' => true,
+            'is_registered' => true,
+        ]);
+
+        $representative->assignRole(RoleEnum::REPRESENTATIVE);
     }
 }

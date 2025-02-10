@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\v1\Supplier\Team;
+namespace App\Http\Resources\v1\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class S_TeamResource extends JsonResource
+class ShortUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,6 @@ class S_TeamResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'name' => $this->name,
-            'full_mobile' => $this->full_mobile,
-            "is_active" => (bool)$this->is_active,
-            'permissions' => $this->whenLoaded('permissions', $this->permissions()->pluck('name')->toArray())
         ];
     }
 }

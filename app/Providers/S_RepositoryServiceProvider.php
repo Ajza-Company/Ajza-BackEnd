@@ -12,6 +12,8 @@ use App\Repositories\Supplier\Order\Find\S_FindOrderInterface;
 use App\Repositories\Supplier\Order\Find\S_FindOrderRepository;
 use App\Repositories\Supplier\Permission\Fetch\S_FetchPermissionInterface;
 use App\Repositories\Supplier\Permission\Fetch\S_FetchPermissionRepository;
+use App\Repositories\Supplier\RepOrder\Find\S_FindRepOrderInterface;
+use App\Repositories\Supplier\RepOrder\Find\S_FindRepOrderRepository;
 use App\Repositories\Supplier\Store\Create\S_CreateStoreInterface;
 use App\Repositories\Supplier\Store\Create\S_CreateStoreRepository;
 use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
@@ -70,6 +72,10 @@ class S_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             S_FindUserInterface::class,
             S_FindUserRepository::class);
+
+        $this->app->bind(
+            S_FindRepOrderInterface::class,
+            S_FindRepOrderRepository::class);
     }
 
     /**

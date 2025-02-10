@@ -30,11 +30,11 @@ class RepChat extends Model
 
     public function messages(): HasMany
     {
-        return $this->hasMany(RepChatMessage::class);
+        return $this->hasMany(RepChatMessage::class, 'rep_chat_id');
     }
 
     public function latestMessage(): HasOne
     {
-        return $this->hasOne(RepChatMessage::class)->latest();
+        return $this->hasOne(RepChatMessage::class, 'rep_chat_id')->latest();
     }
 }

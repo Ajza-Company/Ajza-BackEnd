@@ -119,6 +119,15 @@ class User extends Authenticatable
 
     /**
      *
+     * @return HasMany
+     */
+    public function repOrders(): HasMany
+    {
+        return $this->hasMany(RepOrder::class, 'user_id');
+    }
+
+    /**
+     *
      * @return HasManyThrough
      */
     public function favoriteProducts(): HasManyThrough

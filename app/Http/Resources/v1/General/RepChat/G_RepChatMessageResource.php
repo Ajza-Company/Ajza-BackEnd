@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1\General\RepChat;
 
+use App\Http\Resources\v1\User\ShortUserResource;
 use App\Http\Resources\v1\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,8 +18,8 @@ class G_RepChatMessageResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'sender' => new UserResource($this->whenLoaded('sender')),
+            'id' => encodeString($this->id),
+            'sender' => ShortUserResource::make($this->whenLoaded('sender')),
             'message' => $this->message,
             'message_type' => $this->message_type,
             'attachment' => $this->when($this->attachment, function() {
