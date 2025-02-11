@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\api\v1\Supplier;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\Supplier\RepOrder\S_ShortRepOrderResource;
 use App\Models\RepChat;
+use App\Models\RepOrder;
 use App\Repositories\Supplier\RepOrder\Find\S_FindRepOrderInterface;
 use App\Services\Supplier\RepOrder\S_AcceptRepOrderService;
 use Illuminate\Http\Request;
@@ -33,6 +35,6 @@ class S_RepOrderController extends Controller
      */
     public function orders()
     {
-        //
+        return S_ShortRepOrderResource::collection(RepOrder::whereDoesntHave('repChats')->adaptivePaginate());
     }
 }

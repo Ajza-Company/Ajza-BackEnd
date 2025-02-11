@@ -57,7 +57,8 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::post('create', [S_TeamController::class, 'store']);
         Route::post('{user_id}/update', [S_TeamController::class, 'update']);
     });
-    Route::prefix('rep-orders/{rep_order_id}')->group(function () {
-        Route::get('accept', [S_RepOrderController::class, 'accept']);
+    Route::prefix('rep-orders/')->group(function () {
+        Route::get('/', [S_RepOrderController::class, 'orders']);
+        Route::get('{rep_order_id}/accept', [S_RepOrderController::class, 'accept']);
     });
 });
