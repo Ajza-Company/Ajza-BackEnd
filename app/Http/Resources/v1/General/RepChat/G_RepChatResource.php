@@ -18,7 +18,7 @@ class G_RepChatResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'order_id' => $this->rep_order_id,
+            'rep_order_id' => encodeString($this->rep_order_id),
             'user1' => ShortUserResource::make($this->whenLoaded('user1')),
             'user2' => ShortUserResource::make($this->whenLoaded('user2')),
             'latest_message' => G_RepChatMessageResource::make($this->whenLoaded('latestMessage')),
