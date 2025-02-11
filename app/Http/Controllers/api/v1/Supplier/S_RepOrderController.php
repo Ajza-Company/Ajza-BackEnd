@@ -37,4 +37,12 @@ class S_RepOrderController extends Controller
     {
         return S_ShortRepOrderResource::collection(RepOrder::whereDoesntHave('repChats')->adaptivePaginate());
     }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function allOrders()
+    {
+        return S_ShortRepOrderResource::collection(RepOrder::whereRelation('repChats', 'user2_id', auth('api')->id())->adaptivePaginate());
+    }
 }

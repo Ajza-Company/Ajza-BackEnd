@@ -21,7 +21,7 @@ class F_SetupAccountService
     public function setup(User $user, array $data): JsonResponse
     {
         try {
-            Personal::updateOrCreate(['user_id' => $user->id], $data);
+            Personal::updateOrCreate(['user_id' => $user->id], $data['personal']);
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
