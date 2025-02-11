@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\Supplier;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\Supplier\Permission\S_ShortPermissionResource;
 use App\Repositories\Supplier\Permission\Fetch\S_FetchPermissionInterface;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -24,7 +25,6 @@ class S_PermissionController extends Controller
      */
     public function __invoke(Request $request)
     {
-        // \Gate::authorize('view-any', Permission::class);
-        return $this->fetchPermission->fetch();
+        return S_ShortPermissionResource::collection($this->fetchPermission->fetch());
     }
 }

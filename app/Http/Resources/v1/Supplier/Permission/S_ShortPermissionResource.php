@@ -15,7 +15,8 @@ class S_ShortPermissionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->name
+            'name' => $this->name,
+            'friendly_name' => $this->friendly_name,
         ];
     }
 }
