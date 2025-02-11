@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
         $representative = User::create([
             "name" => fake()->name(),
             'email' => 'representative@ajza.net',
-            'full_mobile' => '+966553275000',
+            'full_mobile' => '+966553275001',
             'password' => '1Alqarawi1',
             'avatar' => fake()->imageUrl(),
             'is_active' => true,
