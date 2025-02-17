@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -31,6 +32,24 @@ class Company extends Model
     public function stores(): HasMany
     {
         return $this->hasMany(Store::class, 'company_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {/**/
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     *
+     * @return HasManyThrough
+     */
+    public function usersPivot(): HasManyThrough
+    {
+        return $this->hasManyThrough(StoreUser::class, Store::class, 'company_id', 'store_id');
     }
 
     /**

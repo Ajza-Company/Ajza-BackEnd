@@ -1,6 +1,7 @@
 <?php
 
 return [
+    App\Providers\A_RepositoryServiceProvider::class,
     App\Providers\AppServiceProvider::class,
     App\Providers\F_RepositoryServiceProvider::class,
     App\Providers\G_RepositoryServiceProvider::class,
