@@ -2,10 +2,8 @@
 
 namespace App\Http\Resources\v1\General\RepChat;
 
-use App\Http\Resources\v1\Frontend\RepOrder\F_ShortRepOrderResource;
 use App\Http\Resources\v1\Supplier\RepOrder\S_ShortRepOrderResource;
 use App\Http\Resources\v1\User\ShortUserResource;
-use App\Http\Resources\v1\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,12 +18,13 @@ class G_RepChatResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'rep_order' => S_ShortRepOrderResource::make($this->whenLoaded('repOrder')),
+            'rep_order_id' => encodeString($this->rep_order_id),
+            'rep_order' => S_ShortRepOrderResource::make($this->whenLoaded('order')),
             'user1' => ShortUserResource::make($this->whenLoaded('user1')),
             'user2' => ShortUserResource::make($this->whenLoaded('user2')),
             'latest_message' => G_RepChatMessageResource::make($this->whenLoaded('latestMessage')),
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }
