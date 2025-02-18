@@ -11,31 +11,34 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class TestEvent implements ShouldBroadcast
+class TestMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
 
-    public function __construct($message = 'Hello from Reverb!')
+    public function __construct($message)
     {
         $this->message = $message;
-        Log::info('TestEvent constructed', ['message' => $message]);
     }
 
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        Log::info('Broadcasting on test-channel');
-        return [new Channel('test-channel')];
+        return new Channel('test-channel');
     }
 
-    public function broadcastWith(): array
+    // Optional: Customize the event name
+    public function broadcastAs()
     {
-        $data = [
+        return 'test.message';
+    }
+
+    // Optional: Customize the data
+    public function broadcastWith()
+    {
+        return [
             'message' => $this->message,
-            'time' => now()->toISOString()
+            'timestamp' => now()->toISOString(),
         ];
-        Log::info('Broadcasting data', $data);
-        return $data;
     }
 }

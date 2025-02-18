@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\Frontend;
 
+use App\Events\TestMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\Frontend\CarBrand\F_CarBrandResource;
 use App\Models\CarBrand;
@@ -26,6 +27,7 @@ class F_CarBrandController extends Controller
      */
     public function __invoke(Request $request)
     {
+        broadcast(new TestMessage('Hello from car brand'));
         return F_CarBrandResource::collection($this->fetchCarBrand->fetch());
     }
 }
