@@ -26,7 +26,7 @@ class G_RepChatController extends Controller
         $user_id = auth('api')->id();
         $chats = RepChat::where('user1_id', $user_id)
             ->orWhere('user2_id', $user_id)
-            ->with(['user1', 'user2', 'latestMessage'])
+            ->with(['user1', 'user2', 'latestMessage', 'order'])
             ->latest()
             ->paginate();
 
