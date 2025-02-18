@@ -100,6 +100,29 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
+    reverb:
+        build:
+            context: .
+            dockerfile: reverb.dockerfile
+        restart: unless-stopped
+        environment:
+            - REVERB_APP_ID=${REVERB_APP_ID}
+            - REVERB_APP_KEY=${REVERB_APP_KEY}
+            - REVERB_APP_SECRET=${REVERB_APP_SECRET}
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+        ports:
+            - '${REVERB_PORT:-8080}:8080'
+        volumes:
+            - '.:/app'
+        networks:
+            - sail
+        depends_on:
+            - mysql
 networks:
     sail:
         driver: bridge
