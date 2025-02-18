@@ -19,10 +19,10 @@ class F_ShortRepOrderResource extends JsonResource
             $this->merge($this->whenLoaded('repChats', function (){
                 $chat = $this->repChats()->latest()->first();
                 return [
-                    'id' => encodeString($chat->id),
-                    'rep_order_id' => encodeString($chat->rep_order_id),
-                    'name' => $chat->user1?->name,
-                    'message' => G_RepChatMessageResource::make($chat->latestMessage)
+                    'id' => encodeString($chat?->id),
+                    'rep_order_id' => encodeString($chat?->rep_order_id),
+                    'name' => $chat?->user1?->name,
+                    'message' => G_RepChatMessageResource::make($chat?->latestMessage)
                 ];
             }))
         ];
