@@ -9,4 +9,5 @@ return [
     'fixed_discount' => 'Fixed',
     'fixed' => 'Fixed',
     'percentage' => 'Percentage',
+    'delete_account' => 'We have received your account deletion request and will contact you soon.',
 ];
