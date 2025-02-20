@@ -19,6 +19,7 @@ class S_ShortRepOrderResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'image' => getFullUrl($this->image),
+            'status' => $this->status
         ];
     }
 }

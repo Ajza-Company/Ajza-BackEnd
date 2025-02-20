@@ -45,10 +45,10 @@ class F_RepOrderController extends Controller
      */
     public function checkIfAccepted(string $order_id)
     {
-        $accepted = RepOrder::find(decodeString($order_id))?->has('repChats') ?? false;
+        $order = RepOrder::findOrFail(decodeString($order_id));
 
         return response()->json([
-            'accepted' => $accepted
+            'accepted' => $order->status == 'pending'
         ]);
     }
 }

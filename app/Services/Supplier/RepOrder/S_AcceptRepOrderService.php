@@ -38,6 +38,8 @@ class S_AcceptRepOrderService
                 'user2_id' => $repOrder->user_id
             ]);
 
+            $repOrder->update(['status' => 'accepted']);
+
             \DB::commit();
             return response()->json(successResponse(trans(SuccessMessagesEnum::CREATED)));
         } catch (\Exception $ex) {
