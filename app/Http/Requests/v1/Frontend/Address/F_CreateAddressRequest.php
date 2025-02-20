@@ -22,7 +22,7 @@ class F_CreateAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:100',
+            'name' => 'nullable|max:100',
             'house_number' => 'nullable|max:10',
             'level' => 'nullable|integer',
             'apartment_number' => 'nullable|max:10',
