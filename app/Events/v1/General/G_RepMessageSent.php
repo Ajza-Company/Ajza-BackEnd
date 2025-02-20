@@ -34,7 +34,7 @@ class G_RepMessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('repair.chat.' . $this->message->rep_chat_id)
+            new PrivateChannel('repair.chat.' . encodeString($this->message->rep_chat_id))
         ];
     }
 
