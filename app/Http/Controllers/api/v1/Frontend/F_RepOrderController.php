@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\Frontend;
 
+use App\Enums\SuccessMessagesEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\RepOrder\F_CreateRepOrderRequest;
 use App\Http\Resources\v1\Frontend\RepOrder\F_ShortRepOrderResource;
@@ -37,5 +38,17 @@ class F_RepOrderController extends Controller
         return F_ShortRepOrderResource::collection(
             auth('api')->user()->repOrders()->with(['repChats'])->adaptivePaginate()
         );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function checkIfAccepted(string $order_id)
+    {
+        $accepted = RepOrder::find(decodeString($order_id))?->has('repChats') ?? false;
+
+        return response()->json([
+            'accepted' => $accepted
+        ]);
     }
 }
