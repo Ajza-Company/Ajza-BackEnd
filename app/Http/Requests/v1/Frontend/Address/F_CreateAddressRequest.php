@@ -24,7 +24,7 @@ class F_CreateAddressRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'house_number' => 'nullable|max:10',
-            'level' => 'required|integer',
+            'level' => 'nullable|integer',
             'apartment_number' => 'nullable|max:10',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
