@@ -27,7 +27,6 @@ class F_CarBrandController extends Controller
      */
     public function __invoke(Request $request)
     {
-        broadcast(new TestEvent('Hello from car brand'));
         return F_CarBrandResource::collection($this->fetchCarBrand->fetch());
     }
 }
