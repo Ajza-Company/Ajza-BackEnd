@@ -38,6 +38,7 @@ class TestEvent implements ShouldBroadcast
     {
         return [
             'message' => $this->message,
+            'hello' => 'world',
             'timestamp' => now()->toISOString(),
         ];
     }
