@@ -22,9 +22,9 @@ class F_UpdateAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:100',
+            'name' => 'sometimes|nullable|max:100',
             'house_number' => 'nullable|max:10',
-            'level' => 'sometimes|integer',
+            'level' => 'sometimes|nullable',
             'apartment_number' => 'nullable|max:10',
             'latitude' => 'sometimes|numeric',
             'longitude' => 'sometimes|numeric',
