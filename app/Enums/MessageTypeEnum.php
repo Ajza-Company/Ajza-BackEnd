@@ -9,6 +9,6 @@ use BenSampo\Enum\Enum;
 final class MessageTypeEnum extends Enum
 {
     const TEXT = 'text';
-    const IMAGE = 'image';
+    const ATTACHMENT = 'attachment';
     const OFFER = 'offer';
 }

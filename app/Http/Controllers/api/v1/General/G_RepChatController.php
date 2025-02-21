@@ -43,7 +43,7 @@ class G_RepChatController extends Controller
 
         $message = new RepChatMessage([
             'sender_id' => auth()->id(),
-            'message_type' => $request->message_type,
+            'message_type' => $request->hasFile('attachment') ? MessageTypeEnum::ATTACHMENT : MessageTypeEnum::TEXT,
             'message' => $request->message,
         ]);
 
