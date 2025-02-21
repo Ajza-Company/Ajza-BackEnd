@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\Frontend;
 
+use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\RepOrder\F_CreateRepOrderRequest;
@@ -9,6 +10,7 @@ use App\Http\Resources\v1\Frontend\RepOrder\F_ShortRepOrderResource;
 use App\Models\RepOrder;
 use App\Services\Frontend\RepOrder\F_CreateRepOrderService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class F_RepOrderController extends Controller
 {
@@ -50,5 +52,24 @@ class F_RepOrderController extends Controller
         return response()->json([
             'accepted' => $order->status == 'pending'
         ]);
+    }
+
+    /**
+     */
+    public function orderDelivered(string $order_id)
+    {
+        try {
+            $order = RepOrder::findOrFail(decodeString($order_id));
+            $order->update([
+                'status' => 'ended'
+            ]);
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
+        } catch (\Exception $ex) {
+            return response()->json(errorResponse(
+                message: trans(ErrorMessageEnum::UPDATE),
+                error: $ex->getMessage()),
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
