@@ -35,7 +35,7 @@ class S_RepOrderController extends Controller
      */
     public function orders()
     {
-        return S_ShortRepOrderResource::collection(RepOrder::whereDoesntHave('repChats')->adaptivePaginate());
+        return S_ShortRepOrderResource::collection(RepOrder::whereDoesntHave('repChats')->latest()->adaptivePaginate());
     }
 
     /**
@@ -46,6 +46,7 @@ class S_RepOrderController extends Controller
         return S_ShortRepOrderResource::collection(
             RepOrder::whereRelation('repChat', 'user1_id', auth('api')->id())->with(['repChat'])
                 ->filter(\request())
+                ->latest()
                 ->adaptivePaginate());
     }
 }
