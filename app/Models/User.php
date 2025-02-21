@@ -164,10 +164,10 @@ class User extends Authenticatable
 
     /**
      *
-     * @return HasOne
+     * @return HasOneThrough
      */
-    public function store(): HasOne
+    public function store(): HasOneThrough
     {
-        return $this->hasOne(StoreUser::class, 'user_id');
+        return $this->hasOneThrough(Store::class, StoreUser::class, 'user_id', 'id', 'id', 'store_id');
     }
 }
