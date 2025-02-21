@@ -43,7 +43,9 @@ class F_CreateRepOrderService
                 $order->update(['image' => $path]);
             }
 
-            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: [
+                'id' => encodeString($order->id)
+            ]));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
                 message: trans(ErrorMessageEnum::CREATE),
