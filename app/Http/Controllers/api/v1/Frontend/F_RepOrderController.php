@@ -48,11 +48,19 @@ class F_RepOrderController extends Controller
      */
     public function checkIfAccepted(string $order_id)
     {
-        $order = RepOrder::findOrFail(decodeString($order_id));
+        try {
+            $order = RepOrder::findOrFail(decodeString($order_id));
 
-        return response()->json([
-            'accepted' => $order->status == 'pending'
-        ]);
+            return response()->json([
+                'accepted' => $order->status == RepOrderStatusEnum::ACCEPTED
+            ]);
+        } catch (\Exception $ex) {
+            return response()->json(errorResponse(
+                message: trans(ErrorMessageEnum::CONNECT),
+                error: $ex->getMessage()),
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     /**
