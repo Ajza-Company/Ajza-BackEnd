@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class RepOrder extends Model
 {
@@ -24,5 +25,14 @@ class RepOrder extends Model
     public function repChats(): HasMany
     {
         return $this->hasMany(RepChat::class, 'rep_order_id');
+    }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function repChat(): HasOne
+    {
+        return $this->hasOne(RepChat::class, 'rep_order_id');
     }
 }

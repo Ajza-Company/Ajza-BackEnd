@@ -43,6 +43,6 @@ class S_RepOrderController extends Controller
      */
     public function allOrders()
     {
-        return S_ShortRepOrderResource::collection(RepOrder::whereRelation('repChats', 'user1_id', auth('api')->id())->adaptivePaginate());
+        return S_ShortRepOrderResource::collection(RepOrder::whereRelation('repChat', 'user1_id', auth('api')->id())->with(['repChat'])->adaptivePaginate());
     }
 }

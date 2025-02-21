@@ -4,6 +4,7 @@ namespace App\Services\Supplier\RepOrder;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Http\Resources\v1\Supplier\RepOrder\S_ShortRepOrderResource;
 use App\Models\RepChat;
 use App\Repositories\Supplier\RepOrder\Find\S_FindRepOrderInterface;
 use Illuminate\Http\JsonResponse;
@@ -45,7 +46,7 @@ class S_AcceptRepOrderService
             $repOrder->update(['status' => 'accepted']);
 
             \DB::commit();
-            return response()->json(successResponse(trans(SuccessMessagesEnum::CREATED)));
+            return response()->json(successResponse(trans(SuccessMessagesEnum::CREATED), data: S_ShortRepOrderResource::make($repOrder->load('repChat'))));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(trans(ErrorMessageEnum::CREATE), $ex->getMessage()), 500);
