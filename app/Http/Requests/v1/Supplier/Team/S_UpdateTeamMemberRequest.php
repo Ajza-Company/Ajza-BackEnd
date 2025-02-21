@@ -24,11 +24,11 @@ class S_UpdateTeamMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.name' => 'required|string',
-            'data.full_mobile' => 'required|string',
-            'data.is_active' => 'required|boolean',
-            'permissions' => 'required|array|min:1',
-            'permissions.*' => 'required|string|exists:permissions,name',
+            'data.name' => 'sometimes|string',
+            'data.full_mobile' => 'sometimes|string',
+            'data.is_active' => 'sometimes|boolean',
+            'permissions' => 'sometimes|array|min:1',
+            'permissions.*' => 'required_with:permissions|string|exists:permissions,name',
         ];
     }
 
