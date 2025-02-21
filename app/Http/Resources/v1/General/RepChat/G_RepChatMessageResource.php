@@ -24,7 +24,7 @@ class G_RepChatMessageResource extends JsonResource
             'message_type' => $this->message_type,
             'attachment' => $this->when($this->attachment, function() {
                 return [
-                    'url' => Storage::url($this->attachment),
+                    'url' => getFullUrl($this->attachment),
                     'filename' => basename($this->attachment)
                 ];
             }),
