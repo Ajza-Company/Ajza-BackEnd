@@ -30,7 +30,9 @@ class S_UpdateTeamMemberService
         try {
             $user = $this->findUser->find(decodeString($userId));
 
-            $user->syncPermissions($data['permissions']);
+            if (isset($data['permissions'])) {
+                $user->syncPermissions($data['permissions']);
+            }
 
             $user->update($data['data']);
 
