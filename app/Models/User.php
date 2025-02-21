@@ -161,4 +161,13 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Store::class, StoreUser::class, 'user_id', 'id', 'id', 'store_id');
     }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function store(): HasOne
+    {
+        return $this->hasOne(StoreUser::class, 'user_id');
+    }
 }
