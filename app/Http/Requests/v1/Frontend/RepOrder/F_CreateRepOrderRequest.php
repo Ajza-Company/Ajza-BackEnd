@@ -24,7 +24,7 @@ class F_CreateRepOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'data.title' => 'required|string',
             'data.description' => 'required|string',
             'data.city_id' => 'required|integer|exists:states,id',
