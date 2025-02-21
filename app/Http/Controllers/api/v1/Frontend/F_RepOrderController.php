@@ -56,6 +56,25 @@ class F_RepOrderController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function cancelOrder(string $order_id)
+    {
+        try {
+            $order = RepOrder::findOrFail(decodeString($order_id));
+            $order->update([
+                'status' => RepOrderStatusEnum::CANCELLED
+            ]);
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
+        } catch (\Exception $ex) {
+            return response()->json(errorResponse(
+                message: trans(ErrorMessageEnum::UPDATE),
+                error: $ex->getMessage()),
+                Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
      */
     public function orderDelivered(string $order_id)
     {

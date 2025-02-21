@@ -107,5 +107,6 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::post('create', [F_RepOrderController::class, 'createOrder']);
         Route::get('{order_id}/check-order-acceptance', [F_RepOrderController::class, 'checkIfAccepted']);
         Route::get('{order_id}/delivered', [F_RepOrderController::class, 'orderDelivered']);
+        Route::get('{order_id}/cancel', [F_RepOrderController::class, 'cancelOrder']);
     });
 });
