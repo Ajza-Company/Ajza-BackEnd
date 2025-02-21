@@ -3,7 +3,7 @@
 namespace App\Filters\General\Filters;
 
 use App\Enums\OrderStatusEnum;
-use App\Enums\RepChatStatusEnum;
+use App\Enums\RepOrderStatusEnum;
 use Illuminate\Database\Eloquent\Builder;
 
 class StatusFilter
@@ -20,11 +20,11 @@ class StatusFilter
         if (in_array($value, ['current', 'previous'])) {
             if ($value == 'current') {
                 return $builder->whereHas('order', function ($q) {
-                    $q->whereIn('status', [RepChatStatusEnum::PENDING, RepChatStatusEnum::ACCEPTED]);
+                    $q->whereIn('status', [RepOrderStatusEnum::PENDING, RepOrderStatusEnum::ACCEPTED]);
                 });
             }elseif ($value === 'previous') {
                 return $builder->whereHas('order', function ($q) {
-                    $q->whereIn('status', [RepChatStatusEnum::ENDED, RepChatStatusEnum::CANCELLED]);
+                    $q->whereIn('status', [RepOrderStatusEnum::ENDED, RepOrderStatusEnum::CANCELLED]);
                 });
             }
         }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\Frontend;
 
 use App\Enums\ErrorMessageEnum;
+use App\Enums\RepOrderStatusEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\RepOrder\F_CreateRepOrderRequest;
@@ -61,7 +62,7 @@ class F_RepOrderController extends Controller
         try {
             $order = RepOrder::findOrFail(decodeString($order_id));
             $order->update([
-                'status' => 'ended'
+                'status' => RepOrderStatusEnum::ENDED
             ]);
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
         } catch (\Exception $ex) {

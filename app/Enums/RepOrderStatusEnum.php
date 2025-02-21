@@ -6,7 +6,7 @@ use BenSampo\Enum\Enum;
 
 /**
  */
-final class RepChatStatusEnum extends Enum
+final class RepOrderStatusEnum extends Enum
 {
     const PENDING = 'pending';
     const ACCEPTED = 'accepted';
