@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\General\RepChatsFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -36,5 +38,16 @@ class RepChat extends Model
     public function latestMessage(): HasOne
     {
         return $this->hasOne(RepChatMessage::class, 'rep_chat_id')->latest();
+    }
+
+    /**
+     *
+     * @param Builder $builder
+     * @param $request
+     * @return Builder
+     */
+    public function scopeFilter(Builder $builder, $request): Builder
+    {
+        return (new RepChatsFilter($request))->filter($builder);
     }
 }

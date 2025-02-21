@@ -28,6 +28,7 @@ class G_RepChatController extends Controller
             ->orWhere('user2_id', $user_id)
             ->with(['user1', 'user2', 'latestMessage', 'order'])
             ->latest()
+            ->filter(\request())
             ->paginate();
 
         return G_RepChatResource::collection($chats);
