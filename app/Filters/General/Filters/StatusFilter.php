@@ -24,7 +24,7 @@ class StatusFilter
                 });
             }elseif ($value === 'previous') {
                 return $builder->whereHas('order', function ($q) {
-                    $q->whereIn('status', [RepOrderStatusEnum::ENDED, RepOrderStatusEnum::CANCELLED]);
+                    $q->whereNotIn('status', [RepOrderStatusEnum::PENDING, RepOrderStatusEnum::ACCEPTED]);
                 });
             }
         }

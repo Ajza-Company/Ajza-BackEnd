@@ -12,4 +12,5 @@ final class RepOrderStatusEnum extends Enum
     const ACCEPTED = 'accepted';
     const ENDED = 'ended';
     const CANCELLED = 'cancelled';
+    const TIMEOUT = 'timeout';
 }

@@ -4,6 +4,7 @@ namespace App\Services\Frontend\RepOrder;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Jobs\CancelRepOrderIfTimeoutJob;
 use App\Models\User;
 use App\Repositories\Frontend\RepOrder\Create\F_CreateRepOrderInterface;
 use Illuminate\Http\JsonResponse;
@@ -38,10 +39,11 @@ class F_CreateRepOrderService
 
             if (isset($data['image'])) {
                 $path = uploadFile("rep-orders/repOrder-$order->id", $data['image']);
-
                 // Update File
                 $order->update(['image' => $path]);
             }
+
+            CancelRepOrderIfTimeoutJob::dispatch($order->refresh())->delay(now()->addMinutes(5));
 
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: [
                 'id' => encodeString($order->id)

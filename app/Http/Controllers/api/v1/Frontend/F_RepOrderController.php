@@ -52,7 +52,8 @@ class F_RepOrderController extends Controller
             $order = RepOrder::findOrFail(decodeString($order_id));
 
             return response()->json([
-                'accepted' => $order->status == RepOrderStatusEnum::ACCEPTED
+                'accepted' => $order->status == RepOrderStatusEnum::ACCEPTED,
+                'status' => $order->status
             ]);
         } catch (\Exception $ex) {
             return response()->json(errorResponse(

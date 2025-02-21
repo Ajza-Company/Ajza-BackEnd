@@ -21,7 +21,7 @@ class StatusFilter
             if ($value == 'current') {
                 return $builder->whereIn('status', [RepOrderStatusEnum::PENDING, RepOrderStatusEnum::ACCEPTED]);
             }elseif ($value === 'previous') {
-                return $builder->whereIn('status', [RepOrderStatusEnum::ENDED, RepOrderStatusEnum::CANCELLED]);
+                return $builder->whereNotIn('status', [RepOrderStatusEnum::PENDING, RepOrderStatusEnum::ACCEPTED]);
             }
         }
         return null;
