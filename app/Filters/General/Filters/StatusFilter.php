@@ -19,9 +19,13 @@ class StatusFilter
     {
         if (in_array($value, ['current', 'previous'])) {
             if ($value == 'current') {
-                return $builder->whereIn('status', [RepChatStatusEnum::PENDING, RepChatStatusEnum::ACCEPTED]);
+                return $builder->whereHas('order', function ($q) {
+                    $q->whereIn('status', [RepChatStatusEnum::PENDING, RepChatStatusEnum::ACCEPTED]);
+                });
             }elseif ($value === 'previous') {
-                return $builder->whereIn('status', [RepChatStatusEnum::ENDED, RepChatStatusEnum::CANCELLED]);
+                return $builder->whereHas('order', function ($q) {
+                    $q->whereIn('status', [RepChatStatusEnum::ENDED, RepChatStatusEnum::CANCELLED]);
+                });
             }
         }
         return null;
