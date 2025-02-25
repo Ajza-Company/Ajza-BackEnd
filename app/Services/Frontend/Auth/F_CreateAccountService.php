@@ -43,7 +43,7 @@ class F_CreateAccountService
                 'email' => $data['email'],
                 'full_mobile' => $data['full_mobile'],
                 'is_registered' => true,
-                'gender' => isset($data['personal']) ? $data['personal']['gender'] : null,
+                'gender' => $data['gender'],
                 'password' => '12345678',
                 'preferred_language' => app()->getLocale()
             ]);
