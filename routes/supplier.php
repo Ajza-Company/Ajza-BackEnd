@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware('guest:sanctum')->group(function () {
+Route::middleware(['guest:sanctum', SetLocale::class])->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', [S_AuthController::class, 'login']);
     });
