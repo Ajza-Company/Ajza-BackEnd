@@ -85,6 +85,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     });
 
     Route::prefix('auth')->group(function () {
+        Route::post('update-profile', [F_AuthController::class, 'updateProfile']);
         Route::get('me', [F_AuthController::class, 'me']);
     });
 

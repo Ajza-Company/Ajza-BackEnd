@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\Auth\F_CreateAccountRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_SendOtpCodeRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_SetupAccountRequest;
+use App\Http\Requests\v1\Frontend\Auth\F_UpdateAccountRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_VerifyOtpCodeRequest;
 use App\Http\Resources\v1\User\UserResource;
 use App\Services\Frontend\Auth\F_CreateAccountService;
@@ -62,6 +63,16 @@ class F_AuthController extends Controller
     public function setupAccount(F_SetupAccountRequest $request)
     {
         return $this->setupAccount->setup(auth('api')->user(), $request->validated());
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function updateProfile(F_UpdateAccountRequest $request)
+    {
+        $user = auth('api')->user();
+        $user->update($request->validated());
+        return UserResource::make($user->refresh()->load('roles'));
     }
 
     /**
