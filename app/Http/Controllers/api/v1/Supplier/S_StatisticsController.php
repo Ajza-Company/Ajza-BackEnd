@@ -54,10 +54,7 @@ class S_StatisticsController extends Controller
             'allOrdersCount' => $allOrdersCount,
             'pendingOrdersCount' => $pendingOrdersCount,
             'ordersAmountToday' => $ordersAmountToday,
-            'ajzaAmount' => $ajzaAmount,
-            // For debugging - can be removed in production
-            'today' => $today->toDateString(),
-            'todayOrdersCount' => $todayOrders->count()
+            'ajzaAmount' => $ajzaAmount
         ];
     }
 }
