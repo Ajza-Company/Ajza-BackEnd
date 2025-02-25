@@ -13,6 +13,6 @@ class CategoryLocaleSeeder extends Seeder
      */
     public function run(): void
     {
-        CategoryLocale::factory()->count(2)->create();
+        CategoryLocale::factory()->count(12)->create();
     }
 }

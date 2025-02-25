@@ -106,4 +106,15 @@ class Order extends Model
     {
         return (new OrdersFilter($request))->filter($builder);
     }
+
+    /**
+     *
+     * @param Builder $builder
+     * @param $request
+     * @return Builder
+     */
+    public function scopeFilter(Builder $builder, $request): Builder
+    {
+        return (new \App\Filters\Frontend\OrdersFilter($request))->filter($builder);
+    }
 }
