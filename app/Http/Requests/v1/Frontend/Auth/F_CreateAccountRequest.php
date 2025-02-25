@@ -28,7 +28,7 @@ class F_CreateAccountRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'full_mobile' => 'required|string|unique:users,full_mobile',
             'account_type' => 'sometimes|string|in:personal,workshop',
-            'gender' => 'required_if:account_type,personal|string|in:male,female',
+            'gender' => 'required|string|in:male,female',
             'workshop.data.name' => 'required_if:account_type,workshop|string',
             'workshop.data.city_id' => 'required_if:account_type,workshop|integer|exists:cities,id',
             'workshop.data.commercial_registration' => 'required_if:account_type,workshop|string',
