@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\api\v1\Frontend;
 
 use App\Enums\ErrorMessageEnum;
+use App\Enums\MessageTypeEnum;
 use App\Enums\RepOrderStatusEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Events\v1\General\G_RepMessageSent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\RepOrder\F_CreateRepOrderRequest;
 use App\Http\Resources\v1\Frontend\RepOrder\F_ShortRepOrderResource;
+use App\Models\RepChatMessage;
 use App\Models\RepOrder;
 use App\Services\Frontend\RepOrder\F_CreateRepOrderService;
 use Illuminate\Http\Request;
@@ -92,6 +95,17 @@ class F_RepOrderController extends Controller
             $order->update([
                 'status' => RepOrderStatusEnum::ENDED
             ]);
+
+            $message = new RepChatMessage([
+                'sender_id' => auth()->id(),
+                'message_type' => MessageTypeEnum::TEXT
+            ]);
+
+            $order->repChat->messages()->save($message);
+            $message->load(['sender']);
+
+            broadcast(new G_RepMessageSent($message))->toOthers();
+
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
         } catch (\Exception $ex) {
             return response()->json(errorResponse(
