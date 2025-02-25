@@ -15,7 +15,7 @@ class G_RepOfferResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
+            'id' => encodeString($this->id),
             'price' => $this->price,
             'status' => $this->status,
             'created_at' => $this->created_at,
