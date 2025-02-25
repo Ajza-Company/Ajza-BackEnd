@@ -25,14 +25,15 @@ class S_StatisticsController extends Controller
     {
         $store = $this->findStore->find(decodeString($store_id));
         $orders = $store->orders()->statisticsFilter(\request());
+        dd($orders?->whereToday()?->sum('amount'));
         $allOrdersCount = $orders?->count();
         $pendingOrdersCount = $orders?->wherePending()?->count();
         $ordersAmountToday = $orders?->whereToday()?->sum('amount');
         $ajzaAmount = $ordersAmountToday * 0.2;
 
         return response()->json([
-            'pendingOrdersCount' => $pendingOrdersCount,
             'allOrdersCount' => $allOrdersCount,
+            'pendingOrdersCount' => $pendingOrdersCount,
             'ordersAmountToday' => $ordersAmountToday,
             'ajzaAmount' => $ajzaAmount
         ]);
