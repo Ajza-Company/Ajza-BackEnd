@@ -25,7 +25,6 @@ class S_StatisticsController extends Controller
     {
         $store = $this->findStore->find(decodeString($store_id));
         $orders = $store->orders()->statisticsFilter(\request());
-        dd($orders->count());
         $pendingOrdersCount = $orders?->wherePending()?->count();
         $allOrdersCount = $orders?->count();
         $ordersAmountToday = $orders?->whereToday()?->sum('amount');
