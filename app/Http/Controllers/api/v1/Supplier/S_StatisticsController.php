@@ -15,7 +15,6 @@ class S_StatisticsController extends Controller
      */
     public function __construct(private S_FindStoreInterface $findStore)
     {
-
     }
 
     /**
@@ -24,18 +23,29 @@ class S_StatisticsController extends Controller
     public function __invoke(string $store_id)
     {
         $store = $this->findStore->find(decodeString($store_id));
-        $orders = $store->orders()->statisticsFilter(\request());
-        dd($orders?->whereToday()?->sum('amount'));
+        return response()->json($this->calculateStatistics($store));
+    }
+
+    /**
+     * Calculate store statistics.
+     *
+     * @param mixed $store
+     * @return array
+     */
+    private function calculateStatistics($store): array
+    {
+        $orders = $store->orders()->statisticsFilter(request());
+
         $allOrdersCount = $orders?->count();
         $pendingOrdersCount = $orders?->wherePending()?->count();
         $ordersAmountToday = $orders?->whereToday()?->sum('amount');
         $ajzaAmount = $ordersAmountToday * 0.2;
 
-        return response()->json([
+        return [
             'allOrdersCount' => $allOrdersCount,
             'pendingOrdersCount' => $pendingOrdersCount,
             'ordersAmountToday' => $ordersAmountToday,
             'ajzaAmount' => $ajzaAmount
-        ]);
+        ];
     }
 }
