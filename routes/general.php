@@ -48,6 +48,6 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::post('/chats/{chat_id}/offers', [G_RepChatController::class, 'sendOffer']);
 
         // Offer routes
-        Route::post('/offers/{offer}', [G_RepChatController::class, 'updateOffer']);
+        Route::post('/offers/{offer}/update', [G_RepChatController::class, 'updateOffer']);
     });
 });
