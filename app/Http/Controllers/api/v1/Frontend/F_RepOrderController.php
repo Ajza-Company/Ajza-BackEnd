@@ -98,7 +98,7 @@ class F_RepOrderController extends Controller
 
             $message = new RepChatMessage([
                 'sender_id' => auth()->id(),
-                'message_type' => MessageTypeEnum::TEXT
+                'message_type' => MessageTypeEnum::ENDED
             ]);
 
             $order->repChat->messages()->save($message);
