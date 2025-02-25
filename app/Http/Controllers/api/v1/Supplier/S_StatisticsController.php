@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\Supplier;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class S_StatisticsController extends Controller
@@ -36,16 +37,27 @@ class S_StatisticsController extends Controller
     {
         $orders = $store->orders()->statisticsFilter(request());
 
-        $allOrdersCount = $orders?->count();
-        $pendingOrdersCount = $orders?->wherePending()?->count();
-        $ordersAmountToday = $orders?->whereToday()?->sum('amount');
+        // Base counts
+        $allOrdersCount = $orders->count() ?? 0;
+        $pendingOrdersCount = $orders->wherePending()->count() ?? 0;
+
+        // Calculate today's orders directly instead of using the scope
+        $today = Carbon::today();
+        $todayOrders = $orders->whereDate('created_at', $today);
+        $ordersAmountToday = $todayOrders->sum('amount') ?? 0;
+
+        // Make sure it's a number before calculation
+        $ordersAmountToday = (float)$ordersAmountToday;
         $ajzaAmount = $ordersAmountToday * 0.2;
 
         return [
             'allOrdersCount' => $allOrdersCount,
             'pendingOrdersCount' => $pendingOrdersCount,
             'ordersAmountToday' => $ordersAmountToday,
-            'ajzaAmount' => $ajzaAmount
+            'ajzaAmount' => $ajzaAmount,
+            // For debugging - can be removed in production
+            'today' => $today->toDateString(),
+            'todayOrdersCount' => $todayOrders->count()
         ];
     }
 }
