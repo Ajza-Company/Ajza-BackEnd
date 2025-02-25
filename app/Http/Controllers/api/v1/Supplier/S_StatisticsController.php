@@ -24,8 +24,8 @@ class S_StatisticsController extends Controller
     public function __invoke(string $store_id)
     {
         $store = $this->findStore->find(decodeString($store_id));
-        $orders = $store->orders()->statisticsFilter(\request());
-        dd($orders);
+        $orders = $store->orders();
+        dd($orders->get());
         $pendingOrdersCount = $orders?->wherePending()?->count();
         $allOrdersCount = $orders?->count();
         $ordersAmountToday = $orders?->whereToday()?->sum('amount');
