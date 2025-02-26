@@ -62,5 +62,8 @@ class UserSeeder extends Seeder
         ]);
 
         $representative->assignRole(RoleEnum::REPRESENTATIVE);
+
+        User::factory()->count(100)->create();
+
     }
 }
