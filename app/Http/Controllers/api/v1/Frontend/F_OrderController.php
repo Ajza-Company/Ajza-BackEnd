@@ -36,7 +36,7 @@ class F_OrderController extends Controller
      */
     public function index()
     {
-        $orders = auth('api')->user()->orders()->with(['orderProducts' => ['storeProduct']])->filter(\request())->adaptivePaginate();
+        $orders = auth('api')->user()->orders()->with(['orderProducts' => ['storeProduct']])->filter(\request())->latest()->adaptivePaginate();
         return F_ShortOrderResource::collection($orders);
     }
 
