@@ -54,7 +54,7 @@ class StoreProduct extends Model
 
     public function offer(): HasOne
     {
-        return $this->hasOne(StoreProductOffer::class, 'store_product_id');
+        return $this->hasOne(StoreProductOffer::class, 'store_product_id')->where('expires_at', '>=', now());
     }
 
     /**
