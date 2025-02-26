@@ -121,6 +121,8 @@ class G_RepChatController extends Controller
         $offer = RepOffer::findOrFail(decodeString($rep_offer_id));
         $offer->update(['status' => $request->status]);
 
+        broadcast(new G_RepMessageSent($offer->refresh()->message))->toOthers();
+
         return G_RepOfferResource::make($offer);
     }
 }
