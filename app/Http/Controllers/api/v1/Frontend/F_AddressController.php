@@ -33,7 +33,7 @@ class F_AddressController extends Controller
      */
     public function index()
     {
-        return F_AddressResource::collection(auth('api')->user()->addresses);
+        return F_AddressResource::collection(auth('api')->user()->addresses()->latest()->get());
     }
 
     /**
