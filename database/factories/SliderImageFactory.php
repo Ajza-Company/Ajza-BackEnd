@@ -17,7 +17,7 @@ class SliderImageFactory extends Factory
 
         return [
             'locale_id' => $locale->id ?? 1,
-            'image' => randomImage('slider')[rand(0, 10)],
+            'image' => randomImage('slider')[rand(0, 3)],
             'order' => $this->faker->randomNumber(),
             'is_active' => $this->faker->boolean()
         ];
