@@ -18,9 +18,9 @@ class TypeFilter
     {
         if (in_array($value, ['current', 'previous'])) {
             if ($value === 'current') {
-                return $builder->whereStatus(OrderStatusEnum::PENDING);
+                return $builder->whereIn('status', [OrderStatusEnum::PENDING, OrderStatusEnum::ACCEPTED]);
             }elseif ($value === 'previous') {
-                return $builder->where('status', '!=', OrderStatusEnum::PENDING);
+                return $builder->whereIn('status', [OrderStatusEnum::REJECTED, OrderStatusEnum::CANCELLED, OrderStatusEnum::COMPLETED]);
             }
         }
         return null;
