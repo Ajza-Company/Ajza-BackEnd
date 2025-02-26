@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1\Supplier\StoreHour;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,8 +18,8 @@ class S_StoreHourResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'day' => $this->day,
-            'open_time' => $this->open_time,
-            'close_time' => $this->close_time
+            'open_time' => Carbon::parse($this->open_time)->format('H:i'),
+            'close_time' => Carbon::parse($this->close_time)->format('H:i')
         ];
     }
 }
