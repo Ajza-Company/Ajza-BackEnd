@@ -16,11 +16,11 @@ class F_ShortProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         $price = $this->price;
-        if ($this->relationLoaded('offer')) {
-            if ($this->offer->type === 'fixed') {
-                $price = $this->price - $this->offer->discount;
+        if ($this->relationLoaded('offer') && $this->offer !== null) {
+            if ($this->offer?->type === 'fixed') {
+                $price = $this->price - $this->offer?->discount;
             } else {
-                $price = $this->price - ($this->price * $this->offer->discount) / 100;
+                $price = $this->price - ($this->price * $this->offer?->discount) / 100;
             }
         }
         return [
