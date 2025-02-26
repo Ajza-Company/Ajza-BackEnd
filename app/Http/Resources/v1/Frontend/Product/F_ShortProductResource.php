@@ -22,7 +22,7 @@ class F_ShortProductResource extends JsonResource
             'price' => $this->price,
             'currency' => $this->store?->company?->country?->localized?->currency_code,
             'discount' => $this->whenLoaded('offer', function (){
-                return trans('general.product_discount', ['discount' => $this->offer->discount ?? 0]);
+                return trans($this->offer->type === 'fixed' ? 'general.product_discount' : 'general.product_discount_percentage', ['discount' => $this->offer->discount ?? 0]);
             }),
             'image' => $this->product?->image,
             'is_favorite' => $this->when($this->relationLoaded('favorite'), function () {
