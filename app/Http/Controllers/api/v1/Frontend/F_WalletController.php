@@ -14,7 +14,7 @@ class F_WalletController extends Controller
      */
     public function __invoke()
     {
-        return F_ShortWalletResource::collection(auth('api')->user()->wallet?->transactions()->latest()->adaptivePaginate())->additional([
+        return F_ShortWalletResource::collection(auth('api')->user()->wallet?->transactions()?->latest()->adaptivePaginate())->additional([
             'balance' => auth('api')->user()->wallet?->balance
         ]);
     }
