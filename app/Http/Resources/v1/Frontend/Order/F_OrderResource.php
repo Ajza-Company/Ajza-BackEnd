@@ -17,6 +17,14 @@ class F_OrderResource extends JsonResource
         return [
             $this->merge(F_ShortOrderResource::make($this)),
             'amount' => $this->amount,
+            'invoice_details' => $this->whenLoaded('orderProducts', function (){
+                return [
+                    'amount' => $this->orderProducts->sum('amount'),
+                    'discount' => $this->orderProducts->sum('discount'),
+                    'delivery_fees' => 10.00,
+                    'total' => $this->orderProducts->sum('amount') + 10.00,
+                ];
+            }),
             'delivery_method' => $this->delivery_method
         ];
     }
