@@ -33,7 +33,10 @@ class S_CreateOfferService
     public function create(array $data, Store $store): JsonResponse
     {
         try {
-            $offerExist = StoreProductOffer::where('store_product_id', $data['product_id'])->exists();
+            $offerExist = StoreProductOffer::query()
+                ->where('store_product_id', $data['product_id'])
+                ->where('expires_at', '>=', Carbon::now())
+                ->exists();
 
             if ($offerExist) {
                 return response()->json(errorResponse(trans(ErrorMessageEnum::CREATE)), 400);
