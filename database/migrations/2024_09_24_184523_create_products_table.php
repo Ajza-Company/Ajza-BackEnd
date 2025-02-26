@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('part_number', 50)->nullable();
-            $table->string('image', 100)->nullable();
+            $table->string('image', 255)->nullable();
             $table->double('price');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('store_id')->constrained()->cascadeOnDelete();
             $table->decimal('price', 10);
             $table->decimal('old_price', 10)->nullable();
-            $table->string('image', 150)->nullable();
+            $table->string('image', 255)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

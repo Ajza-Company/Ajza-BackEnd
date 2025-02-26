@@ -13,6 +13,6 @@ class ProductLocaleSeeder extends Seeder
      */
     public function run(): void
     {
-        ProductLocale::factory()->count(200)->create();
+        ProductLocale::factory()->count(400)->create();
     }
 }
