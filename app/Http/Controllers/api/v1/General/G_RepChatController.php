@@ -119,8 +119,9 @@ class G_RepChatController extends Controller
     public function updateOffer(G_UpdateOfferRequest $request, string $rep_offer_id)
     {
         $data = $request->validated();
+        \Log::info('$rep_offer_id: '. $rep_offer_id . ' - $data: '. json_encode($data));
         $offer = RepOffer::findOrFail(decodeString($rep_offer_id));
-        $chat = RepChat::findOrFail(decodeString($data['chat_id']));
+        $chat = RepChat::findOrFail($data['chat_id']);
         $offer->update(['status' => $data['status']]);
 
         $message = new RepChatMessage([
