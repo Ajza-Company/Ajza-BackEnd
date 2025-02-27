@@ -10,7 +10,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('repair.chat.{chatId}', function ($user, $chatId) {
-    Log::info('channel: ' . $user->id . ' ' . $chatId);
-    $chat = RepChat::findOrFail($chatId);
+    $chat = RepChat::findOrFail(decodeString($chatId));
     return $user->id === $chat->user1_id || $user->id === $chat->user2_id;
 });
