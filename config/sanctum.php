@@ -81,7 +81,6 @@ return [
     ],
 
     // Add these new settings
-    'prefix' => 'sanctum',
     'domain' => null,
     'supports_credentials' => true,
 

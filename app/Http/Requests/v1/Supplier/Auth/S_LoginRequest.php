@@ -23,7 +23,8 @@ class S_LoginRequest extends FormRequest
     {
         return [
             'full_mobile' => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'fcm_token' => 'sometimes|string'
         ];
     }
 }

@@ -10,9 +10,24 @@ Broadcast::routes(['middleware' => 'auth:sanctum']);
 });*/
 
 Broadcast::channel('repair.chat.{chatId}', function ($user, $chatId) {
-    Log::info('chatId: ' . $chatId);
-    $chat = RepChat::findOrFail(decodeString($chatId));
-    Log::info('chatId: ' . json_encode($chat));
+    try {
+        $decodedChatId = decodeString($chatId);
+        $chat = RepChat::findOrFail($decodedChatId);
 
-    return $user->id === $chat->user1_id || $user->id === $chat->user2_id;
+        $authorized = $user->id === $chat->user1_id || $user->id === $chat->user2_id;
+
+        \Log::info('Channel Auth:', [
+            'user_id' => $user->id,
+            'chat_id' => $chatId,
+            'authorized' => $authorized
+        ]);
+
+        return $authorized;
+    } catch (\Exception $e) {
+        \Log::error('Channel Auth Error:', [
+            'error' => $e->getMessage(),
+            'chat_id' => $chatId
+        ]);
+        return false;
+    }
 });
