@@ -22,6 +22,7 @@ class G_RepChatMessageResource extends JsonResource
             'sender' => ShortUserResource::make($this->whenLoaded('sender')),
             'message' => $this->message,
             'message_type' => $this->message_type,
+            'is_hidden' => (bool)$this->is_hidden,
             'attachment' => $this->when($this->attachment, function() {
                 return [
                     'url' => getFullUrl($this->attachment),
