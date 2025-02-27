@@ -80,6 +80,7 @@ class G_RepChatController extends Controller
         $chat = RepChat::findOrFail(decodeString($chat_id));
 
         $messages = $chat->messages()
+            ->whereIsHidden(false)
             ->with(['sender', 'offer'])
             ->latest()
             ->paginate();
@@ -127,7 +128,8 @@ class G_RepChatController extends Controller
         $message = new RepChatMessage([
             'sender_id' => auth('api')->id(),
             'message_type' => MessageTypeEnum::TEXT,
-            'rep_offer_id' => $offer->id
+            'rep_offer_id' => $offer->id,
+            'is_hidden' => true
         ]);
 
         $chat->messages()->save($message);
