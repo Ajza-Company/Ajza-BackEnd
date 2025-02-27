@@ -3,6 +3,7 @@
 use App\Models\RepChat;
 use Illuminate\Support\Facades\Broadcast;
 
+Log::info('BroadcastServiceProvider: auth:sanctum22222');
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
