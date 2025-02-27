@@ -35,7 +35,7 @@ class S_RepOrderController extends Controller
      */
     public function orders()
     {
-        return S_ShortRepOrderResource::collection(RepOrder::whereDoesntHave('repChats')->latest()->adaptivePaginate());
+        return S_ShortRepOrderResource::collection(RepOrder::whereDoesntHave('repChats')->whereStatus('pending')->latest()->adaptivePaginate());
     }
 
     /**
