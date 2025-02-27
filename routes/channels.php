@@ -9,7 +9,7 @@ Broadcast::routes(['middleware' => 'auth:sanctum']);
     return (int) $user->id === (int) $id;
 });*/
 
-Broadcast::channel('private-repair.chat.{chatId}', function ($user, $chatId) {
+Broadcast::channel('repair.chat.{chatId}', function ($user, $chatId) {
     Log::info('chatId: ' . $chatId);
     $chat = RepChat::findOrFail(decodeString($chatId));
     Log::info('chatId: ' . json_encode($chat));
