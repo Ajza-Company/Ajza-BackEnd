@@ -129,7 +129,8 @@ class G_RepChatController extends Controller
             'sender_id' => auth('api')->id(),
             'message_type' => MessageTypeEnum::TEXT,
             'message' => $data['status'] == 'accepted' ? 'تم قبول العرض بقيمة '. $offer->price : 'تم رفض العرض بقيمة '. $offer->price,
-            'rep_offer_id' => $offer->id
+            'rep_offer_id' => $offer->id,
+            'is_hidden' => true
         ]);
 
         $chat->messages()->save($message);
