@@ -5,11 +5,14 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::routes(['middleware' => 'auth:sanctum']);
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+/*Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
-});
+});*/
 
 Broadcast::channel('repair.chat.{chatId}', function ($user, $chatId) {
+    Log::info('chatId: ' . $chatId);
     $chat = RepChat::findOrFail(decodeString($chatId));
+    Log::info('chatId: ' . json_encode($chat));
+
     return $user->id === $chat->user1_id || $user->id === $chat->user2_id;
 });
