@@ -80,4 +80,9 @@ return [
         'validate_csrf_token' => Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
     ],
 
+    // Add these new settings
+    'prefix' => 'sanctum',
+    'domain' => null,
+    'supports_credentials' => true,
+
 ];
