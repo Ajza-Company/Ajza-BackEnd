@@ -24,7 +24,7 @@ class F_VerifyOtpCodeRequest extends FormRequest
         return [
             'full_mobile' => 'required|string',
             'code' => 'required|integer',
-            'fcm_token' => 'sometimes|string'
+            //'fcm_token' => 'sometimes|string'
         ];
     }
 }

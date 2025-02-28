@@ -35,7 +35,7 @@ class F_CreateAccountRequest extends FormRequest
             'workshop.data.national_identity' => 'required_if:account_type,workshop|string',
             'workshop.data.added_tax' => 'required_if:account_type,workshop|string',
             'workshop.commercial_registration_image' => 'required_if:account_type,workshop|image|mimes:jpeg,png,jpg,gif,svg',
-            'fcm_token' => 'sometimes|string',
+            //'fcm_token' => 'sometimes|string',
         ];
     }
 
