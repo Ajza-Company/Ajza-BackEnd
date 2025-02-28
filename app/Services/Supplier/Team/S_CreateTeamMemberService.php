@@ -32,7 +32,10 @@ class S_CreateTeamMemberService
         try {
             $store = $this->findStore->find($data['store_id']);
 
-            $user = $this->createUser->create($data['data']);
+            $user = $this->createUser->create([
+                'company_id' => $store->company_id,
+                ...$data['data']
+            ]);
 
             $store->storeUsers()->create(['user_id' => $user->id]);
 

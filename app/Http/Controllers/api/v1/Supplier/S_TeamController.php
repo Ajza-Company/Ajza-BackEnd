@@ -16,6 +16,7 @@ class S_TeamController extends Controller
      * Create a new instance.
      *
      * @param S_CreateTeamMemberService $createTeamMember
+     * @param S_UpdateTeamMemberService $updateTeamMember
      */
     public function __construct(private S_CreateTeamMemberService $createTeamMember, private S_UpdateTeamMemberService $updateTeamMember)
     {
@@ -26,7 +27,7 @@ class S_TeamController extends Controller
      */
     public function index()
     {
-        return S_TeamResource::collection(userCompany()->users()->with('permissions', 'store')->get());
+        return S_TeamResource::collection(userCompany()->users()->with(['permissions', 'store'])->get());
     }
 
     /**

@@ -54,14 +54,11 @@ class Company extends Model
 
     /**
      *
-     * @return BelongsToMany
+     * @return HasMany
      */
-    public function users(): BelongsToMany
+    public function users(): HasMany
     {
-        return $this->belongsToMany(User::class, 'store_users', 'store_id', 'user_id')
-            ->join('stores', 'stores.id', '=', 'store_users.store_id')
-            ->where('stores.company_id', $this->id)
-            ->distinct();
+        return $this->hasMany(User::class, 'company_id');
     }
 
     /**
