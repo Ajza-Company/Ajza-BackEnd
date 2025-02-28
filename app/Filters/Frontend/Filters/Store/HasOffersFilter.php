@@ -19,9 +19,13 @@ class HasOffersFilter
 
         return $query->whereHas('storeProducts', function (Builder $productsQuery) use ($hasOffers): void {
             if ($hasOffers) {
-                $productsQuery->whereHas('offer');
+                $productsQuery->whereHas('offer', function (Builder $offerQuery): void {
+                    $offerQuery->where('ajza_offer', false);
+                });
             } else {
-                $productsQuery->whereDoesntHave('offer');
+                $productsQuery->whereDoesntHave('offer', function (Builder $offerQuery): void {
+                    $offerQuery->where('ajza_offer', false);
+                });
             }
         });
     }

@@ -44,7 +44,7 @@ Route::group([], function () {
     });
 
     Route::middleware(SetLocale::class)->group(function () {
-        Route::get('ajza-offers', F_AjzaOfferController::class);
+        Route::get('ajza-offers', [F_ProductController::class, '__invoke']);
 
         Route::prefix('car-brands')->group(function () {
             Route::get('/', F_CarBrandController::class);

@@ -3,6 +3,7 @@
 namespace App\Filters\Frontend;
 
 use App\Filters\FilterClass;
+use App\Filters\Frontend\Filters\Product\AjzaOfferFilter;
 use App\Filters\Frontend\Filters\Product\CarBrandFilter;
 use App\Filters\Frontend\Filters\Product\CarModelFilter;
 use App\Filters\Frontend\Filters\Product\CarTypeFilter;
@@ -19,7 +20,8 @@ class ProductFilter extends FilterClass
         'store' => \App\Filters\Frontend\Filters\Product\StoreFilter::class,
         'car-type' => CarTypeFilter::class,
         'car-brand' => CarBrandFilter::class,
-        'car-model' => CarModelFilter::class
+        'car-model' => CarModelFilter::class,
+        'has-ajza-offer' => AjzaOfferFilter::class,
 
     ];
 }
