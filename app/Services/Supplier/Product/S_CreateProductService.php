@@ -43,7 +43,7 @@ class S_CreateProductService
     
             DB::commit();
     
-            return response()->json(successResponse(message: "Products synced successfully"));
+            return response()->json(successResponse(message: trans('general.products_created_successfully')));
         } catch (\Exception $ex) {
             DB::rollBack();
     
