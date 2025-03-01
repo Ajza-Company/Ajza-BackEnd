@@ -32,9 +32,8 @@ class StoreProductRequest extends FormRequest
             ],
             'product_ids.*' => [
                 'required_with::product_ids',
-                'integer',
-                'exists:products,id'
-            ],
+                'string'
+                ],
 
             'category_id' => [
                 'required_if:is_select_all,true',
