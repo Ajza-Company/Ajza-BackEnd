@@ -37,9 +37,8 @@ class StoreProductRequest extends FormRequest
             ],
 
             'category_id' => [
-                'required',
-                'integer',
-                'exists:categories,id'
+                'required_if:is_select_all,true',
+                'string'
             ],
         ];
         }
