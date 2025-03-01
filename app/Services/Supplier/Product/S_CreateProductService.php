@@ -14,9 +14,10 @@ class S_CreateProductService
     /**
      *
      * @param array $data
+     * @param $store_id
      * @return JsonResponse
      */
-    public function create(array $data): JsonResponse
+    public function create(array $data , $store_id): JsonResponse
     {
         try {
             DB::beginTransaction();
@@ -25,11 +26,11 @@ class S_CreateProductService
                 $data['product_ids'] = Product::where('category_id', $data['category_id'])->pluck('id')->toArray();
             }
     
-            Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($data) {
+            Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($store_id) {
                 foreach ($products as $product) {
                     StoreProduct::updateOrCreate(
                         [
-                            'store_id' => $data['store_id'],
+                            'store_id' => $store_id,
                             'product_id' => $product->id
                         ], // Search for an existing record
                         [

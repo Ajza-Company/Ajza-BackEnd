@@ -22,7 +22,7 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => 'required|exists:stores,id',
+            // 'store_id' => 'required|exists:stores,id',
             'is_select_all' => 'required|boolean',
             
             'product_ids' => [

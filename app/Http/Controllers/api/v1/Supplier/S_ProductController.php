@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\Supplier;
 
+use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Supplier\Product\S_CreateProductService;
@@ -41,17 +42,17 @@ class S_ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request,string $store_id)
     {
-        return $this->createProduct->create($request->validated());
+        $store = $this->findStore->find($store_id);
+        return $this->createProduct->create($request->validated(),$store->id);
     }
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        return $this->createProduct->create($request->validated());
-    
+        //
     }
 
     /**
