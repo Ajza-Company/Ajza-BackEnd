@@ -33,7 +33,7 @@ Route::middleware(['guest:sanctum', SetLocale::class])->group(function () {
     });
 });
 
-Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
+// Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('permissions', S_PermissionController::class);
     Route::get('store-details', S_CompanyController::class);
     Route::post('orders/{order_id}/take-action', [S_OrderController::class, 'takeAction']);
@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
             Route::get('statistics', S_StatisticsController::class);
             Route::get('orders', [S_OrderController::class, 'orders']);
             Route::get('products', [S_ProductController::class, 'index']);
+            Route::post('products/create', [S_ProductController::class, 'store']);
             Route::get('offers', [S_OfferController::class, 'index']);
             Route::post('offers', [S_OfferController::class, 'store']);
         });
@@ -62,4 +63,4 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('all', [S_RepOrderController::class, 'allOrders']);
         Route::get('{rep_order_id}/accept', [S_RepOrderController::class, 'accept']);
     });
-});
+// });
