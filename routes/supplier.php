@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
             Route::get('statistics', S_StatisticsController::class);
             Route::get('orders', [S_OrderController::class, 'orders']);
             Route::get('products', [S_ProductController::class, 'index']);
+            Route::post('products/create', [S_ProductController::class, 'store']);
             Route::get('offers', [S_OfferController::class, 'index']);
             Route::post('offers', [S_OfferController::class, 'store']);
         });
