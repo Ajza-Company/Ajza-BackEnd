@@ -44,7 +44,8 @@ class S_ProductController extends Controller
      */
     public function store(StoreProductRequest $request,string $store_id)
     {
-        $store = $this->findStore->find($store_id);
+        $store = $this->findStore->find(decodeString($store_id));
+        
         return $this->createProduct->create($request->validated(),$store->id);
     }
     /**

@@ -24,22 +24,24 @@ class StoreProductRequest extends FormRequest
         return [
             // 'store_id' => 'required|exists:stores,id',
             'is_select_all' => 'required|boolean',
-            
+
             'product_ids' => [
-                'nullable',
                 'required_if:is_select_all,false',
-                'array'
+                'array',
+                'min:1'
             ],
             'product_ids.*' => [
-                'required_if:is_select_all,false',
+                'required_with::product_ids',
+                'integer',
                 'exists:products,id'
             ],
-            
+
             'category_id' => [
-                'nullable',
-                'required_if:is_select_all,true',
+                'required',
+                'integer',
                 'exists:categories,id'
             ],
         ];
-    }
+        }
+    
     }
