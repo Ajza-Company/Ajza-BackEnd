@@ -23,7 +23,7 @@ class S_CreateProductService
             DB::beginTransaction();
     
             if ($data['is_select_all'] == true) {
-                $data['product_ids'] = Product::where('category_id', $data['category_id'])->pluck('id')->toArray();
+                $data['product_ids'] = Product::where('category_id', decodeString($data['category_id']))->pluck('id')->toArray();
             }
     
             Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($store_id) {
