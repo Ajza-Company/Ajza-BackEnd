@@ -26,17 +26,9 @@ class G_ProductController extends Controller
      */
     public function __invoke(string $store_id, Request $request)
     {
-        $store = $this->findStore->find(decodeString($store_id));
+        $store = $this->findStore->find(decodeString($store_id));        
+        $allProducts = $this->fetchProduct->fetch(data:['category_id'=> $store->category->id]);
         
-        $storeProductIds = $store->storeProducts()->pluck('product_id')->toArray();
-        
-        $allProducts = $this->fetchProduct->fetch();
-        
-        if ($request->category_id !== null) {
-            $decodedCategoryId = decodeString($request->category_id);
-            $allProducts = $allProducts->where('category_id', $decodedCategoryId);
-        }
-        
-        return G_ProductResource::collection($allProducts, $storeProductIds);
+        return G_ProductResource::collection($allProducts);
     }
 }

@@ -15,7 +15,9 @@ class F_ShortProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $oldprice = $this->price;
         $price = $this->price;
+
         if ($this->relationLoaded('offer') && $this->offer !== null) {
             if ($this->offer?->type === 'fixed') {
                 $price = $this->price - $this->offer?->discount;
@@ -28,6 +30,7 @@ class F_ShortProductResource extends JsonResource
             'store_id' => encodeString($this->store_id),
             'name' => $this->product?->localized?->name,
             'price' => $price,
+            'old_price' => $oldprice,
             'currency' => $this->store?->company?->country?->localized?->currency_code,
             'discount' => $this->whenLoaded('offer', function (){
                 return trans($this->offer?->type === 'fixed' ? 'general.product_discount' : 'general.product_discount_percentage', ['discount' => $this->offer?->discount ?? 0]);

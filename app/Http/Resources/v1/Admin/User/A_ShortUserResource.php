@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Resources\v1\General\Product;
+namespace App\Http\Resources\v1\Admin\User;
 
-use App\Enums\EncodingMethodsEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class G_ProductResource extends JsonResource
+class A_ShortUserResource extends JsonResource
 {
-
     /**
      * Transform the resource into an array.
      *
@@ -18,10 +16,9 @@ class G_ProductResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'name' => $this->localized?->name,
-            'price' => $this->price,
-            'image' => $this->image,
+            'name' => $this->name,
+            'email' => $this->email,
+            'full_mobile' => $this->full_mobile
         ];
     }
-
 }

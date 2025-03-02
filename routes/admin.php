@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\Admin\A_CompanyController;
+use App\Http\Controllers\api\v1\Admin\A_UserController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
 use App\Http\Controllers\api\v1\Supplier\S_CompanyController;
 use App\Http\Controllers\api\v1\Supplier\S_OfferController;
@@ -36,4 +37,5 @@ Route::middleware('guest:sanctum')->group(function () {
 
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
+    Route::get('users', [A_UserController::class, 'index']);
 });

@@ -26,12 +26,12 @@ class S_CreateProductService
                 $data['product_ids'] = Product::where('category_id', decodeString($data['category_id']))->pluck('id')->toArray();
             }
     
-            Product::whereIn('id', decodeString($data['product_ids']))->chunk(100, function ($products) use ($store_id) {
+            Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($store_id) {
                 foreach ($products as $product) {
                     StoreProduct::updateOrCreate(
                         [
                             'store_id' => $store_id,
-                            'product_id' => decodeString($product->id)
+                            'product_id' => $product->id
                         ], // Search for an existing record
                         [
                             'price' => $product->price,

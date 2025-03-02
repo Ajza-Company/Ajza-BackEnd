@@ -76,6 +76,15 @@ class Store extends Model
         return $this->hasManyThrough(Category::class, StoreCategory::class, 'store_id', 'id', 'id', 'category_id');
     }
 
+     /**
+     *
+     * @return HasOne
+     */
+    public function category(): HasOne
+    {
+        return $this->hasOne(StoreCategory::class);
+    }
+
     /**
      *
      * @return HasManyThrough
