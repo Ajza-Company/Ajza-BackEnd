@@ -17,13 +17,15 @@ class S_CreateProductService
      * @param $store_id
      * @return JsonResponse
      */
-    public function create(array $data , $store_id): JsonResponse
+    public function create(array $data , $store): JsonResponse
     {
         try {
             DB::beginTransaction();
+
+            $store_id = $store->id;
     
             if ($data['is_select_all'] == true) {
-                $data['product_ids'] = Product::where('category_id', decodeString($data['category_id']))->pluck('id')->toArray();
+                $data['product_ids'] = Product::where('category_id', $store->category->id)->pluck('id')->toArray();
             }
     
             Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($store_id) {
