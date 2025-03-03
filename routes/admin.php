@@ -13,6 +13,7 @@ use App\Http\Controllers\api\v1\Supplier\S_StatisticsController;
 use App\Http\Controllers\api\v1\Supplier\S_StoreController;
 use App\Http\Controllers\api\v1\Supplier\S_TeamController;
 use App\Http\Controllers\api\v1\Supplier\S_TransactionController;
+use App\Http\Controllers\api\v1\Admin\A_AuthController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +39,7 @@ Route::middleware('guest:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::get('users', [A_UserController::class, 'index']);
+    Route::prefix('auth')->group(function () {
+        Route::get('virtual-login/{user}', [A_AuthController::class, 'loginWithID']);
+    });
 });

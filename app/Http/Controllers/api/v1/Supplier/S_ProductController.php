@@ -46,7 +46,7 @@ class S_ProductController extends Controller
     {
         $store = $this->findStore->find(decodeString($store_id));
         
-        return $this->createProduct->create($request->validated(),$store->id);
+        return $this->createProduct->create($request->validated(),$store);
     }
     /**
      * Display the specified resource.

@@ -24,7 +24,7 @@ class S_CreateStoreService
     public function __construct(private S_CreateStoreInterface $createStore,
                                 private S_InsertStoreHourInterface $insertStoreHour)
     {
-    }
+    } 
 
     /**
      *
