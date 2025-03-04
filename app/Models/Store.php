@@ -76,6 +76,15 @@ class Store extends Model
         return $this->hasManyThrough(Category::class, StoreCategory::class, 'store_id', 'id', 'id', 'category_id');
     }
 
+     /**
+     *
+     * @return HasOne
+     */
+    public function category(): HasOne
+    {
+        return $this->hasOne(StoreCategory::class);
+    }
+
     /**
      *
      * @return HasManyThrough
@@ -119,6 +128,15 @@ class Store extends Model
     public function storeUsers(): HasMany
     {
         return $this->hasMany(StoreUser::class, 'store_id');
+    }
+
+    /**
+     *
+     * @return HasManyThrough
+     */
+    public function users(): HasManyThrough
+    {
+        return $this->hasManyThrough(User::class, StoreUser::class, 'store_id', 'id', 'id', 'user_id');
     }
 
     /**

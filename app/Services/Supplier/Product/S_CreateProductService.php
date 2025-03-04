@@ -14,22 +14,25 @@ class S_CreateProductService
     /**
      *
      * @param array $data
+     * @param $store_id
      * @return JsonResponse
      */
-    public function create(array $data): JsonResponse
+    public function create(array $data , $store): JsonResponse
     {
         try {
             DB::beginTransaction();
+
+            $store_id = $store->id;
     
             if ($data['is_select_all'] == true) {
-                $data['product_ids'] = Product::where('category_id', $data['category_id'])->pluck('id')->toArray();
+                $data['product_ids'] = Product::where('category_id', $store->category->id)->pluck('id')->toArray();
             }
     
-            Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($data) {
+            Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($store_id) {
                 foreach ($products as $product) {
                     StoreProduct::updateOrCreate(
                         [
-                            'store_id' => $data['store_id'],
+                            'store_id' => $store_id,
                             'product_id' => $product->id
                         ], // Search for an existing record
                         [
@@ -42,7 +45,7 @@ class S_CreateProductService
     
             DB::commit();
     
-            return response()->json(successResponse(message: "Products synced successfully"));
+            return response()->json(successResponse(message: trans('general.products_created_successfully')));
         } catch (\Exception $ex) {
             DB::rollBack();
     

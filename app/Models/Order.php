@@ -60,6 +60,15 @@ class Order extends Model
 
     /**
      *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     *
      * @return HasOne
      */
     public function review(): HasOne

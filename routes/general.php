@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
-use App\Http\Controllers\api\v1\General\G_AreaController;
-use App\Http\Controllers\api\v1\General\G_CancelOrderController;
-use App\Http\Controllers\api\v1\General\G_NotificationController;
-use App\Http\Controllers\api\v1\General\G_RepChatController;
-use App\Http\Controllers\api\v1\General\G_StateController;
+use App\Http\Controllers\api\v1\General\{
+    G_AreaController,
+    G_CancelOrderController,
+    G_NotificationController,
+    G_RepChatController,
+    G_StateController,
+    G_ProductController
+};
 use App\Http\Controllers\DeleteAccountController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
@@ -33,13 +36,18 @@ Route::group([], function () {
     });
 });
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+Route::prefix('v1')->group(function () {
     Route::middleware(SetLocale::class)->group(function () {
         Route::get('notifications', G_NotificationController::class);
     });
     Route::prefix('orders')->group(function () {
         Route::post('{order_id}/cancel', G_CancelOrderController::class);
     });
+
+    Route::prefix('products')->group(function () {
+        Route::get('/{store_id}', G_ProductController::class);
+    });
+    
     Route::prefix('rep-orders')->group(function () {
         Route::get('/chats', [G_RepChatController::class, 'index']);
         Route::get('/chats/{chat_id}', [G_RepChatController::class, 'show']);

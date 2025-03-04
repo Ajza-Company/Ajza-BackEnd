@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\v1\Supplier\Product;
 
+use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProductRequest extends FormRequest
 {
+    use DecodesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,24 +25,29 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => 'required|exists:stores,id',
             'is_select_all' => 'required|boolean',
-            
+    
             'product_ids' => [
                 'nullable',
                 'required_if:is_select_all,false',
                 'array'
             ],
+
             'product_ids.*' => [
-                'required_if:is_select_all,false',
-                'exists:products,id'
+                'required_with:product_ids',
+                'integer'
             ],
-            
-            'category_id' => [
-                'nullable',
-                'required_if:is_select_all,true',
-                'exists:categories,id'
-            ],
+
         ];
     }
+            
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->decodeInput('product_ids.*');
     }
+
+    
+}

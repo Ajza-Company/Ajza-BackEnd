@@ -12,7 +12,17 @@ trait DecodesInputTrait
      */
     protected function decodeInput(string $field): void
     {
-        if (str_contains($field, '.*')) {
+        /*if (str_contains($field, '.*')) {
+            $this->decodeArrayInput($field);
+            return;
+        }*/
+
+        if (str_contains($field, '.*') && substr_count($field, '.') === 1) {
+            $this->decodeSimpleArrayInput($field);
+            return;
+        }
+
+        if (str_contains($field, '.*.')) {
             $this->decodeArrayInput($field);
             return;
         }
@@ -45,6 +55,36 @@ trait DecodesInputTrait
                 $this->merge([$field => $decoded]);
             }
         }
+    }
+
+    /**
+     * Decode simple array input values.
+     *
+     * @param string $field The field name with wildcard (e.g., 'product_ids.*')
+     * @return void
+     */
+    protected function decodeSimpleArrayInput(string $field): void
+    {
+        // Get the base array name by removing the .*
+        $arrayKey = str_replace('.*', '', $field);
+
+        // Get the array from input
+        $array = $this->input($arrayKey, []);
+
+        if (!is_array($array)) {
+            return;
+        }
+
+        // Process each item in the array
+        foreach ($array as $index => $value) {
+            if ($value && function_exists('decodeString')) {
+                $decoded = decodeString($value);
+                $array[$index] = $decoded;
+            }
+        }
+
+        // Update the request with the modified array
+        $this->merge([$arrayKey => $array]);
     }
 
     /**

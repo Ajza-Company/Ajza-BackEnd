@@ -26,6 +26,8 @@ use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeInterface;
 use App\Repositories\Frontend\OtpCode\Create\F_CreateOtpCodeRepository;
 use App\Repositories\Frontend\Product\Find\F_FindProductInterface;
 use App\Repositories\Frontend\Product\Find\F_FindProductRepository;
+use App\Repositories\Frontend\Product\Fetch\F_FetchProductRepository;
+use App\Repositories\Frontend\Product\Fetch\F_FetchProductInterface;
 use App\Repositories\Frontend\ProductFavorite\Create\F_CreateProductFavoriteInterface;
 use App\Repositories\Frontend\ProductFavorite\Create\F_CreateProductFavoriteRepository;
 use App\Repositories\Frontend\RepOrder\Create\F_CreateRepOrderInterface;
@@ -92,7 +94,11 @@ class F_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             F_FindProductInterface::class,
             F_FindProductRepository::class);
-
+ 
+        $this->app->bind(
+            F_FetchProductInterface::class,
+            F_FetchProductRepository::class);
+    
         $this->app->bind(
             F_FetchCategoryInterface::class,
             F_FetchCategoryRepository::class);
