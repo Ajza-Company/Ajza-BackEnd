@@ -14,5 +14,5 @@ return [
     'connect' => 'Unable to connect to server',
     'found' => 'Resource not found',
     'initiate' => 'Unable to initiate process',
-    'send' => 'Unable to send data',
+    'send' => 'Unable to send data'
 ];

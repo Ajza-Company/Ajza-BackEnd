@@ -10,11 +10,13 @@ use App\Models\Order;
 use App\Models\Store;
 use App\Models\StoreProduct;
 use App\Models\User;
+use App\Notifications\OrderNotification;
 use App\Repositories\Frontend\Order\Create\F_CreateOrderInterface;
 use App\Repositories\Frontend\OrderProduct\Insert\F_InsertOrderProductInterface;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Notification;
 
 class F_CreateOrderService
 {
@@ -59,6 +61,11 @@ class F_CreateOrderService
 
             // Update the order with the total amount
             $order->update(['amount' => $totalAmount]);
+
+            Notification::send($store->users()->get(), new OrderNotification(
+                order: $order,
+                type: 'order_created'
+            ));
 
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));

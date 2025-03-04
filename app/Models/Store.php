@@ -132,6 +132,15 @@ class Store extends Model
 
     /**
      *
+     * @return HasManyThrough
+     */
+    public function users(): HasManyThrough
+    {
+        return $this->hasManyThrough(User::class, StoreUser::class, 'store_id', 'id', 'id', 'user_id');
+    }
+
+    /**
+     *
      * @return HasMany
      */
     public function hours(): HasMany

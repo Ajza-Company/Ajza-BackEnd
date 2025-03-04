@@ -9,6 +9,10 @@ Broadcast::routes(['middleware' => 'auth:sanctum']);
     return (int) $user->id === (int) $id;
 });*/
 
+Broadcast::channel('orders', function ($user) {
+    return true;
+});
+
 Broadcast::channel('repair.chat.{chatId}', function ($user, $chatId) {
     try {
         $decodedChatId = decodeString($chatId);
