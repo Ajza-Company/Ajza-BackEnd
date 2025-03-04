@@ -23,6 +23,7 @@ class G_RepChatMessageResource extends JsonResource
             'message' => $this->message,
             'message_type' => $this->message_type,
             'is_hidden' => (bool)$this->is_hidden,
+            'is_invoice' => (bool)$this->is_invoice,
             'attachment' => $this->when($this->attachment, function() {
                 return [
                     'url' => getFullUrl($this->attachment),
