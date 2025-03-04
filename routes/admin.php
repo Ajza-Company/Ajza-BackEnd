@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\v1\Admin\A_CompanyController;
 use App\Http\Controllers\api\v1\Admin\A_UserController;
+use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
 use App\Http\Controllers\api\v1\Supplier\S_CompanyController;
 use App\Http\Controllers\api\v1\Supplier\S_OfferController;
@@ -29,7 +30,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::middleware('guest:sanctum')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', [S_AuthController::class, 'login']);
@@ -37,6 +37,7 @@ Route::middleware('guest:sanctum')->group(function () {
 });
 
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
+    Route::post('terms/update', [G_TermsController::class, 'updateTerms']);
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::get('users', [A_UserController::class, 'index']);
     Route::prefix('auth')->group(function () {

@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
-use App\Http\Controllers\api\v1\General\{
-    G_AreaController,
+use App\Http\Controllers\api\v1\General\{G_AreaController,
     G_CancelOrderController,
     G_NotificationController,
     G_RepChatController,
     G_StateController,
-    G_ProductController
-};
+    G_ProductController,
+    G_TermsController};
 use App\Http\Controllers\DeleteAccountController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([], function () {
+    Route::get('terms', [G_TermsController::class, 'terms']);
     Route::middleware(SetLocale::class)->group(function () {
         Route::get('delete-account', DeleteAccountController::class);
         Route::get('categories', F_CategoryController::class);
@@ -47,7 +47,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/{store_id}', G_ProductController::class);
     });
-    
+
     Route::prefix('rep-orders')->group(function () {
         Route::get('/chats', [G_RepChatController::class, 'index']);
         Route::get('/chats/{chat_id}', [G_RepChatController::class, 'show']);
