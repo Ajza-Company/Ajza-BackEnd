@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\General\RepChat;
+namespace App\Http\Requests\v1\Frontend\RepReview;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class G_SendMessageRequest extends FormRequest
+class F_SubmitRepReviewRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,8 @@ class G_SendMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'message' => 'required_without:attachment|nullable|string',
-            'attachment' => 'required_without:message|nullable|file|max:10240',
-            'message_type' => 'sometimes|in:text,offer,attachment,invoice',
-            'is_invoice' => 'sometimes|boolean'
+            'rating' => 'required|integer|between:1,5',
+            'review_text' => 'nullable|string',
         ];
     }
 }

@@ -45,6 +45,7 @@ class G_RepChatController extends Controller
             'sender_id' => auth('api')->id(),
             'message_type' => $request->hasFile('attachment') ? MessageTypeEnum::ATTACHMENT : MessageTypeEnum::TEXT,
             'message' => $request->message,
+            'is_invoice' => $request->has('is_invoice') && (bool)$request->is_invoice
         ]);
 
         if ($request->hasFile('attachment')) {

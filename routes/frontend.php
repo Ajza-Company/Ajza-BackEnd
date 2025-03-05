@@ -13,6 +13,7 @@ use App\Http\Controllers\api\v1\Frontend\F_LocaleController;
 use App\Http\Controllers\api\v1\Frontend\F_OrderController;
 use App\Http\Controllers\api\v1\Frontend\F_ProductController;
 use App\Http\Controllers\api\v1\Frontend\F_RepOrderController;
+use App\Http\Controllers\api\v1\Frontend\F_RepReviewController;
 use App\Http\Controllers\api\v1\Frontend\F_SliderImageController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreController;
 use App\Http\Controllers\api\v1\Frontend\F_StoreReviewController;
@@ -110,5 +111,6 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('{order_id}/check-order-acceptance', [F_RepOrderController::class, 'checkIfAccepted']);
         Route::get('{order_id}/delivered', [F_RepOrderController::class, 'orderDelivered']);
         Route::get('{order_id}/cancel', [F_RepOrderController::class, 'cancelOrder']);
+        Route::post('{order_id}/submit-review', F_RepReviewController::class);
     });
 });
