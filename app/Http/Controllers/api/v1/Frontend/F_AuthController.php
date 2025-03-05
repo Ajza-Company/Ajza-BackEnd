@@ -14,7 +14,7 @@ use App\Http\Requests\v1\Frontend\Auth\F_SetupAccountRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_CreateAccountRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_UpdateAccountRequest;
 use App\Http\Requests\v1\Frontend\Auth\F_VerifyOtpCodeRequest;
-use App\Repositories\Supplier\User\Find\S_FindUserInterface;
+use App\Repositories\Frontend\Company\Find\F_FindCompanyInterface;
 
 class F_AuthController extends Controller
 {
@@ -25,14 +25,14 @@ class F_AuthController extends Controller
      * @param F_VerifyOtpCodeService $verifyOtpCode
      * @param F_CreateAccountService $createAccount
      * @param F_SetupAccountService $setupAccount
-     * @param S_FindUserInterface $findUser
+     * @param F_FindCompanyInterface $findUser
      */
     public function __construct(
         private F_SendOtpCodeService   $sendOtpCode,
         private F_VerifyOtpCodeService $verifyOtpCode,
         private F_CreateAccountService $createAccount,
         private F_SetupAccountService $setupAccount,
-        private S_FindUserInterface $findUser)
+        private F_FindCompanyInterface $findCompany)
     {
 
     }
@@ -92,13 +92,15 @@ class F_AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function loginWithID(string $user_id)
+    public function loginCompanyWithID(string $company_id)
     {
-        $user = $this->findUser->find(decodeString($user_id));
+        $company = $this->findCompany->find(decodeString($company_id));
         
+        $user = $company->user;
+
         return response()->json(successResponse(
             message: trans(SuccessMessagesEnum::LOGGEDIN),
-            data: UserResource::make($user->load('stores', 'roles')),
+            data: UserResource::make($user->load('roles')),
             token: $user->createToken('virtual_auth_token')->plainTextToken
         ));
 

@@ -36,7 +36,7 @@ class S_CreateStoreService
     {
         try {
             $store = $this->createStore->create([
-                'company_id' => userCompany()->id,
+                'company_id' => $data['company_id'] ?? userCompany()->id,
                 ...$data['data']
             ]);
 

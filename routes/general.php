@@ -7,6 +7,7 @@ use App\Http\Controllers\api\v1\General\{
     G_NotificationController,
     G_RepChatController,
     G_StateController,
+    G_CountryController,
     G_ProductController
 };
 use App\Http\Controllers\DeleteAccountController;
@@ -29,6 +30,7 @@ Route::group([], function () {
     Route::middleware(SetLocale::class)->group(function () {
         Route::get('delete-account', DeleteAccountController::class);
         Route::get('categories', F_CategoryController::class);
+        Route::get('countries', G_CountryController::class);
         Route::prefix('cities')->group(function () {
             Route::get('/', G_StateController::class);
             Route::get('{city_id}/areas', G_AreaController::class);

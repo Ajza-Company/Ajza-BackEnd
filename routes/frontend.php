@@ -87,6 +87,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('update-profile', [F_AuthController::class, 'updateProfile']);
         Route::get('me', [F_AuthController::class, 'me']);
+        Route::get('company-virtual-login/{store}', [F_AuthController::class, 'loginCompanyWithID']);
     });
 
     Route::prefix('user')->group(function () {

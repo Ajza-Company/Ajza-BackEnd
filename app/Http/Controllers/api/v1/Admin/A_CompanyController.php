@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\api\v1\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Admin\Company\CreateCompanyServices;
+use App\Http\Requests\v1\Admin\Company\A_CreateCompanyRequest;
 use App\Http\Resources\v1\Admin\Company\A_ShortCompanyResource;
 use App\Repositories\Admin\Company\Fetch\A_FetchCompanyInterface;
-use Illuminate\Http\Request;
 
 class A_CompanyController extends Controller
 {
@@ -13,7 +15,8 @@ class A_CompanyController extends Controller
      *
      * @param A_FetchCompanyInterface $fetchCompany
      */
-    public function __construct(private A_FetchCompanyInterface $fetchCompany)
+    public function __construct(private A_FetchCompanyInterface $fetchCompany,
+                                private CreateCompanyServices $createCompany)
     {
 
     }
@@ -29,9 +32,10 @@ class A_CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(A_CreateCompanyRequest $request)
     {
-        //
+        $data = $request->validated();
+        return $this->createCompany->create($data);
     }
 
     /**
