@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('terms/update', [G_TermsController::class, 'updateTerms']);
+
 Route::middleware('guest:sanctum')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', [S_AuthController::class, 'login']);
@@ -37,7 +39,6 @@ Route::middleware('guest:sanctum')->group(function () {
 });
 
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
-    Route::post('terms/update', [G_TermsController::class, 'updateTerms']);
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::post('companies', [A_CompanyController::class, 'store']);
     Route::get('users', [A_UserController::class, 'index']);
