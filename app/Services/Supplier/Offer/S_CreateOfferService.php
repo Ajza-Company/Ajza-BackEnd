@@ -32,6 +32,7 @@ class S_CreateOfferService
      */
     public function create(array $data, Store $store): JsonResponse
     {
+
         try {
             $offerExist = StoreProductOffer::query()
                 ->where('store_product_id', $data['product_id'])
@@ -47,7 +48,8 @@ class S_CreateOfferService
                 'store_product_id' => $data['product_id'],
                 'type' => $data['type'],
                 'discount' => $data['discount'],
-                'expires_at' => $data['expires_at'] ?? null
+                'expires_at' => $data['expires_at'] ?? null,
+                'ajza_offer'=> isset($data['is_ajza_offer']) ? $data['is_ajza_offer'] :0
             ]);
 
             return response()->json(successResponse(trans(SuccessMessagesEnum::CREATED)));
