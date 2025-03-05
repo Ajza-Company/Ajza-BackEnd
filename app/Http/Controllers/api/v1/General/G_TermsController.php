@@ -22,11 +22,22 @@ class G_TermsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Update terms and conditions in storage.
      */
     public function updateTerms(A_UpdateTermsRequest $request)
     {
-        if (file_put_contents(storage_path('app/settings/terms.txt'), $request->terms)) {
+        $directory = storage_path('app/settings');
+        $filePath = $directory . '/terms.txt';
+
+        // Create directory if it doesn't exist
+        if (!file_exists($directory)) {
+            if (!mkdir($directory, 0755, true)) {
+                return response()->json(['error' => 'Failed to create directory'], 500);
+            }
+        }
+
+        // Write content to file
+        if (file_put_contents($filePath, $request->terms)) {
             return response()->json(['message' => 'Terms updated successfully']);
         }
 
