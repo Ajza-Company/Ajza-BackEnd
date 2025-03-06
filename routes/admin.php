@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('terms/update', [G_TermsController::class, 'updateTerms']);
+Route::post('terms/{name}/update', [G_TermsController::class, 'updateTerms']);
 
 Route::middleware('guest:sanctum')->group(function () {
     Route::prefix('auth')->group(function () {
