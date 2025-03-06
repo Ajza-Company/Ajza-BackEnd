@@ -51,9 +51,9 @@ class A_CreateCompanyRequest extends FormRequest
             'company.phone' => 'required|string|max:20|unique:companies,phone',
             'company.logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'company.cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'company.commercial_register' => 'nullable|string|max:50',
+            'company.commercial_register' => 'sometimes|nullable|string|max:50',
             'company.vat_number' => 'nullable|string|max:50',
-            'company.commercial_register_file' => 'nullable|file|max:2048',
+            'company.commercial_register_file' => 'sometimes|nullable|file|max:2048',
         ];
     }
 

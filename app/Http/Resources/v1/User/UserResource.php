@@ -24,9 +24,9 @@ class UserResource extends JsonResource
             'gender' => $this->gender,
             'isRegistered' => (bool)$this->is_registered,
             'role' => $this->whenLoaded('roles', function () {
-                return $this->roles->first()->name;
+                return $this->roles->first()?->name;
             }),
-            'permissions' => $this->when($this->relationLoaded('roles') && $this->roles->first()->name === RoleEnum::SUPPLIER, function () {
+            'permissions' => $this->when($this->relationLoaded('roles') && $this->roles->first()?->name === RoleEnum::SUPPLIER, function () {
                 return $this->permissions()->pluck('name')->toArray();
             }),
             'stores' => $this->whenLoaded('stores', S_ShortStoreResource::collection($this->stores))

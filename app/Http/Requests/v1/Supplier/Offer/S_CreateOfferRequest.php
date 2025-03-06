@@ -27,7 +27,8 @@ class S_CreateOfferRequest extends FormRequest
             'product_id' => 'required|integer|exists:store_products,id',
             'type' => 'required|string|in:fixed,percentage',
             'discount' => 'required|numeric',
-            'expires_at' => 'nullable|date|after:now'
+            'expires_at' => 'nullable|date|after:now',
+            'is_ajza_offer'=>'nullable|boolean'
         ];
     }
 

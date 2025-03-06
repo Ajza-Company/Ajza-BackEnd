@@ -13,6 +13,12 @@ use App\Repositories\Admin\Company\Create\F_CreateCompanyInterface;
 use App\Repositories\Admin\Company\Create\F_CreateCompanyRepository;
 use App\Repositories\Frontend\Country\Fetch\F_FetchCountryInterface;
 use App\Repositories\Frontend\Country\Fetch\F_FetchCountryRepository;
+use App\Repositories\Admin\PromoCode\Create\A_CreatePromoCodeInterface; 
+use App\Repositories\Admin\PromoCode\Create\A_CreatePromoCodeRepository;
+use App\Repositories\Admin\PromoCode\Fetch\A_FetchPromoCodeInterface;
+use App\Repositories\Admin\PromoCode\Fetch\A_FetchPromoCodeRepository;
+use App\Repositories\Admin\PromoCode\Find\A_FindPromoCodeInterface;
+use App\Repositories\Admin\PromoCode\Find\A_FindPromoCodeRepository;
 
 class A_RepositoryServiceProvider extends ServiceProvider
 {
@@ -42,8 +48,23 @@ class A_RepositoryServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-        F_FetchCountryInterface::class, 
-        F_FetchCountryRepository::class
+            F_FetchCountryInterface::class, 
+            F_FetchCountryRepository::class
+        );
+
+        $this->app->bind(
+            A_CreatePromoCodeInterface::class, 
+            A_CreatePromoCodeRepository::class
+        );
+
+        $this->app->bind(
+            A_FetchPromoCodeInterface::class, 
+            A_FetchPromoCodeRepository::class
+        );
+
+        $this->app->bind(
+            A_FindPromoCodeInterface::class, 
+            A_FindPromoCodeRepository::class
         );
 
     }
