@@ -95,7 +95,6 @@ class F_AuthController extends Controller
     public function loginCompanyWithID(string $company_id)
     {
         $company = $this->findCompany->find(decodeString($company_id));
-        
         $user = $company->user;
 
         return response()->json(successResponse(
