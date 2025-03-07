@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\PromoCode\CreatePromoCodeServices;
+use App\Services\Admin\PromoCode\DeletePromoCodeServices;
 use App\Http\Requests\v1\Admin\PromoCode\A_CreatePromoCodeRequest;
 use App\Http\Resources\v1\Admin\PromoCode\A_ShortPromoCodeResource;
 use App\Repositories\Admin\PromoCode\Fetch\A_FetchPromoCodeInterface;
@@ -16,10 +17,12 @@ class A_PromoCodeController extends Controller
      *
      * @param A_FetchPromoCodeInterface $fetchPromoCode
      * @param CreatePromoCodeServices $createPromoCode
+     * @param DeletePromoCodeServices $deletePromoCode
      * @param A_FindPromoCodeInterface $findPromoCode
      */
     public function __construct(private A_FetchPromoCodeInterface $fetchPromoCode,
                                 private CreatePromoCodeServices $createPromoCode,
+                                private DeletePromoCodeServices $deletePromoCode,
                                 private A_FindPromoCodeInterface $findPromoCode)
     {
 
@@ -30,7 +33,7 @@ class A_PromoCodeController extends Controller
      */
     public function index()
     {
-        return A_ShortPromoCodeResource::collection($this->fetchPromoCode->fetch());
+        return A_ShortPromoCodeResource::collection($this->fetchPromoCode->fetch(isLocalized:false));
     }
 
     /**
@@ -47,7 +50,7 @@ class A_PromoCodeController extends Controller
      */
     public function show(string $id)
     {
-        $promoCode =  $this->findPromoCode->find($id);
+        $promoCode =  $this->findPromoCode->find(decodeString($id));
         return A_ShortPromoCodeResource::make($promoCode);
     }
 
@@ -56,8 +59,7 @@ class A_PromoCodeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $promoCode =  $this->findPromoCode->find($id);
-        //update
+        //
     }
 
     /**
@@ -65,6 +67,7 @@ class A_PromoCodeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $promoCode =  $this->findPromoCode->find(decodeString($id));
+        return $this->deletePromoCode->delete($promoCode);
     }
 }

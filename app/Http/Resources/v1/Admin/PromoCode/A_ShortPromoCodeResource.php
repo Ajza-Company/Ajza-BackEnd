@@ -24,10 +24,8 @@ class A_ShortPromoCodeResource extends JsonResource
             'used_count' => $this->used_count,
             'min_order_value' => $this->min_order_value,
             'max_discount' => $this->max_discount,
-            'is_active' => (bool) $this->isValid,
             'starts_at' => $this->starts_at ? $this->starts_at->toISOString() : null,
             'expires_at' => $this->expires_at ? $this->expires_at->toISOString() : null,
-            'is_valid'=>$this->isValid
         ];
     }
     

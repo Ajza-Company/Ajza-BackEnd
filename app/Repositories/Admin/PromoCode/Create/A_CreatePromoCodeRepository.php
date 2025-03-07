@@ -5,7 +5,7 @@ namespace App\Repositories\Admin\PromoCode\Create;
 use App\Models\PromoCode;
 use App\Repositories\Frontend\F_CreatingRepository;
 
-class A_CreatePromoCodeRepository extends F_CreatingRepository implements A_FetchPromoCodeInterface
+class A_CreatePromoCodeRepository extends F_CreatingRepository implements A_CreatePromoCodeInterface
 {
     /**
      * Create a new instance.
