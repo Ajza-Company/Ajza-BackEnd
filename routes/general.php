@@ -43,6 +43,7 @@ Route::group([], function () {
 Route::prefix('v1')->group(function () {
     Route::middleware(SetLocale::class)->group(function () {
         Route::get('notifications', G_NotificationController::class);
+        Route::get('Statistics',G_StatisticsController::class);
     });
     Route::prefix('orders')->group(function () {
         Route::post('{order_id}/cancel', G_CancelOrderController::class);
@@ -62,6 +63,4 @@ Route::prefix('v1')->group(function () {
         // Offer routes
         Route::post('/offers/{offer}/update', [G_RepChatController::class, 'updateOffer']);
     });
-
-    Route::get('Statistics',G_StatisticsController::class);
 });
