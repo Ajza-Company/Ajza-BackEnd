@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Enums\ErrorMessageEnum;
 use Illuminate\Http\JsonResponse;
 use App\Enums\SuccessMessagesEnum;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\v1\User\UserResource;
 use App\Events\v1\Frontend\F_UserCreatedEvent;
@@ -77,6 +78,10 @@ class CreateCompanyServices
             'password' => Hash::make($data['password']),
             'preferred_language' => $data['preferred_language'] ??app()->getLocale()
         ]);
+        $role = Role::where('name', 'Supplier')->first();
+
+        $user->syncRoles([$role]);
+        
         return $user;
     }
 
