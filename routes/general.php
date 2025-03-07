@@ -9,6 +9,7 @@ use App\Http\Controllers\api\v1\General\{
     G_StateController,
     G_CountryController,
     G_ProductController,
+    G_StatisticsController,
     G_TermsController};
 use App\Http\Controllers\DeleteAccountController;
 use App\Http\Middleware\SetLocale;
@@ -61,4 +62,6 @@ Route::prefix('v1')->group(function () {
         // Offer routes
         Route::post('/offers/{offer}/update', [G_RepChatController::class, 'updateOffer']);
     });
+
+    Route::get('Statistics',G_StatisticsController::class);
 });

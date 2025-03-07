@@ -41,7 +41,7 @@ Route::middleware('guest:sanctum')->group(function () {
     });
 });
 
-// Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
+Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::post('companies', [A_CompanyController::class, 'store']);
     Route::get('users', [A_UserController::class, 'index']);
@@ -51,4 +51,4 @@ Route::middleware('guest:sanctum')->group(function () {
 
     Route::apiResource('promo-codes', A_PromoCodeController::class)->except(['update']);
 
-// });
+});
