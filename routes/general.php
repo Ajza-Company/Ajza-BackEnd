@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([], function () {
-    Route::get('terms', [G_TermsController::class, 'terms']);
+    Route::get('terms/{name}', [G_TermsController::class, 'terms']);
     Route::middleware(SetLocale::class)->group(function () {
         Route::get('delete-account', DeleteAccountController::class);
         Route::get('categories', F_CategoryController::class);

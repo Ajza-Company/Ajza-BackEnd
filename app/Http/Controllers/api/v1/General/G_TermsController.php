@@ -11,10 +11,10 @@ class G_TermsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function terms()
+    public function terms(string $name)
     {
-        if (file_exists(storage_path('app/settings/terms.txt'))) {
-            $terms = file_get_contents(storage_path('app/settings/terms.txt'));
+        if (file_exists(storage_path('app/settings/' . $name . '.txt'))) {
+            $terms = file_get_contents(storage_path('app/settings/' . $name . '.txt'));
             return response()->json(['terms' => $terms]);
         }
 
@@ -24,10 +24,13 @@ class G_TermsController extends Controller
     /**
      * Update terms and conditions in storage.
      */
-    public function updateTerms(A_UpdateTermsRequest $request)
+    public function updateTerms(string $name, A_UpdateTermsRequest $request)
     {
+        if (!in_array($name, ['rep_terms', 'client_terms', 'privacy_partner', 'privacy_client'])) {
+            return response()->json(['error' => 'Invalid name'], 400);
+        }
         $directory = storage_path('app/settings');
-        $filePath = $directory . '/terms.txt';
+        $filePath = $directory . '/' . $name . '.txt';
 
         // Create directory if it doesn't exist
         if (!file_exists($directory)) {
