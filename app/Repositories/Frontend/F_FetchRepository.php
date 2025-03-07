@@ -23,7 +23,7 @@ class F_FetchRepository
      * @param bool $isLocalized
      * @return mixed
      */
-    public function fetch(array $data = null, bool $paginate = true, array $with = null, array $withCount = null, bool $isLocalized = true): mixed
+    public function fetch(array $data = null, bool $paginate = true, array $with = null, array $withCount = null, bool $isLocalized = true ,bool $latest=true): mixed
     {
         $query = $this->model->query();
 
@@ -41,6 +41,10 @@ class F_FetchRepository
 
         if ($with) {
             $query->with($with);
+        }
+
+        if ($latest) {
+            $query = $query->latest();
         }
 
         if ($withCount) {

@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\Company;
 
+use App\Models\CompanyLocale;
 use Illuminate\Http\Response;
 use App\Enums\ErrorMessageEnum;
 use Illuminate\Http\JsonResponse;
@@ -9,10 +10,10 @@ use App\Enums\SuccessMessagesEnum;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\v1\User\UserResource;
 use App\Events\v1\Frontend\F_UserCreatedEvent;
-use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
-use App\Repositories\Frontend\Wallet\Create\F_CreateWalletInterface;
-use App\Repositories\Admin\Company\Create\F_CreateCompanyInterface;
 use App\Services\Supplier\Store\S_CreateStoreService;
+use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
+use App\Repositories\Admin\Company\Create\F_CreateCompanyInterface;
+use App\Repositories\Frontend\Wallet\Create\F_CreateWalletInterface;
 
 class CreateCompanyServices
 {
@@ -104,6 +105,14 @@ class CreateCompanyServices
             'vat_number'=>$data['vat_number'],
             'commercial_register_file'=>$commercialRegisterFile,
         ]);
+
+        foreach($data['localized'] as $local){
+            CompanyLocale::create([
+                'locale_id'=>$local['local_id'],
+                'name'=>$local['name'],
+                'company_id'=>$company->id
+            ]);
+        }
     return $company;
     }
 }
