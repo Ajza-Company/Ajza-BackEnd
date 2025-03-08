@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\v1\Frontend\F_AddressController;
 use App\Http\Controllers\api\v1\Frontend\F_AjzaOfferController;
 use App\Http\Controllers\api\v1\Frontend\F_AuthController;
+use App\Http\Controllers\api\v1\Frontend\F_CartController;
 use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
 use App\Http\Controllers\api\v1\Frontend\F_CarTypeController;
@@ -97,6 +98,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     });
 
     Route::post('stores/{store_id}/orders/create', [F_OrderController::class, 'store']);
+    Route::post('stores/cart', [F_CartController::class, 'show']);
 
     Route::prefix('orders')->group(function () {
         Route::get('/', [F_OrderController::class, 'index']);
