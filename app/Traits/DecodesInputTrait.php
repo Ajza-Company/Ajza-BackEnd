@@ -94,26 +94,65 @@ trait DecodesInputTrait
      * @return void
      */
     protected function decodeArrayInput(string $field): void
-    {
-        // Split the field path into parts
-        $parts = explode('.*.', $field);
-        $arrayKey = $parts[0]; // e.g., 'sentences'
-        $fieldKey = $parts[1]; // e.g., 'voice_id'
-
-        // Get the array from input
-        $array = $this->input($arrayKey, []);
-
+{
+    // Handle case where the wildcard is in the middle of the path
+    $pathParts = explode('.*', $field);
+    $beforeWildcard = $pathParts[0]; // e.g., 'company.localized'
+    $afterWildcard = $pathParts[1]; // e.g., '.local_id'
+    
+    // Handle nested paths before the wildcard
+    $baseKeys = explode('.', $beforeWildcard);
+    $arrayKey = $baseKeys[0]; // e.g., 'company'
+    
+    // Get the array from input
+    $data = $this->input($arrayKey, []);
+    
+    // If we have a nested path like 'company.localized'
+    if (count($baseKeys) > 1) {
+        $currentData = $data;
+        $pointer = &$currentData;
+        
+        // Navigate to the nested array
+        for ($i = 1; $i < count($baseKeys); $i++) {
+            if (!isset($pointer[$baseKeys[$i]]) || !is_array($pointer[$baseKeys[$i]])) {
+                return; // Invalid path
+            }
+            $pointer = &$pointer[$baseKeys[$i]];
+        }
+        
+        // Get the field key from after the wildcard
+        $fieldKey = ltrim($afterWildcard, '.'); // e.g., 'local_id'
+        
         // Process each item in the array
-        foreach ($array as $index => $item) {
+        foreach ($pointer as $index => $item) {
             $value = $item[$fieldKey] ?? null;
-
-            if ($value && decodeString($value)) {
+            
+            if ($value && function_exists('decodeString')) {
                 $decoded = decodeString($value);
-                $array[$index][$fieldKey] = $decoded;
+                $pointer[$index][$fieldKey] = $decoded;
             }
         }
-
+        
+        // Update the request with the modified data
+        $this->merge([$arrayKey => $currentData]);
+    } else {
+        // Handle simple case (no nesting before wildcard)
+        // This is your existing implementation
+        $fieldKey = ltrim($afterWildcard, '.'); // e.g., 'voice_id'
+        
+        // Process each item in the array
+        foreach ($data as $index => $item) {
+            $value = $item[$fieldKey] ?? null;
+            
+            if ($value && function_exists('decodeString')) {
+                $decoded = decodeString($value);
+                $data[$index][$fieldKey] = $decoded;
+            }
+        }
+        
         // Update the request with the modified array
-        $this->merge([$arrayKey => $array]);
+        $this->merge([$arrayKey => $data]);
     }
+}
+
 }

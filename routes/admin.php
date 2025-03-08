@@ -4,7 +4,8 @@ use App\Http\Controllers\api\v1\Admin\{
     A_CompanyController,
     A_UserController,
     A_AuthController,
-    A_PromoCodeController
+    A_PromoCodeController,
+    F_RepSalesController
 };
 use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
@@ -44,6 +45,7 @@ Route::middleware('guest:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::post('companies', [A_CompanyController::class, 'store']);
+    Route::post('rep-sales', [F_RepSalesController::class, 'store']);
     Route::get('users', [A_UserController::class, 'index']);
     Route::prefix('auth')->group(function () {
         Route::get('virtual-login/{user}', [A_AuthController::class, 'loginWithID']);

@@ -15,6 +15,7 @@ class F_LocaleResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => encodeString($this->id),
             'name' => $this->name,
             'locale' => $this->locale,
             'isDefault' => (bool) $this->is_default

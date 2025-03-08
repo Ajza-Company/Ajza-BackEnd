@@ -67,5 +67,6 @@ class A_CreateCompanyRequest extends FormRequest
     {
         $this->decodeInput('store.data.area_id');
         $this->decodeInput('company.country_id');
+        $this->decodeInput('company.localized.*.local_id');
     }
 }
