@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::post('companies', [A_CompanyController::class, 'store']);
     Route::post('rep-sales', [F_RepSalesController::class, 'store']);
+    Route::get('rep-sales', [F_RepSalesController::class, 'index']);
     Route::get('users', [A_UserController::class, 'index']);
     Route::prefix('auth')->group(function () {
         Route::get('virtual-login/{user}', [A_AuthController::class, 'loginWithID']);

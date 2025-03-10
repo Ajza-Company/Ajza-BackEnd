@@ -23,7 +23,7 @@ class F_FetchRepository
      * @param bool $isLocalized
      * @return mixed
      */
-    public function fetch(array $data = null, bool $paginate = true, array $with = null, array $withCount = null, bool $isLocalized = true ,bool $latest=true): mixed
+    public function fetch(array $data = null, bool $paginate = true, array $with = null, array $withCount = null, bool $isLocalized = true ,bool $latest=true,string $role = null): mixed
     {
         $query = $this->model->query();
 
@@ -51,6 +51,12 @@ class F_FetchRepository
             $query->withCount($withCount);
         }
 
+        if ($role) {
+            $query->whereHas('roles', function ($q) use ($role) {
+                $q->where('name', $role);
+            });
+        }    
+        
         if ($paginate) {
             return $query->adaptivePaginate();
         }

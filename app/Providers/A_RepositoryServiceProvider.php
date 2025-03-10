@@ -6,6 +6,8 @@ use App\Repositories\Admin\Company\Fetch\A_FetchCompanyInterface;
 use App\Repositories\Admin\Company\Fetch\A_FetchCompanyRepository;
 use App\Repositories\Admin\User\Fetch\A_FetchUserInterface;
 use App\Repositories\Admin\User\Fetch\A_FetchUserRepository;
+use App\Repositories\Admin\RepSales\Fetch\A_FetchRepSalesInterface;
+use App\Repositories\Admin\RepSales\Fetch\A_FetchRepSalesRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Frontend\Company\Find\F_FindCompanyInterface;
 use App\Repositories\Frontend\Company\Find\F_FindCompanyRepository;
@@ -45,6 +47,11 @@ class A_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             A_FetchUserInterface::class,
             A_FetchUserRepository::class
+        );
+
+        $this->app->bind(
+            A_FetchRepSalesInterface::class,
+            A_FetchRepSalesRepository::class
         );
 
         $this->app->bind(
