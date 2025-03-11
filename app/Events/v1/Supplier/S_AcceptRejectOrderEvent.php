@@ -46,11 +46,6 @@ class S_AcceptRejectOrderEvent implements ShouldBroadcast
         return F_ShortOrderResource::make($this->order)->resolve();
     }
 
-    public function broadcastWhen(): bool
-    {
-        return auth()->user()->can('manage-orders');
-    }
-
     /**
      * The event's broadcast name.
      */
