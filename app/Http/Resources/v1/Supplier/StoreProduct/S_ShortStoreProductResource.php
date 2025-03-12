@@ -19,9 +19,9 @@ class S_ShortStoreProductResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             $this->merge(S_ShortProductResource::make($this->product)),
-            'price' => $this->price,
+            'price' => round($this->price, 2),
             'price_after_discount' => $this->when($this->relationLoaded('offer'), function () {
-                return $this->price_after_discount;
+                return round($this->price_after_discount, 2);
             }),
         ];
     }
