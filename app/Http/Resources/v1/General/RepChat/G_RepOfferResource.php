@@ -16,7 +16,7 @@ class G_RepOfferResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'price' => $this->price,
+            'price' => round($this->price, 2),
             'status' => $this->status,
             'created_at' => $this->created_at,
         ];

@@ -17,7 +17,7 @@ class F_ShortAjzaOfferResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'title' => $this->localized?->title,
-            'price' => $this->price,
+            'price' => round($this->price, 2),
             'old_price' => $this->old_price,
             'image' => getFullUrl($this->image)
         ];

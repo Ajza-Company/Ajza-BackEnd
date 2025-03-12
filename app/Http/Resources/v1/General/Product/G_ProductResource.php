@@ -19,7 +19,7 @@ class G_ProductResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'name' => $this->localized?->name,
-            'price' => $this->price,
+            'price' => round($this->price, 2),
             'image' => $this->image,
         ];
     }
