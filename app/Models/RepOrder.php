@@ -40,6 +40,15 @@ class RepOrder extends Model
 
     /**
      *
+     * @return HasMany
+     */
+    public function offers(): HasMany
+    {
+        return $this->hasMany(RepOffer::class, 'rep_order_id');
+    }
+
+    /**
+     *
      * @param Builder $builder
      * @param $request
      * @return Builder
