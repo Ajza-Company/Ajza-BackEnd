@@ -23,7 +23,7 @@ class RepChatMessage extends Model
 
     public function chat(): BelongsTo
     {
-        return $this->belongsTo(RepChat::class);
+        return $this->belongsTo(RepChat::class, 'rep_chat_id');
     }
 
     public function sender(): BelongsTo
