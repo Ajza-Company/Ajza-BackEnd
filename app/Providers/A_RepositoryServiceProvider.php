@@ -21,6 +21,14 @@ use App\Repositories\Admin\PromoCode\Fetch\A_FetchPromoCodeInterface;
 use App\Repositories\Admin\PromoCode\Fetch\A_FetchPromoCodeRepository;
 use App\Repositories\Admin\PromoCode\Find\A_FindPromoCodeInterface;
 use App\Repositories\Admin\PromoCode\Find\A_FindPromoCodeRepository;
+use App\Repositories\Admin\VariantCategory\Fetch\A_FetchVariantCategoryInterface;
+use App\Repositories\Admin\VariantCategory\Fetch\A_FetchVariantCategoryRepository;
+use App\Repositories\Admin\VariantCategory\Find\A_FindVariantCategoryInterface;
+use App\Repositories\Admin\VariantCategory\Find\A_FindVariantCategoryRepository;
+use App\Repositories\Admin\Product\Fetch\A_FetchProductInterface;
+use App\Repositories\Admin\Product\Fetch\A_FetchProductRepository;
+use App\Repositories\Admin\Product\Find\A_FindProductInterface;
+use App\Repositories\Admin\Product\Find\A_FindProductRepository;
 
 class A_RepositoryServiceProvider extends ServiceProvider
 {
@@ -29,6 +37,17 @@ class A_RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        
+        $this->app->bind(
+            A_FindProductInterface::class,
+            A_FindProductRepository::class
+        );
+        
+        $this->app->bind(
+            A_FetchProductInterface::class,
+            A_FetchProductRepository::class
+        );
+
         $this->app->bind(
             A_FetchCompanyInterface::class,
             A_FetchCompanyRepository::class
@@ -72,6 +91,16 @@ class A_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             A_FindPromoCodeInterface::class, 
             A_FindPromoCodeRepository::class
+        );
+
+        $this->app->bind(
+            A_FetchVariantCategoryInterface::class, 
+            A_FetchVariantCategoryRepository::class
+        );
+
+        $this->app->bind(
+            A_FindVariantCategoryInterface::class, 
+            A_FindVariantCategoryRepository::class
         );
 
     }

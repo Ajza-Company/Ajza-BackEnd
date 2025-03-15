@@ -25,7 +25,8 @@ class Product extends Model
         'category_id',
         'image',
         'price',
-        'part_number'
+        'part_number',
+        'is_active'
     ];
 
     /**
@@ -45,6 +46,16 @@ class Product extends Model
     {
         return $this->hasOne(StoreProductOffer::class, 'product_id');
     }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function variant(): HasOne
+    {
+        return $this->hasOne(VariantValue::class, 'product_id');
+    }
+
 
     /**
      *

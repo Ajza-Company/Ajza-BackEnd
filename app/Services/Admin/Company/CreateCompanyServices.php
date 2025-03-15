@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use App\Enums\SuccessMessagesEnum;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use App\Http\Resources\v1\User\UserResource;
 use App\Events\v1\Frontend\F_UserCreatedEvent;
 use App\Services\Supplier\Store\S_CreateStoreService;
@@ -65,26 +66,29 @@ class CreateCompanyServices
     private function createUser($data) {
         $avatar = null;
         if (isset($data['avatar'])) {
-            $avatar = uploadFile('user/avatar',$data['avatar'],);
+            $avatar = uploadFile('user/avatar', $data['avatar']);
         }
-
+    
         $user = $this->createUser->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'full_mobile' => $data['full_mobile'],
-            'avatar'=>$avatar,
+            'avatar' => $avatar,
             'is_registered' => true,
-            'gender' => $data['gender'] ,
+            'gender' => $data['gender'],
             'password' => Hash::make($data['password']),
-            'preferred_language' => $data['preferred_language'] ??app()->getLocale()
+            'preferred_language' => $data['preferred_language'] ?? app()->getLocale(),
         ]);
+    
         $role = Role::where('name', 'Supplier')->first();
-
         $user->syncRoles([$role]);
-        
+    
+        $permissions = Permission::pluck('name'); 
+        $user->syncPermissions($permissions); 
+    
         return $user;
     }
-
+    
     private function createCompany($data , $user) {
         $logo = null;
         $coverImage = null;

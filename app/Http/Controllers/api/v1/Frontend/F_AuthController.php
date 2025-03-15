@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1\Frontend;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\User\UserResource;
+use App\Http\Resources\v1\RepSales\RepSalesResource;
 use App\Services\Frontend\Auth\F_SendOtpCodeService;
 use App\Services\Frontend\Auth\F_SetupAccountService;
 use App\Services\Frontend\Auth\F_CreateAccountService;
@@ -95,11 +96,11 @@ class F_AuthController extends Controller
     public function loginCompanyWithID(string $company_id)
     {
         $company = $this->findCompany->find(decodeString($company_id));
-        $user = $company->user;
+        $user = $company->user->load('roles','stores');
 
         return response()->json(successResponse(
             message: trans(SuccessMessagesEnum::LOGGEDIN),
-            data: UserResource::make($user->load('roles')),
+            data: RepSalesResource::make($user),
             token: $user->createToken('virtual_auth_token')->plainTextToken
         ));
 

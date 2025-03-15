@@ -5,7 +5,9 @@ use App\Http\Controllers\api\v1\Admin\{
     A_UserController,
     A_AuthController,
     A_PromoCodeController,
-    F_RepSalesController
+    F_RepSalesController,
+    A_VariantCategoryController,
+    A_ProductController
 };
 use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
@@ -46,11 +48,25 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::post('companies', [A_CompanyController::class, 'store']);
     Route::post('rep-sales', [F_RepSalesController::class, 'store']);
+    Route::post('rep-sales/update/{id}', [F_RepSalesController::class, 'update']);
+    Route::post('rep-sales/delete/{id}', [F_RepSalesController::class, 'delete']);
     Route::get('rep-sales', [F_RepSalesController::class, 'index']);
     Route::get('users', [A_UserController::class, 'index']);
     Route::prefix('auth')->group(function () {
         Route::get('virtual-login/{user}', [A_AuthController::class, 'loginWithID']);
     });
+
+    Route::get('variant-categories/{category}', [A_VariantCategoryController::class,'index']);
+    Route::post('variant-categories', [A_VariantCategoryController::class,'store']);
+    Route::post('variant-categories/{variant}', [A_VariantCategoryController::class,'update']);
+    Route::get('variant-categories/show/{variant}', [A_VariantCategoryController::class,'show']);
+    Route::delete('variant-categories/delete/{variant}', [A_VariantCategoryController::class,'destroy']);
+
+    Route::get('product', [A_ProductController::class,'index']);
+    Route::post('product', [A_ProductController::class,'store']);
+    Route::post('product/{product}', [A_ProductController::class,'update']);
+    Route::get('product/show/{product}', [A_ProductController::class,'show']);
+    Route::delete('product/delete/{product}', [A_ProductController::class,'destroy']);
 
     Route::apiResource('promo-codes', A_PromoCodeController::class)->except(['update']);
 

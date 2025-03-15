@@ -96,4 +96,28 @@ if (!function_exists('uploadFiles')) {
         Log::alert('Uploaded File: ' . $path);
         return str_replace('public/', '', $path);
     }
+
+    /**
+     * Delete a file from storage
+     * 
+     * @param string $path The file path to delete, relative to storage
+     * @param string|null $disk The storage disk to use
+     * @return bool Whether the deletion was successful
+     */
+    function deleteFile(string $path, string $disk = null): bool
+    {
+        try {
+            $disk = $disk ?? config('filesystems.default');
+            $fullPath = 'public/' . $path;
+            
+            if (Storage::disk($disk)->exists($fullPath)) {
+                $result = Storage::disk($disk)->delete($fullPath);
+                return $result;
+            }
+            
+            return false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
