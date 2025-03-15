@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\Frontend\F_CategoryController;
+use App\Http\Controllers\api\v1\Frontend\F_RepOrderController;
 use App\Http\Controllers\api\v1\General\{
     G_AreaController,
     G_CancelOrderController,
@@ -61,6 +62,7 @@ Route::prefix('v1')->group(function () {
 
         // Offer routes
         Route::post('/offers/{offer}/update', [G_RepChatController::class, 'updateOffer']);
+        Route::get('/invoices/{invoice}/view', [F_RepOrderController::class, 'viewInvoice']);
     });
 
     Route::get('Statistics',G_StatisticsController::class);

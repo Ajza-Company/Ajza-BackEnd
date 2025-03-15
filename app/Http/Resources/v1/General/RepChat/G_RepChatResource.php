@@ -20,11 +20,30 @@ class G_RepChatResource extends JsonResource
             'id' => encodeString($this->id),
             'rep_order_id' => encodeString($this->rep_order_id),
             'rep_order' => S_ShortRepOrderResource::make($this->whenLoaded('order')),
-            'user1' => ShortUserResource::make($this->whenLoaded('user1')),
-            'user2' => ShortUserResource::make($this->whenLoaded('user2')),
+            'user1' => $this->getUserResource($this->user1, $this->order),
+            'user2' => $this->getUserResource($this->user2, $this->order),
             'latest_message' => G_RepChatMessageResource::make($this->whenLoaded('latestMessage')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
+    }
+
+    protected function getUserResource($user, $order)
+    {
+        if (!$user) {
+            return null;
+        }
+
+        $resource = ShortUserResource::make($user);
+        $resourceArray = $resource->toArray(request());
+        if (!$order) {
+            return $resourceArray;
+        }else{
+            if ($order->offers()->where('status', 'accepted')->exists()) {
+                $resourceArray['full_mobile'] = $user->full_mobile;
+            }
+        }
+
+        return $resourceArray;
     }
 }

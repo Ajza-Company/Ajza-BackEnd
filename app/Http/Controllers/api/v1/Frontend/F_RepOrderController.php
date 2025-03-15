@@ -115,4 +115,31 @@ class F_RepOrderController extends Controller
         }
 
     }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function viewInvoice(string $chat_message_id)
+    {
+        $message = RepChatMessage::findOrFail(decodeString($chat_message_id));
+
+        if (!$message->is_invoice) {
+            return response()->json(errorResponse(message: trans(ErrorMessageEnum::FOUND)), Response::HTTP_NOT_FOUND);
+        }
+
+        $offer = $message->chat?->order?->offers()->where('status', 'accepted')->first();
+        $deliveryPrice = 30;
+        $tax = 10;
+        $total = $offer?->price + $deliveryPrice + $tax;
+
+        return response()->json([
+            'data' => [
+                'invoice' => getFullUrl($message->attachment),
+                'price' => $offer?->price,
+                'delivery_price' => $deliveryPrice,
+                'tax' => $tax,
+                'total' => $total
+            ]
+        ]);
+    }
 }

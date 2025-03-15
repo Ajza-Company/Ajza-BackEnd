@@ -43,6 +43,16 @@ class S_CreateOfferService
                 return response()->json(errorResponse(trans(ErrorMessageEnum::CREATE)), 400);
             }
 
+            $product = $store->storeProducts()->find($data['product_id']);
+
+            if ($data['type'] == 'percentage' && $data['discount'] > 100) {
+                return response()->json(errorResponse(trans(ErrorMessageEnum::CREATE)), 400);
+            }
+
+            if ($data['type'] == 'fixed' && $data['discount'] > $product->price) {
+                return response()->json(errorResponse(trans(ErrorMessageEnum::CREATE)), 400);
+            }
+
             $this->createOffer->create([
                 'store_id' => $store->id,
                 'store_product_id' => $data['product_id'],

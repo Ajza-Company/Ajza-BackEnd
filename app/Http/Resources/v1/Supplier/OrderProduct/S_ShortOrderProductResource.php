@@ -17,7 +17,7 @@ class S_ShortOrderProductResource extends JsonResource
     {
         return [
             $this->merge($this->whenLoaded('storeProduct', S_ShortStoreProductResource::make($this->storeProduct))),
-            'price' => $this->price,
+            'price' => round($this->price, 2),
             'quantity' => $this->quantity,
         ];
     }
