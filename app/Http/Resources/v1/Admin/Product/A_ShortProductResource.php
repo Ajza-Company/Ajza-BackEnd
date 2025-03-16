@@ -19,14 +19,19 @@ class A_ShortProductResource extends JsonResource
             'name' => $this->localized->name,
             'description' => $this->localized->description,
             'category' => $this->category,
-            'variant_value'=>$this->variant?->value,
-            'variant_name'=>$this->variant?->variantCategory?->localized?->name,
             'part_number' => $this->part_number,
             'image' => $this->image,
             'price' => $this->price,
             'is_original' => (bool) $this->is_original,
             'is_active' => (bool) $this->is_active,
+            'variants' => $this->variant ? $this->variant->map(function($variant) {
+                return [
+                    'id' => encodeString($variant->id),
+                    'value' => $variant->value,
+                    'category_name' => $variant->variantCategory?->localized?->name,
+                    'custom_value' => $variant->custom_value
+                ];
+            }) : [],
         ];
-        
     }
 }

@@ -49,11 +49,11 @@ class Product extends Model
 
     /**
      *
-     * @return HasOne
+     * @return HasMany
      */
-    public function variant(): HasOne
+    public function variant(): HasMany
     {
-        return $this->hasOne(VariantValue::class, 'product_id');
+        return $this->hasMany(VariantValue::class, 'product_id');
     }
 
 
