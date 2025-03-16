@@ -27,9 +27,8 @@ class A_ShortProductResource extends JsonResource
             'variants' => $this->variant ? $this->variant->map(function($variant) {
                 return [
                     'id' => encodeString($variant->id),
-                    'value' => $variant->value,
-                    'category_name' => $variant->variantCategory?->localized?->name,
-                    'custom_value' => $variant->custom_value
+                    'variant_name' => $variant->variantCategory?->localized?->name,
+                    'variant_value' => $variant->value,
                 ];
             }) : [],
         ];
