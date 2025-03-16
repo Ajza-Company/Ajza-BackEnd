@@ -38,7 +38,7 @@ class A_ProductController extends Controller
     public function index()
     {
         return A_ShortProductResource::collection(
-            $this->fetchProduct->fetch(with:['variant','variant.variantCategory','variant.variantCategory.localized','localized'])
+            $this->fetchProduct->fetch(with:['variant','variant.variantCategory','variant.variantCategory.localized','localized','category.localized'])
         );
     }
 
