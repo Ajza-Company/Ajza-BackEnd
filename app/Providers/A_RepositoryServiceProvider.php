@@ -15,16 +15,12 @@ use App\Repositories\Admin\Company\Create\F_CreateCompanyInterface;
 use App\Repositories\Admin\Company\Create\F_CreateCompanyRepository;
 use App\Repositories\Frontend\Country\Fetch\F_FetchCountryInterface;
 use App\Repositories\Frontend\Country\Fetch\F_FetchCountryRepository;
-use App\Repositories\Admin\PromoCode\Create\A_CreatePromoCodeInterface; 
+use App\Repositories\Admin\PromoCode\Create\A_CreatePromoCodeInterface;
 use App\Repositories\Admin\PromoCode\Create\A_CreatePromoCodeRepository;
 use App\Repositories\Admin\PromoCode\Fetch\A_FetchPromoCodeInterface;
 use App\Repositories\Admin\PromoCode\Fetch\A_FetchPromoCodeRepository;
 use App\Repositories\Admin\PromoCode\Find\A_FindPromoCodeInterface;
 use App\Repositories\Admin\PromoCode\Find\A_FindPromoCodeRepository;
-use App\Repositories\Admin\VariantCategory\Fetch\A_FetchVariantCategoryInterface;
-use App\Repositories\Admin\VariantCategory\Fetch\A_FetchVariantCategoryRepository;
-use App\Repositories\Admin\VariantCategory\Find\A_FindVariantCategoryInterface;
-use App\Repositories\Admin\VariantCategory\Find\A_FindVariantCategoryRepository;
 use App\Repositories\Admin\Product\Fetch\A_FetchProductInterface;
 use App\Repositories\Admin\Product\Fetch\A_FetchProductRepository;
 use App\Repositories\Admin\Product\Find\A_FindProductInterface;
@@ -37,12 +33,12 @@ class A_RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        
+
         $this->app->bind(
             A_FindProductInterface::class,
             A_FindProductRepository::class
         );
-        
+
         $this->app->bind(
             A_FetchProductInterface::class,
             A_FetchProductRepository::class
@@ -52,7 +48,7 @@ class A_RepositoryServiceProvider extends ServiceProvider
             A_FetchCompanyInterface::class,
             A_FetchCompanyRepository::class
         );
-        
+
         $this->app->bind(
             F_CreateCompanyInterface::class,
             F_CreateCompanyRepository::class
@@ -74,35 +70,24 @@ class A_RepositoryServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            F_FetchCountryInterface::class, 
+            F_FetchCountryInterface::class,
             F_FetchCountryRepository::class
         );
 
         $this->app->bind(
-            A_CreatePromoCodeInterface::class, 
+            A_CreatePromoCodeInterface::class,
             A_CreatePromoCodeRepository::class
         );
 
         $this->app->bind(
-            A_FetchPromoCodeInterface::class, 
+            A_FetchPromoCodeInterface::class,
             A_FetchPromoCodeRepository::class
         );
 
         $this->app->bind(
-            A_FindPromoCodeInterface::class, 
+            A_FindPromoCodeInterface::class,
             A_FindPromoCodeRepository::class
         );
-
-        $this->app->bind(
-            A_FetchVariantCategoryInterface::class, 
-            A_FetchVariantCategoryRepository::class
-        );
-
-        $this->app->bind(
-            A_FindVariantCategoryInterface::class, 
-            A_FindVariantCategoryRepository::class
-        );
-
     }
 
     /**
