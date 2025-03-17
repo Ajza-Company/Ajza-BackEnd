@@ -16,10 +16,10 @@ class F_ShortStoreResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $location = locationHelper($request->ip());
-        $latitude = $location->latitude ?? 0;
-        $longitude = $location->longitude ?? 0;
-        $distanceAndTime = distanceTimeBetweenTwoLocations($latitude, $longitude, $this->latitude, $this->longitude);
+        // $location = locationHelper($request->ip());
+       /* $latitude = $location->latitude ?? 0;
+        $longitude = $location->longitude ?? 0;*/
+        $distanceAndTime = distanceTimeBetweenTwoLocations(0, 0, $this->latitude, $this->longitude);
         $localizedDistanceTime = trans('general.distance_time_format', [
             'distance' => $distanceAndTime['distance'],     // Value for :distance
             'distanceUnit' => trans('general.km'),         // Value for :distanceUnit
