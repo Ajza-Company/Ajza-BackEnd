@@ -6,7 +6,6 @@ use App\Http\Controllers\api\v1\Admin\{
     A_AuthController,
     A_PromoCodeController,
     F_RepSalesController,
-    A_VariantCategoryController,
     A_ProductController
 };
 use App\Http\Controllers\api\v1\General\G_TermsController;
@@ -55,12 +54,6 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::prefix('auth')->group(function () {
         Route::get('virtual-login/{user}', [A_AuthController::class, 'loginWithID']);
     });
-
-    Route::get('variant-categories/{category}', [A_VariantCategoryController::class,'index']);
-    Route::post('variant-categories', [A_VariantCategoryController::class,'store']);
-    Route::post('variant-categories/{variant}', [A_VariantCategoryController::class,'update']);
-    Route::get('variant-categories/show/{variant}', [A_VariantCategoryController::class,'show']);
-    Route::delete('variant-categories/delete/{variant}', [A_VariantCategoryController::class,'destroy']);
 
     Route::get('product', [A_ProductController::class,'index']);
     Route::post('product', [A_ProductController::class,'store']);
