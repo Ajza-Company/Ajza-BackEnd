@@ -1,26 +1,20 @@
 <?php
 
-use App\Enums\LocationHelperTypesEnum;
 use Stevebauman\Location\Facades\Location;
 use Stevebauman\Location\Position;
 
-if (!function_exists('locationHelper')) {
+if (!function_exists('getUserLocation')) {
     /**
      * Returns decoded Item
      */
-    function locationHelper(string $ip): Position|bool|null
+    function getUserLocation($request): Position|bool|null
     {
-        try {
-            $location = Location::get($ip);
-
-            if ($location) {
-                return $location;
-            } else {
+        return cache()->remember('user_location_'.$request->ip(), 3600, function() use ($request) {
+            try {
+                return Location::get($request->ip()) ?: null;
+            } catch (\Exception $ex) {
                 return null;
             }
-        } catch (\Exception $ex) {
-            return null;
-        }
-
+        });
     }
 }
