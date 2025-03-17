@@ -26,6 +26,15 @@ class Category extends Model
 
     /**
      *
+     * @return HasMany
+     */
+    public function variants(): HasMany
+    {
+        return $this->hasMany(VariantCategory::class, 'category_id');
+    }
+
+    /**
+     *
      * @return HasManyThrough
      */
     public function stores(): HasManyThrough
