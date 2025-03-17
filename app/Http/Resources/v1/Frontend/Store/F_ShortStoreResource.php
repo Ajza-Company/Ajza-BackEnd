@@ -36,7 +36,7 @@ class F_ShortStoreResource extends JsonResource
             'name' => $this->company?->localized?->name,
             'rate' => 4.3,
             'image' => $this->image,
-            'distanceAndTime' => $localizedDistanceTime,
+            'distanceAndTime' => '',
             // 'address' => $this->area?->localized?->name . ', ' . $this->area?->state?->localized?->name,
             'address' => $localizedDistance,
             'is_open' => true
