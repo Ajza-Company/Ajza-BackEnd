@@ -24,6 +24,6 @@ class F_CategoryController extends Controller
      */
     public function __invoke()
     {
-        return F_CategoryResource::collection($this->fetchCategory->fetch(paginate: false));
+        return F_CategoryResource::collection($this->fetchCategory->fetch(paginate: false, with: ['variants']));
     }
 }

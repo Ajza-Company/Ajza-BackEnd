@@ -16,8 +16,7 @@ class A_ShortVariantResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'name' => $this->localized->name,
-            'category' => $this->category
+            'name' => $this->localized?->name
         ];
     }
 }

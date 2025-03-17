@@ -21,7 +21,11 @@ class A_VariantCategoryController extends Controller
     /**
      * Create a new instance.
      *
-     * @param A_CreateVariantCategoryService $createAccount
+     * @param A_CreateVariantCategoryService $createVariantCategory
+     * @param A_FetchVariantCategoryInterface $fetchVariantCategory
+     * @param A_UpdateVariantCategoryService $updateVariantCategory
+     * @param A_DeleteVariantCategoryService $deleteVariantCategory
+     * @param A_FindVariantCategoryInterface $findVariantCategory
      */
     public function __construct(
         private A_CreateVariantCategoryService $createVariantCategory,
