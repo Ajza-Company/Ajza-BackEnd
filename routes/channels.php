@@ -38,5 +38,5 @@ Broadcast::channel('repair.chat.{chatId}', function ($user, $chatId) {
 });
 
 Broadcast::channel('rep-order', function ($user, $chatId) {
-    return $user->hasRole(RoleEnum::REPRESENTATIVE);
+    return true;
 });
