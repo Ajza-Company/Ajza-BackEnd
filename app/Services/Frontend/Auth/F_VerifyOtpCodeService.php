@@ -7,6 +7,7 @@ use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\User\UserResource;
 use App\Models\OtpCode;
 use App\Models\User;
+use App\Repositories\General\FcmToken\Create\G_CreateFcmTokenInterface;
 use App\Services\Frontend\SmsService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +20,7 @@ class F_VerifyOtpCodeService
      *
      * @param SmsService $smsService
      */
-    public function __construct(private SmsService $smsService)
+    public function __construct(private SmsService $smsService, private G_CreateFcmTokenInterface $createFcmToken)
     {
 
     }
@@ -46,6 +47,12 @@ class F_VerifyOtpCodeService
                 $token = null;
 
                 if ($user) {
+                    if (isset($data['fcm_token'])) {
+                        $this->createFcmToken->create([
+                            'user_id' => $user->id,
+                            'token' => $data['fcm_token']
+                        ]);
+                    }
                     $returnArr = UserResource::make($user);
                     $token = $user->createToken('auth_token')->plainTextToken;
                 }

@@ -6,6 +6,7 @@ use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\User\UserResource;
 use App\Models\User;
+use App\Repositories\General\FcmToken\Create\G_CreateFcmTokenInterface;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Lang;
 
 class S_LoginService
 {
+
+    /**
+     * Create the event listener.
+     */
+    public function __construct(private G_CreateFcmTokenInterface $createFcmToken)
+    {
+        //
+    }
+
     /**
      * @param array $data
      * @return JsonResponse
@@ -24,12 +34,20 @@ class S_LoginService
             $credentials = [
                 'is_registered' => true,
                 'is_active' => true,
-                ...$data
+                'full_mobile' => $data['full_mobile'],
+                'password' => $data['password']
             ];
 
             $user = $this->authenticate($credentials);
 
             if ($user) {
+                if (isset($data['fcm_token'])) {
+                    $this->createFcmToken->create([
+                        'user_id' => $user->id,
+                        'token' => $data['fcm_token']
+                    ]);
+                }
+
                 return response()->json(successResponse(
                     message: trans(SuccessMessagesEnum::LOGGEDIN),
                     data: UserResource::make($user->load('stores', 'roles')),
