@@ -46,7 +46,7 @@ class OrderNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['database', FCMChannel::class];
+        return [FCMChannel::class];
     }
 
     /**
