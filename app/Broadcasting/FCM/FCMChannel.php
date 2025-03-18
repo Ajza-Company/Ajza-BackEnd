@@ -23,7 +23,7 @@ class FCMChannel
     {
         // Channel initialization, if necessary
         $this->client = new Client();
-        $this->client->setAuthConfig(storage_path('ajza-4ad8b-firebase-adminsdk-ufolh-1608b44ec9.json'));
+        $this->client->setAuthConfig(storage_path('app/ajza-4ad8b-firebase-adminsdk-ufolh-1608b44ec9.json'));
         $this->client->addScope('https://www.googleapis.com/auth/firebase.messaging');
     }
 
