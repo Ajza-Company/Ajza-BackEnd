@@ -4,6 +4,7 @@ return [
     'km' => 'كم',
     'min' => 'دقيقة',
     'distance_time_format' => ':distance :distanceUnit , :time :timeUnit',
+    'distance' => ':distance :distanceUnit',
     'product_discount_percentage' => 'خصم :discount%',
     'product_discount' => 'خصم :discount ر.س',
     'percentage_discount' => 'نسبة',

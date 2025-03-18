@@ -4,6 +4,7 @@ namespace App\Services\Frontend\RepOrder;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Events\v1\Frontend\F_CreateRepOrderEvent;
 use App\Jobs\CancelRepOrderIfTimeoutJob;
 use App\Models\User;
 use App\Repositories\Frontend\RepOrder\Create\F_CreateRepOrderInterface;
@@ -44,6 +45,8 @@ class F_CreateRepOrderService
             }
 
             CancelRepOrderIfTimeoutJob::dispatch($order->refresh())->delay(now()->addMinutes(5));
+
+            broadcast(new F_CreateRepOrderEvent($order))->toOthers();
 
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: [
                 'id' => encodeString($order->id)

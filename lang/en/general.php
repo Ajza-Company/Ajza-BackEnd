@@ -4,6 +4,7 @@ return [
     'km' => 'km',
     'min' => 'min',
     'distance_time_format' => ':distance :distanceUnit , :time :timeUnit',
+    'distance' => ':distance :distanceUnit',
     'product_discount_percentage' => 'Discount :discount%',
     'product_discount' => 'Discount :discount SAR',
     'percentage_discount' => 'Percentage',

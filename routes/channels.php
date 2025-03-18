@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\RoleEnum;
 use App\Models\RepChat;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -34,4 +35,11 @@ Broadcast::channel('repair.chat.{chatId}', function ($user, $chatId) {
         ]);
         return false;
     }
+});
+
+Broadcast::channel('rep-order', function ($user) {
+    \Log::info('Channel Auth:', [
+        'user_id' => $user->id
+    ]);
+    return true;
 });

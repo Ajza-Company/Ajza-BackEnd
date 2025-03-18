@@ -10,4 +10,5 @@ return [
     App\Providers\S_RepositoryServiceProvider::class,
     App\Providers\SmsServiceProvider::class,
     Spatie\Permission\PermissionServiceProvider::class,
+    PulkitJalan\Google\GoogleServiceProvider::class
 ];
