@@ -50,11 +50,6 @@ class FCMChannel
             return;
         }
 
-        if (!config('app.FCM_NOTIFICATION')) {
-            Log::warning('FCM notification is disabled');
-            return;
-        }
-
         $url = 'https://fcm.googleapis.com/v1/projects/ajza-4ad8b/messages:send';
         $tokens = is_array($data->tokens) ? $data->tokens : [$data->tokens];
 
