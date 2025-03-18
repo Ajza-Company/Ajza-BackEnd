@@ -23,7 +23,7 @@ class FCMChannel
     {
         // Channel initialization, if necessary
         $this->client = new Client();
-        $this->client->setAuthConfig(storage_path('app/deraya-b7016-firebase-adminsdk-2qndg-9a86f3dcae.json'));
+        $this->client->setAuthConfig(storage_path('ajza-4ad8b-firebase-adminsdk-ufolh-1608b44ec9.json'));
         $this->client->addScope('https://www.googleapis.com/auth/firebase.messaging');
     }
 
@@ -43,7 +43,7 @@ class FCMChannel
     public function send($notifiable, Notification $notification)
     {
         $accessToken = $this->getAccessToken();
-        $data = $notification->toFCM();
+        $data = $notification->toFCM($notifiable);
 
         if (empty($data->tokens)) {
             Log::warning('No tokens provided for FCM notification');
@@ -55,7 +55,7 @@ class FCMChannel
             return;
         }
 
-        $url = 'https://fcm.googleapis.com/v1/projects/deraya-b7016/messages:send';
+        $url = 'https://fcm.googleapis.com/v1/projects/ajza-4ad8b/messages:send';
         $tokens = is_array($data->tokens) ? $data->tokens : [$data->tokens];
 
         foreach ($tokens as $token) {
