@@ -3,6 +3,7 @@
 namespace App\Events\v1\Frontend;
 
 use App\Http\Resources\v1\Frontend\RepOrder\F_ShortRepOrderResource;
+use App\Http\Resources\v1\Supplier\RepOrder\S_ShortRepOrderResource;
 use App\Models\RepOrder;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -16,11 +17,14 @@ class F_CreateRepOrderEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public RepOrder $order;
+
     /**
      * Create a new event instance.
      */
-    public function __construct(public RepOrder $order)
+    public function __construct(RepOrder $order)
     {
+        $this->order = $order;
         \Log::info('order created' . json_encode($this->order));
     }
 
@@ -43,7 +47,7 @@ class F_CreateRepOrderEvent implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        return (F_ShortRepOrderResource::make($this->order))->resolve();
+        return (S_ShortRepOrderResource::make($this->order))->resolve();
     }
 
     /**
