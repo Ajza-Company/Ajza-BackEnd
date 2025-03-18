@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Broadcasting\FCM\FCMChannel;
 use App\Broadcasting\FCM\FCMContent;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
@@ -45,7 +46,7 @@ class OrderNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['database', 'fcm'];
+        return ['database', FCMChannel::class];
     }
 
     /**
