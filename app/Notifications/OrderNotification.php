@@ -57,8 +57,8 @@ class OrderNotification extends Notification implements ShouldQueue
      */
     public function toFcm(object $notifiable): FCMContent
     {
-        $title = $this->getTitle();
-        $message = $this->getMessage();
+        $tokens = $this->getFcmTokens($notifiable);
+        \Log::info('FCM Tokens:', $tokens);
 
         $fcmData = [
             'order_id' => $this->order->id,
@@ -66,10 +66,12 @@ class OrderNotification extends Notification implements ShouldQueue
             'click_action' => self::FCM_CLICK_ACTION
         ];
 
+        \Log::info('FCM Data:', $fcmData);
+
         return (new FCMContent)
-            ->title($title)
-            ->body($message)
-            ->to($this->getFcmTokens($notifiable))
+            ->title($this->getTitle())
+            ->body($this->getMessage())
+            ->to($tokens)
             ->data(['json' => json_encode($fcmData)]);
     }
 
