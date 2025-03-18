@@ -21,7 +21,7 @@ class F_CreateRepOrderEvent implements ShouldBroadcast
      */
     public function __construct(public RepOrder $order)
     {
-        //
+        \Log::info('order created' . json_encode($this->order));
     }
 
     /**

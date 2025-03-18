@@ -37,6 +37,9 @@ Broadcast::channel('repair.chat.{chatId}', function ($user, $chatId) {
     }
 });
 
-Broadcast::channel('rep-order', function ($user, $chatId) {
+Broadcast::channel('rep-order', function ($user) {
+    \Log::info('Channel Auth:', [
+        'user_id' => $user->id
+    ]);
     return true;
 });
