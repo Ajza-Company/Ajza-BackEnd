@@ -20,7 +20,7 @@ class A_ShortProductResource extends JsonResource
             'description' => $this->localized->description,
             'category' => $this->category,
             'part_number' => $this->part_number,
-            'image' => $this->image,
+            'image' => getFullUrl($this->image),
             'price' => $this->price,
             'is_original' => (bool) $this->is_original,
             'is_active' => (bool) $this->is_active,
