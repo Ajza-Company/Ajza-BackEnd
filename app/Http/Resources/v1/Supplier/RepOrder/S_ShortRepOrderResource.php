@@ -21,6 +21,7 @@ class S_ShortRepOrderResource extends JsonResource
             'description' => $this->description,
             'image' => getFullUrl($this->image),
             'status' => $this->status,
+            'created_at' => $this->created_at,
             'chat' => $this->whenLoaded('repChat', new G_RepChatResource($this->repChat)),
         ];
     }
