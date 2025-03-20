@@ -6,7 +6,7 @@ return [
     'distance_time_format' => ':distance :distanceUnit , :time :timeUnit',
     'distance' => ':distance :distanceUnit',
     'product_discount_percentage' => 'Discount :discount%',
-    'product_discount' => 'Discount :discount SAR',
+    'product_discount' => 'Discount :discount',
     'percentage_discount' => 'Percentage',
     'fixed_discount' => 'Fixed',
     'fixed' => 'Fixed',

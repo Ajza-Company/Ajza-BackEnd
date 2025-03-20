@@ -34,6 +34,9 @@ class F_ShortProductResource extends JsonResource
                 return round($oldprice, 2);
             }),
             'currency' => $this->store?->company?->country?->localized?->currency_code,
+            'discount_type' => $this->whenLoaded('offer', function () {
+                return $this->offer?->type;
+            }),
             'discount' => $this->whenLoaded('offer', function (){
                 return trans($this->offer?->type === 'fixed' ? 'general.product_discount' : 'general.product_discount_percentage', ['discount' => $this->offer?->discount ?? 0]);
             }),

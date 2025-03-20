@@ -6,7 +6,7 @@ return [
     'distance_time_format' => ':distance :distanceUnit , :time :timeUnit',
     'distance' => ':distance :distanceUnit',
     'product_discount_percentage' => 'خصم :discount%',
-    'product_discount' => 'خصم :discount ر.س',
+    'product_discount' => 'خصم :discount',
     'percentage_discount' => 'نسبة',
     'fixed_discount' => 'خصم علي السعر',
     'fixed' => 'خصم علي السعر',
