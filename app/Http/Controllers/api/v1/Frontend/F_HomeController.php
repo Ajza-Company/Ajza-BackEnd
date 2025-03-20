@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\Frontend;
 
 use App\Enums\OrderStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\Frontend\Order\F_ShortOrderResource;
 use Illuminate\Http\Request;
 
 class F_HomeController extends Controller
@@ -18,7 +19,7 @@ class F_HomeController extends Controller
             ->orders()
             ->where('status', OrderStatusEnum::COMPLETED)
             ->whereDoesntHave('review')
-            ->count();
+            ->adaptivePaginate();
 
         $notReadNotifications = $user
             ->notifications()
@@ -27,7 +28,7 @@ class F_HomeController extends Controller
 
         return response()->json([
             'data' => [
-                'notReviewedOrders' => $notReviewedOrders,
+                'notReviewedOrders' => F_ShortOrderResource::collection($notReviewedOrders),
                 'notReadNotifications' => $notReadNotifications
             ]
         ]);
