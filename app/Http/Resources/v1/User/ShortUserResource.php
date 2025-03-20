@@ -16,7 +16,8 @@ class ShortUserResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'name' => $this->name
+            'name' => $this->name,
+            'avatar' => getFullUrl($this->avatar)
         ];
     }
 }

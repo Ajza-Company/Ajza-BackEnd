@@ -18,6 +18,7 @@ class F_HomeController extends Controller
         $notReviewedOrders = $user
             ->orders()
             ->where('status', OrderStatusEnum::COMPLETED)
+            ->with('store')
             ->whereDoesntHave('review')
             ->adaptivePaginate();
 

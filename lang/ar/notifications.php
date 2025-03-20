@@ -1,5 +1,11 @@
 <?php
     return [
+        'rep_orders' => [
+            'order_accepted' => [
+                'title' => 'تم قبول الطلب',
+                'message' => 'تم قبول طلبك رقم #:order_number',
+            ],
+        ],
         'orders' => [
             'order_created' => [
                 'title' => 'تم استلام طلب جديد',

@@ -3,12 +3,16 @@
 namespace App\Services\Supplier\RepOrder;
 
 use App\Enums\ErrorMessageEnum;
+use App\Enums\OrderStatusEnum;
 use App\Enums\RepOrderStatusEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\Supplier\RepOrder\S_ShortRepOrderResource;
 use App\Models\RepChat;
+use App\Notifications\OrderNotification;
+use App\Notifications\RepOrderNotification;
 use App\Repositories\Supplier\RepOrder\Find\S_FindRepOrderInterface;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class S_AcceptRepOrderService
 {
@@ -27,6 +31,7 @@ class S_AcceptRepOrderService
      *
      * @param string $rep_order_id
      * @return JsonResponse
+     * @throws Throwable
      */
     public function execute(string $rep_order_id): JsonResponse
     {
@@ -43,6 +48,11 @@ class S_AcceptRepOrderService
                 'user1_id' => auth('api')->id(),
                 'user2_id' => $repOrder->user_id
             ]);
+
+            $repOrder->user->notify(new RepOrderNotification(
+                order: $repOrder,
+                type: RepOrderStatusEnum::ACCEPTED
+            ));
 
             $repOrder->update(['status' => RepOrderStatusEnum::ACCEPTED]);
             $repOrder->refresh();
