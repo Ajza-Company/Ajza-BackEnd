@@ -43,7 +43,7 @@ class S_StatisticsController extends Controller
 
         // Calculate today's orders directly instead of using the scope
         $today = Carbon::today();
-        $todayOrders = $orders->whereDate('created_at', $today);
+        $todayOrders = $orders->whereDate('created_at', $today)->get();
         $ordersAmountToday = $todayOrders->sum('amount') ?? 0;
 
         // Make sure it's a number before calculation
