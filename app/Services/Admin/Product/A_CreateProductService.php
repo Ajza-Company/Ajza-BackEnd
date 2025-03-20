@@ -40,12 +40,14 @@ class A_CreateProductService
                 $product->update(['image' => $path]);
             }
 
-            foreach($data['variate'] as $variant){
-                VariantValue::create([
-                    'variant_category_id'=>$variant['variant_category_id'],
-                    'value'=>$variant['value'],
-                    'product_id'=>$product->id
-                ]);
+            if(isset($data['variate'])){
+                foreach($data['variate'] as $variant){
+                    VariantValue::create([
+                        'variant_category_id'=>$variant['variant_category_id'],
+                        'value'=>$variant['value'],
+                        'product_id'=>$product->id
+                    ]);
+                }
             }
     
 

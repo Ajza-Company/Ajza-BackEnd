@@ -61,23 +61,23 @@ class S_ProductController extends Controller
         return $this->createProduct->create($data,$store->id);
     }
 
-    public function show(string $id)
+    public function show(string $id,string $product)
     {
-        $product =  $this->findProduct->find(decodeString($id));
+        $product =  $this->findProduct->find(decodeString($product));
 
         return A_ShortProductResource::make($product);
     }
 
-    public function update(S_UpdateProductRequest $request, string $id)
+    public function update(S_UpdateProductRequest $request, string $id,string $product)
     {
-        $product =  $this->findProduct->find(decodeString($id));
+        $product =  $this->findProduct->find(decodeString($product));
 
         return $this->updateProduct->update($request->validated(),$product);
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id ,string $product )
     {
-        $product =  $this->findProduct->find(decodeString($id));
+        $product =  $this->findProduct->find(decodeString($product));
 
         return $this->deleteProduct->delete($product);
     }
