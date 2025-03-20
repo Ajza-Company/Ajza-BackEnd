@@ -52,7 +52,6 @@ class A_ProductController extends Controller
     {
         $data = $request->validated();
 
-        $data['is_original']=true;
         $data['is_active']=true;
 
         return $this->createProduct->create($data);

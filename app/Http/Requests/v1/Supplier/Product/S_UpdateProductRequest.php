@@ -35,7 +35,8 @@ class S_UpdateProductRequest extends FormRequest
             'image' => 'sometimes|nullable|file|max:10240',
             'variate' => 'required|array|min:1',
             'variate.*.variant_category_id' => 'required|integer|exists:variant_categories,id',
-            'variate.*.value' => 'required|string|max:100'
+            'variate.*.value' => 'required|string|max:100',
+            'is_original'=>'required|boolean'
         ];
     }
     

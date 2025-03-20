@@ -9,7 +9,7 @@ use App\Enums\ErrorMessageEnum;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class S_CreateProductService
+class S_CreateSelectProductService
 {
     /**
      *

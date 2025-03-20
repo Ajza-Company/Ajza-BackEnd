@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api\v1\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
-use App\Services\Supplier\Product\S_CreateProductService;
+use App\Services\Supplier\Product\S_CreateSelectProductService;
 use App\Http\Requests\v1\Supplier\Product\StoreProductRequest;
 use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
 use App\Http\Resources\v1\Supplier\Product\S_ShortProductResource;
@@ -19,7 +19,7 @@ class S_SelectProductController extends Controller
      * @param S_FindStoreInterface $findStore
      */
     public function __construct(private S_FindStoreInterface $findStore,
-                                private S_CreateProductService $createProduct)
+                                private S_CreateSelectProductService $createProduct)
     {
 
     }
