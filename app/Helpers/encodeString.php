@@ -7,8 +7,11 @@ if (!function_exists('encodeString')) {
     /**
      * Returns decoded Item
      */
-    function encodeString(string $value, string $method = EncodingMethodsEnum::HASHID): string
+    function encodeString(string $value, string $method = EncodingMethodsEnum::HASHID): ?string
     {
+        if (!$value) {
+            return null;
+        }
         return match ($method) {
             'hashid' => Hashids::encode($value),
             'crypt' => Crypt::encrypt($value),
