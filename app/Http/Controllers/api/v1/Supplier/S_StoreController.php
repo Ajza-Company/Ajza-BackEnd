@@ -37,7 +37,7 @@ class S_StoreController extends Controller
         return S_ShortStoreResource::collection(
             userCompany()
                 ->stores()
-                ->with(['company' => ['localized'], 'area' => ['localized', 'state' => ['localized']]])
+                ->with(['company' => ['localized'], 'area' => ['localized', 'state' => ['localized']],'category'])
                 ->adaptivePaginate()
         );
     }

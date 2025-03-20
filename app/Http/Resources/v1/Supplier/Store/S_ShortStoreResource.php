@@ -23,7 +23,8 @@ class S_ShortStoreResource extends JsonResource
             'address_url' => $this->address_url,
             'isActive' => (bool)$this->is_active,
             'area' => $this->whenLoaded('area', F_AreaResource::make($this->area)),
-            'hours' => $this->whenLoaded('hours', S_StoreHourResource::collection($this->hours))
+            'hours' => $this->whenLoaded('hours', S_StoreHourResource::collection($this->hours)),
+            'category'=>encodeString($this->category->id)
         ];
     }
 }
