@@ -49,6 +49,12 @@ class F_CreateRepSalesService
 
             $user->assignRole(RoleEnum::REPRESENTATIVE);
 
+            if (isset($data['avatar'])) {
+                $path = uploadFile("user-$user->id", $data['avatar']);
+                $user->update(['avatar' => $path]);
+            }
+
+
             event(new F_UserCreatedEvent($user, $data['fcm_token'] ?? null));
 
             \DB::commit();

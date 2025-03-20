@@ -30,6 +30,11 @@ class F_UpdateRepSalesService
                 'full_mobile' => $data['full_mobile']
             ]);
 
+            if (isset($data['avatar'])) {
+                $path = uploadFile("user-$user->id", $data['avatar']);
+                $user->update(['avatar' => $path]);
+            }
+
 
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED), data: UserResource::make($user)));
