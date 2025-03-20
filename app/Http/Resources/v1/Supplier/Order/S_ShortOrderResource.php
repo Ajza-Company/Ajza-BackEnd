@@ -20,7 +20,7 @@ class S_ShortOrderResource extends JsonResource
             'id' => encodeString($this->id),
             'status' => $this->status,
             'delivery_method' => $this->delivery_method,
-            'date' => Carbon::parse($this->created_at)->locale(app()->getLocale())->format('d M, Y h:i A'),
+            'date' => $this->created_at,
             'products' => $this->whenLoaded('orderProducts', S_ShortOrderProductResource::collection($this->orderProducts))
         ];
     }

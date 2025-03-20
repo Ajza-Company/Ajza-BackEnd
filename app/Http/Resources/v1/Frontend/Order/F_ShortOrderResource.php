@@ -23,7 +23,7 @@ class F_ShortOrderResource extends JsonResource
             'id' => encodeString($this->id),
             'status' => $this->status,
             'delivery_method' => $this->delivery_method,
-            'date' => Carbon::parse($this->created_at)->locale(app()->getLocale())->translatedFormat('d M, Y h:i A'),
+            'date' => $this->created_at,
             'store' => $this->whenLoaded('store', new F_ShortStoreResource($this->store)),
             'products' => $this->whenLoaded('orderProducts', F_ShortOrderProductResource::collection($this->orderProducts)),
             'address' => $this->whenLoaded('address', new F_AddressResource($this->address)),

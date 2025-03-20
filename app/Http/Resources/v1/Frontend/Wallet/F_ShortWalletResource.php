@@ -22,7 +22,7 @@ class F_ShortWalletResource extends JsonResource
             'description' => $this->description,
             'reference' => $this->reference,
             'status' => $this->status,
-            'date' => Carbon::parse($this->created_at)->locale(app()->getLocale())->translatedFormat('d M, Y h:i A'),
+            'date' => $this->created_at,
         ];
     }
 }
