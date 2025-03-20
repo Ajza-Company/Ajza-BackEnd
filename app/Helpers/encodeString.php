@@ -7,7 +7,7 @@ if (!function_exists('encodeString')) {
     /**
      * Returns decoded Item
      */
-    function encodeString(string $value, string $method = EncodingMethodsEnum::HASHID): ?string
+    function encodeString(string $value = null, string $method = EncodingMethodsEnum::HASHID): ?string
     {
         if (!$value) {
             return null;
