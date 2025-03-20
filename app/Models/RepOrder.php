@@ -6,6 +6,7 @@ use App\Filters\Supplier\RepOrderFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -36,6 +37,15 @@ class RepOrder extends Model
     public function repChat(): HasOne
     {
         return $this->hasOne(RepChat::class, 'rep_order_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

@@ -1,5 +1,11 @@
 <?php
     return [
+        'rep_orders' => [
+            'order_accepted' => [
+                'title' => 'Order Accepted',
+                'message' => 'Your order has been accepted',
+            ],
+        ],
         'orders' => [
             'order_created' => [
                 'title' => 'New Order Received',
