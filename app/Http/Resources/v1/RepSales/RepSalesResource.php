@@ -22,6 +22,7 @@ class RepSalesResource extends JsonResource
             'email' => $this->email,
             'fullMobile' => $this->full_mobile,
             'gender' => $this->gender,
+            'avatar' => $this->avatar,
             'isRegistered' => (bool)$this->is_registered,
             'role' => $this->whenLoaded('roles', function () {
                 return $this->roles->first()?->name;
