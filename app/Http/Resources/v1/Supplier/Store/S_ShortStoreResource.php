@@ -24,6 +24,7 @@ class S_ShortStoreResource extends JsonResource
             'isActive' => (bool)$this->is_active,
             'area' => $this->whenLoaded('area', F_AreaResource::make($this->area)),
             'hours' => $this->whenLoaded('hours', S_StoreHourResource::collection($this->hours)),
+            'test_category' => $this->category,
             'category' => encodeString($this->category?->category_id)
         ];
     }
