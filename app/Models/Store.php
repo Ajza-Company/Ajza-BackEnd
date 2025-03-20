@@ -82,7 +82,7 @@ class Store extends Model
      */
     public function category(): HasOne
     {
-        return $this->hasOne(StoreCategory::class);
+        return $this->hasOne(StoreCategory::class, 'store_id');
     }
 
     /**
