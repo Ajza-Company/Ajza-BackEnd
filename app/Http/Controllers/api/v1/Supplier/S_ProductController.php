@@ -16,10 +16,10 @@ use App\Http\Resources\v1\Supplier\StoreProduct\S_ShortStoreProductResource;
 use App\Http\Requests\v1\Supplier\Product\S_UpdateProductRequest;
 use App\Http\Requests\v1\Supplier\Product\S_CreateProductRequest;
 use App\Repositories\Admin\Product\Find\A_FindProductInterface;
-use App\Services\Admin\Product\A_UpdateProductService;
-use App\Services\Admin\Product\A_DeleteProductService;
+use App\Services\Supplier\Product\A_UpdateProductService;
+use App\Services\Supplier\Product\A_DeleteProductService;
 use App\Http\Resources\v1\Admin\Product\A_ShortProductResource;
-use App\Services\Admin\Product\A_CreateProductService;
+use App\Services\Supplier\Product\A_CreateProductService;
 use App\Repositories\Admin\Product\Fetch\A_FetchProductInterface;
 
 class S_ProductController extends Controller
@@ -59,7 +59,7 @@ class S_ProductController extends Controller
         $data['is_original']=false;
         $data['is_active']=false;
 
-        return $this->createProduct->create($data);
+        return $this->createProduct->create($data,$store->id);
     }
 
     public function show(string $id)

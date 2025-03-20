@@ -32,7 +32,7 @@ class S_UpdateProductRequest extends FormRequest
             'localized.*.description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'part_number' => 'nullable|string|max:50',
-            'image' => 'sometime|nullable|file|max:10240',
+            'image' => 'sometimes|nullable|file|max:10240',
             'variate' => 'required|array|min:1',
             'variate.*.variant_category_id' => 'required|integer|exists:variant_categories,id',
             'variate.*.value' => 'required|string|max:100'

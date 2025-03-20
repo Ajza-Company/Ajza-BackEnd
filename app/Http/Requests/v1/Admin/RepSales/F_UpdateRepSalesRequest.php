@@ -37,6 +37,7 @@ class F_UpdateRepSalesRequest extends FormRequest
                 'string',
                 Rule::unique('users', 'full_mobile')->ignore($this->id),
             ],
+            'avatar' => 'sometimes|nullable|file|max:2408'
         ];
     }
     
