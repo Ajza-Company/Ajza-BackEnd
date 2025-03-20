@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Filters\Frontend\ProductFilter;
+use App\Filters\General\ProductFilter;
 use App\Traits\HasLocalized;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -101,4 +101,16 @@ class Product extends Model
     {
         return $this->hasMany(ProductCarAttribute::class, 'product_id');
     }
+
+        /**
+     *
+     * @param Builder $builder
+     * @param $request
+     * @return Builder
+     */
+    public function scopeFilter(Builder $builder, $request): Builder
+    {
+        return (new ProductFilter($request))->filter($builder);
+    }
+
 }

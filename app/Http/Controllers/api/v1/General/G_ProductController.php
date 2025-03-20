@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\General;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\General\Product\G_ProductResource;
@@ -24,11 +25,13 @@ class G_ProductController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(string $store_id, Request $request)
+    public function __invoke(Request $request)
     {
-        $store = $this->findStore->find(decodeString($store_id));        
-        $allProducts = $this->fetchProduct->fetch(data:['category_id'=> $store->category->id]);
-        
+        $allProducts = Product::where('is_default',true)
+        ->with('localized')
+        ->filter(request())
+        ->adaptivePaginate();
+
         return G_ProductResource::collection($allProducts);
     }
 }

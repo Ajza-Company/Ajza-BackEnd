@@ -49,9 +49,7 @@ Route::prefix('v1')->group(function () {
         Route::post('{order_id}/cancel', G_CancelOrderController::class);
     });
 
-    Route::prefix('products')->group(function () {
-        Route::get('/{store_id}', G_ProductController::class);
-    });
+        Route::get('/products', G_ProductController::class);
 
     Route::prefix('rep-orders')->group(function () {
         Route::get('/chats', [G_RepChatController::class, 'index']);
