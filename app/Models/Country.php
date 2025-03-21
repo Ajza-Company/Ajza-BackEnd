@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasLocalized;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Country extends Model
@@ -32,5 +33,14 @@ class Country extends Model
     public function localized(): HasOne
     {
         return $this->localizedRelation(CountryLocale::class);
+    }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function states(): HasMany
+    {
+        return $this->hasMany(State::class, 'country_id');
     }
 }
