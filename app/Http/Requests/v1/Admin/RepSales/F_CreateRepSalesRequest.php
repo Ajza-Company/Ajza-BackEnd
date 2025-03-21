@@ -31,7 +31,7 @@ class F_CreateRepSalesRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'full_mobile' => 'required|string|unique:users,full_mobile',
             'gender' => 'required|string|in:male,female',
-            'avatar' => 'sometimes|nullable|file|max:2408',
+            'avatar' => 'sometimes|file|max:2408',
             'workshop.data.name' => 'sometimes|string',
             'workshop.data.city_id' => 'sometimes|integer|exists:cities,id',
             'workshop.data.commercial_registration' => 'sometimes|string',

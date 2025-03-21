@@ -47,12 +47,13 @@ class F_CreateRepSalesService
                 'preferred_language' => app()->getLocale()
             ]);
 
-            $user->assignRole(RoleEnum::REPRESENTATIVE);
-
             if (isset($data['avatar'])) {
                 $path = uploadFile("user-$user->id", $data['avatar']);
                 $user->update(['avatar' => $path]);
             }
+
+            $user->assignRole(RoleEnum::REPRESENTATIVE);
+
 
 
             event(new F_UserCreatedEvent($user, $data['fcm_token'] ?? null));
