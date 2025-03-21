@@ -18,7 +18,8 @@ class A_ShortUserResource extends JsonResource
             'id' => encodeString($this->id),
             'name' => $this->name,
             'email' => $this->email,
-            'full_mobile' => $this->full_mobile
+            'full_mobile' => $this->full_mobile,
+            'avatar'=>$this->avatar
         ];
     }
 }
