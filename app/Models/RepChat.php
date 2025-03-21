@@ -37,7 +37,7 @@ class RepChat extends Model
 
     public function latestMessage(): HasOne
     {
-        return $this->hasOne(RepChatMessage::class, 'rep_chat_id')->latest();
+        return $this->hasOne(RepChatMessage::class, 'rep_chat_id')->where('message_type', '!=', 'ended')->latest();
     }
 
     /**
