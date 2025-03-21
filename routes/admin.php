@@ -6,7 +6,8 @@ use App\Http\Controllers\api\v1\Admin\{
     A_AuthController,
     A_PromoCodeController,
     F_RepSalesController,
-    A_ProductController
+    A_ProductController,
+    F_StateController
 };
 use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
@@ -62,5 +63,12 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::delete('product/delete/{product}', [A_ProductController::class,'destroy']);
 
     Route::apiResource('promo-codes', A_PromoCodeController::class)->except(['update']);
+
+    //state
+    Route::get('state', [F_StateController::class,'index']);
+    Route::post('state', [F_StateController::class,'store']);
+    Route::post('state/{state}', [F_StateController::class,'update']);
+    Route::get('state/show/{state}', [F_StateController::class,'show']);
+    Route::delete('state/delete/{state}', [F_StateController::class,'destroy']);
 
 });

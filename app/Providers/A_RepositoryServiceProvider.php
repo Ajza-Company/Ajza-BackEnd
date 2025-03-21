@@ -25,6 +25,10 @@ use App\Repositories\Admin\Product\Fetch\A_FetchProductInterface;
 use App\Repositories\Admin\Product\Fetch\A_FetchProductRepository;
 use App\Repositories\Admin\Product\Find\A_FindProductInterface;
 use App\Repositories\Admin\Product\Find\A_FindProductRepository;
+use App\Repositories\Admin\State\Fetch\A_FetchStateInterface;
+use App\Repositories\Admin\State\Fetch\A_FetchStateRepository;
+use App\Repositories\Admin\State\Find\S_FindStateInterface;
+use App\Repositories\Admin\State\Find\S_FindStateRepository;
 
 class A_RepositoryServiceProvider extends ServiceProvider
 {
@@ -33,6 +37,16 @@ class A_RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+
+        $this->app->bind(
+            S_FindStateInterface::class,
+            S_FindStateRepository::class
+        );
+
+        $this->app->bind(
+            A_FetchStateInterface::class,
+            A_FetchStateRepository::class
+        );
 
         $this->app->bind(
             A_FindProductInterface::class,
