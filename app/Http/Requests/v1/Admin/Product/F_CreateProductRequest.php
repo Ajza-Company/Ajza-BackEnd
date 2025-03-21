@@ -33,7 +33,7 @@ class F_CreateProductRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'part_number' => 'nullable|string|max:50',
             'image' => 'sometimes|nullable|file|max:10240',
-            'variate' => 'sometimes|array|min:1',
+            'variate' => 'sometimes|array',
             'variate.*.variant_category_id' => 'required_with:variate|integer|exists:variant_categories,id',
             'variate.*.value' => 'required_with:variate|string|max:100',
             'is_original'=>'required|boolean'
