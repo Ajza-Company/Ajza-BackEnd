@@ -44,16 +44,17 @@ class A_UpdateProductService
                 $product->update(['image' => $path]);
             }
 
-            foreach($data['variate'] as $variant){
-                VariantValue::updateOrCreate([
-                        'variant_category_id'=>$variant['variant_category_id'],
-                        'product_id'=>$product->id
-                    ],
-                    [
-                        'value'=>$variant['value'],
-                    ]);
+            if(isset($data['variate'])){
+                foreach($data['variate'] as $variant){
+                    VariantValue::updateOrCreate([
+                            'variant_category_id'=>$variant['variant_category_id'],
+                            'product_id'=>$product->id
+                        ],
+                        [
+                            'value'=>$variant['value'],
+                        ]);
+                }
             }
-
 
             foreach($data['localized'] as $local){
                 ProductLocale::updateOrCreate(

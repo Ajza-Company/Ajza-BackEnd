@@ -13,6 +13,6 @@ class VariantValue extends Model
 
     public function variantCategory()
     {
-        return $this->belongsTo(VariantCategory::class);
+        return $this->belongsTo(VariantCategory::class, 'variant_category_id');
     }
 }

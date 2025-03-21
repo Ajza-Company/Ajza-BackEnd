@@ -31,10 +31,10 @@ class S_CreateProductRequest extends FormRequest
             'localized.*.description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'part_number' => 'nullable|string|max:50',
-            'image' => 'sometimes|nullable|file|max:10240',
-            'variate' => 'required|array|min:1',
-            'variate.*.variant_category_id' => 'required|integer|exists:variant_categories,id',
-            'variate.*.value' => 'required|string|max:100',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2408',
+            'variate' => 'sometimes|array',
+            'variate.*.variant_category_id' => 'required_with:variate|integer|exists:variant_categories,id',
+            'variate.*.value' => 'required_with:variate|string|max:100',
             'is_original'=>'required|boolean'
         ];
     }

@@ -16,9 +16,11 @@ class VariantCategory extends Model
 
     public function variantValues()
     {
-        return $this->hasMany(VariantValue::class);
+        return $this->hasMany(VariantValue::class, 'variant_category_id');
     }
+    
     /**
+     * Get the category associated with the variant category.
      *
      * @return BelongsTo
      */
@@ -28,6 +30,7 @@ class VariantCategory extends Model
     }
 
     /**
+     * Get the localized information for the variant category.
      *
      * @return HasOne
      */
