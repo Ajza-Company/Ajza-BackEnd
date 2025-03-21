@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api\v1\Admin;
 
 use App\Enums\RoleEnum;
+use App\Http\Resources\v1\Admin\Country\A_CountryResource;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Controllers\Controller;
@@ -20,21 +22,24 @@ class F_StateController extends Controller
     /**
      * Create a new instance.
      *
-     * @param F_CreateStateService $createAccount
+     * @param F_CreateStateService $createState
+     * @param A_FetchStateInterface $fetchState
+     * @param F_UpdateStateService $updateState
+     * @param F_DeleteStateService $deleteState
+     * @param S_FindStateInterface $findState
      */
     public function __construct(
         private F_CreateStateService $createState,
-        private A_FetchStateInterface $fetchState,
         private F_UpdateStateService $updateState,
         private F_DeleteStateService $deleteState,
         private S_FindStateInterface $findState)
     {
 
     }
-    
+
     public function index() {
-        return A_ShortStateResource::collection(
-            $this->fetchState->fetch()
+        return A_CountryResource::collection(
+            Country::with(['states' => ['localized']])->get()
         );
     }
 
