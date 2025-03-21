@@ -6,6 +6,7 @@ use App\Enums\ErrorMessageEnum;
 use App\Enums\OrderDeliveryMethodEnum;
 use App\Enums\OrderStatusEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Http\Resources\v1\Frontend\Order\F_ShortOrderResource;
 use App\Models\Order;
 use App\Models\Store;
 use App\Models\StoreProduct;
@@ -68,7 +69,7 @@ class F_CreateOrderService
             ));
 
             \DB::commit();
-            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: F_ShortOrderResource::make($order)));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(
