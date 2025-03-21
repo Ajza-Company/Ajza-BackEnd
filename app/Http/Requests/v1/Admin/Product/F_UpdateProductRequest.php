@@ -41,13 +41,16 @@ class F_UpdateProductRequest extends FormRequest
         ];
     }
     
-    /**
+        /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void
     {
         $this->decodeInput('localized.*.local_id');
-        $this->decodeInput('variate.*.variant_category_id');
+        if(\request()->variate){
+
+            $this->decodeInput('variate.*.variant_category_id');
+        }
         $this->decodeInput('category_id');
     }
 }
