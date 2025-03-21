@@ -82,6 +82,7 @@ class G_RepChatController extends Controller
 
         $messages = $chat->messages()
             ->whereIsHidden(false)
+            ->where('message_type', '!=', MessageTypeEnum::ENDED)
             ->with(['sender', 'offer'])
             ->latest()
             ->paginate();

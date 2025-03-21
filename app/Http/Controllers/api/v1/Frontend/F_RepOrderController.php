@@ -92,9 +92,6 @@ class F_RepOrderController extends Controller
     {
         try {
             $order = RepOrder::findOrFail(decodeString($order_id));
-            $order->update([
-                'status' => RepOrderStatusEnum::ENDED
-            ]);
 
             $message = new RepChatMessage([
                 'sender_id' => auth()->id(),
@@ -102,6 +99,9 @@ class F_RepOrderController extends Controller
             ]);
 
             $order->repChat->messages()->save($message);
+            $order->update([
+                'status' => RepOrderStatusEnum::ENDED
+            ]);
             $message->load(['sender']);
 
             broadcast(new G_RepMessageSent($message))->toOthers();
