@@ -44,7 +44,7 @@ class S_OrderController extends Controller
     public function details(string $order_id)
     {
         $order = $this->findOrder->find(decodeString($order_id));
-        return S_OrderResource::make($order);
+        return S_OrderResource::make($order->load('address'));
     }
 
     /**

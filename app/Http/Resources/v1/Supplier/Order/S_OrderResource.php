@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\v1\Supplier\Order;
 
+use App\Enums\OrderDeliveryMethodEnum;
+use App\Http\Resources\v1\Frontend\Address\F_AddressResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,6 +18,7 @@ class S_OrderResource extends JsonResource
     {
         return [
             $this->merge(S_ShortOrderResource::make($this)),
+            'address' => $this->when($this->relationLoaded('address') && $this->delivery_method == OrderDeliveryMethodEnum::DELIVERY, F_AddressResource::make($this->address)),
             'invoice_details' => $this->whenLoaded('orderProducts', function (){
                 return [
                     'amount' => $this->orderProducts->sum('amount'),
