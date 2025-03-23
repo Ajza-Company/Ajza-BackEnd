@@ -19,7 +19,8 @@ class A_ShortUserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'full_mobile' => $this->full_mobile,
-            'avatar'=>$this->avatar
+            'avatar'=>$this->avatar,
+            'orders_count' => $this->whenCounted('orders'),
         ];
     }
 }

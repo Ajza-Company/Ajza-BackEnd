@@ -22,7 +22,7 @@ class A_UserController extends Controller
      */
     public function index()
     {
-        return A_ShortUserResource::collection($this->fetchUser->fetch(isLocalized:false));
+        return A_ShortUserResource::collection($this->fetchUser->fetch(isLocalized:false, withCount: ['orders']));
     }
 
     /**
