@@ -103,9 +103,7 @@ class OrderNotification extends Notification implements ShouldQueue
      */
     private function getTitle(): string
     {
-        return $this->customMessage ?? __("notifications.orders.{$this->type}.title", [
-            'order_number' => $this->order->order_number
-        ]);
+        return $this->customMessage ?? __("notifications.orders.{$this->type}.title");
     }
 
     /**
@@ -116,7 +114,7 @@ class OrderNotification extends Notification implements ShouldQueue
     private function getMessage(): string
     {
         return __("notifications.orders.{$this->type}.message", [
-            'order_number' => $this->order->order_number,
+            'order_number' => encodeString($this->order->id),
             'amount' => number_format($this->order->total_amount, 2)
         ]);
     }
