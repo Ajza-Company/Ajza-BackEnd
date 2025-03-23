@@ -28,7 +28,7 @@ class F_ShortStoreResource extends JsonResource
             'timeUnit' => trans('general.min'),             // Value for :timeUnit
         ]);
         $localizedDistance = trans('general.distance', [
-            'distance' => round($distanceAndTime['distance'], 2),     // Value for :distance
+            'distance' => round($distanceAndTime['distance'], 1),     // Value for :distance
             'distanceUnit' => trans('general.km')
         ]);
         return [
