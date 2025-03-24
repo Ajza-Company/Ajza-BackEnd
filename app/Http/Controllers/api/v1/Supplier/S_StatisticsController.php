@@ -36,8 +36,8 @@ class S_StatisticsController extends Controller
     {
         return [
             'allOrdersCount' => $this->getAllOrdersCount($store),
-            'pendingOrdersCount' => $this->getPendingOrdersCount($store),
-            'ordersAmountToday' => $this->getOrdersAmountToday($store),
+            'ordersAmountToday' => $this->ordersAmountToday($store),
+            'ordersAmounts' => $this->getOrdersAmount($store),
             'ajzaAmount' => $this->getAjzaAmount($store),
         ];
     }
@@ -59,9 +59,9 @@ class S_StatisticsController extends Controller
      * @param mixed $store
      * @return int
      */
-    private function getPendingOrdersCount(Store $store): int
+    private function ordersAmountToday(Store $store): int
     {
-        return $store->orders()->wherePending()->count();
+        return $store->orders()->whereDate('created_at', now()->format('Y-m-d'))->sum('amount');
     }
 
     /**
@@ -70,7 +70,7 @@ class S_StatisticsController extends Controller
      * @param mixed $store
      * @return float
      */
-    private function getOrdersAmountToday(Store $store): float
+    private function getOrdersAmount(Store $store): float
     {
         return (float) $store->orders()->statisticsFilter(request())->sum('amount');
     }
