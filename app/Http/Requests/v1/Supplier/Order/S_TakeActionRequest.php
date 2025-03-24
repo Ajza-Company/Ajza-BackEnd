@@ -23,7 +23,7 @@ class S_TakeActionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'action' => 'required|string|in:accept,reject,completed'
+            'action' => 'required|string|in:accepted,rejected,completed'
         ];
     }
 
