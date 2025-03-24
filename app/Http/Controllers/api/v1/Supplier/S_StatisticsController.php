@@ -36,9 +36,9 @@ class S_StatisticsController extends Controller
     {
         return [
             'allOrdersCount' => $this->getAllOrdersCount($store),
-            'ordersAmountToday' => $this->ordersAmountToday($store),
-            'ordersAmounts' => $this->getOrdersAmount($store),
-            'ajzaAmount' => $this->getAjzaAmount($store),
+            'ordersAmountToday' => round( $this->ordersAmountToday($store), 2),
+            'ordersAmounts' => round($this->getOrdersAmount($store), 2),
+            'ajzaAmount' => round($this->getAjzaAmount($store), 2),
         ];
     }
 
