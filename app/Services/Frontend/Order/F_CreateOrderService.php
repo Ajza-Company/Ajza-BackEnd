@@ -51,6 +51,7 @@ class F_CreateOrderService
                 'delivery_method' => $data['delivery_method'],
                 'amount' => 0, // Initial amount set to 0
                 'address_id' => $data['delivery_method'] == OrderDeliveryMethodEnum::DELIVERY ? $data['address_id'] : null,
+                'ajza_percentage' => 20
             ]);
 
             // Prepare and insert order products
@@ -62,11 +63,6 @@ class F_CreateOrderService
 
             // Update the order with the total amount
             $order->update(['amount' => $totalAmount]);
-
-            Notification::send($store->users()->get(), new OrderNotification(
-                order: $order,
-                type: 'order_created'
-            ));
 
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: F_ShortOrderResource::make($order)));
