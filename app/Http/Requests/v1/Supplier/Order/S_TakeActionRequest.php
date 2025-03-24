@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\v1\Supplier\Order;
 
+use App\Enums\OrderStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class S_TakeActionRequest extends FormRequest
@@ -22,7 +23,17 @@ class S_TakeActionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'action' => 'required|string|in:accept,reject'
+            'action' => 'required|string|in:accept,reject,completed'
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+      if (in_array($this->action, ['accept', 'reject'])) {
+        $this->merge(['action' => $this->action . 'ed']);
+      }
     }
 }
