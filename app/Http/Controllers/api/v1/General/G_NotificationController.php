@@ -13,7 +13,7 @@ class G_NotificationController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $notifications = auth('api')->user()->notifications()->latest()->get();
+        $notifications = auth('api')->user()->notifications()->latest()->adaptivePaginate();
         auth('api')->user()->unreadNotifications->markAsRead();
         return G_NotificationResource::collection($notifications);
     }
