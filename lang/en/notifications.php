@@ -27,6 +27,10 @@
                 'title' => 'Order Delivered',
                 'message' => 'Your order #:order_number has been delivered',
             ],
+            'order_completed' => [
+                'title' => 'Order Completed',
+                'message' => 'Your order #:order_number has been completed',
+            ],
             'order_cancelled' => [
                 'title' => 'Order Cancelled',
                 'message' => 'Order #:order_number has been cancelled',
