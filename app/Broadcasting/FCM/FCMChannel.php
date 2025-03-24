@@ -2,7 +2,6 @@
 
 namespace App\Broadcasting\FCM;
 
-use App\Models\User;
 use Google\Client;
 use Google\Exception;
 use Illuminate\Notifications\Notification;
