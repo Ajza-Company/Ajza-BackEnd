@@ -24,7 +24,7 @@ class SendOrderCreatedNotification implements ShouldQueue
     public function handle(F_OrderCreatedEvent $event): void
     {
         \Log::info('SendOrderCreatedNotification' . json_encode($event->order->store->users()->get()));
-        Notification::send($event->order->store->users()->get(), new OrderNotification(
+        Notification::send($event->order->store->users()->whereHas('userFcmTokens')->get(), new OrderNotification(
             order: $event->order,
             type: 'order_created'
         ));
