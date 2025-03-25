@@ -7,6 +7,7 @@ use App\Http\Controllers\api\v1\General\{
     G_CancelOrderController,
     G_NotificationController,
     G_RepChatController,
+    G_SupportChatController,
     G_StateController,
     G_CountryController,
     G_ProductController,
@@ -49,7 +50,7 @@ Route::prefix('v1')->group(function () {
         Route::post('{order_id}/cancel', G_CancelOrderController::class);
     });
 
-        Route::get('/products', G_ProductController::class);
+    Route::get('/products', G_ProductController::class);
 
     Route::prefix('rep-orders')->group(function () {
         Route::get('/chats', [G_RepChatController::class, 'index']);
@@ -65,4 +66,14 @@ Route::prefix('v1')->group(function () {
 
     Route::get('Statistics',G_StatisticsController::class);
 
+    // Support Chat Routes
+    Route::prefix('support')->middleware(['auth:sanctum'])->group(function () {
+        Route::get('/chats', [G_SupportChatController::class, 'index']);
+        Route::post('/chats', [G_SupportChatController::class, 'store']);
+        Route::get('/chats/{chat_id}', [G_SupportChatController::class, 'show']);
+        Route::get('/chats/{chat_id}/messages', [G_SupportChatController::class, 'messages']);
+        Route::post('/chats/{chat_id}/messages', [G_SupportChatController::class, 'sendMessage']);
+        Route::get('/chats/{chat_id}/close', [G_SupportChatController::class, 'close']);
+        Route::get('/chats/{chat_id}/reopen', [G_SupportChatController::class, 'reopen']);
+    });
 });

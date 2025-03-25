@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\v1\Admin\{
     A_CompanyController,
+    A_SupportChatController,
     A_UserController,
     A_AuthController,
     A_PromoCodeController,
@@ -70,5 +71,11 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::post('state/{state}', [F_StateController::class,'update']);
     Route::get('state/show/{state}', [F_StateController::class,'show']);
     Route::delete('state/delete/{state}', [F_StateController::class,'destroy']);
+
+    // Support Chat Routes for Admin
+    Route::prefix('support')->group(function () {
+        Route::get('/chats', [A_SupportChatController::class, 'index']);
+        Route::post('/chats/{chat_id}/status', [A_SupportChatController::class, 'updateStatus']);
+    });
 
 });
