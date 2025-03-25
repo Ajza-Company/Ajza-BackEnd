@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\Frontend;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\Order\F_CancelOrderRequest;
 use App\Http\Requests\v1\Frontend\Order\F_CreateOrderRequest;
@@ -179,5 +180,15 @@ class F_OrderController extends Controller
     {
         $order = $this->findOrder->find(decodeString($order_id));
         return $this->cancelOrder->cancel($request->validated(), $order);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function export(F_CancelOrderRequest $request, string $order_id)
+    {
+        $orders = auth('api')->user()->orders()->with(['orderProducts' => ['storeProduct'], 'store'])->filter(\request())->latest()->get();
+        return new OrderExport($orders);
+
     }
 }
