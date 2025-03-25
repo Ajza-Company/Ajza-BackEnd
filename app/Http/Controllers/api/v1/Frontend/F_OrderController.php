@@ -59,7 +59,7 @@ class F_OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function getInvoice(F_GetInvoiceRequest $request)
+    public function getInvoice(F_GetInvoiceRequest $request, string $store_id)
     {
         $data = $request->validated();
         try {
@@ -185,10 +185,9 @@ class F_OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function export(F_CancelOrderRequest $request, string $order_id)
+    public function export()
     {
         $orders = auth('api')->user()->orders()->with(['orderProducts' => ['storeProduct'], 'store'])->filter(\request())->latest()->get();
         return new OrderExport($orders);
-
     }
 }

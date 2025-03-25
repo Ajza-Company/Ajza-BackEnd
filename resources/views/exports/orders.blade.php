@@ -5,10 +5,10 @@
 <table style="width: 100%; border-collapse: collapse;">
     <thead>
     <tr>
-        <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">Name</th>
-        <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">Mobile</th>
-        <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">Advisor</th>
-        <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">Advisor BC</th>
+        <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">#ID</th>
+        <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">DATE</th>
+        <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">STATUS</th>
+        <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">TOTAL</th>
         <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">Broker</th>
         <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">Lives</th>
         <th style="text-align: center; padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">Status</th>
@@ -16,19 +16,9 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($leads as $lead)
-
-            <?php
-            $advisorBc = $lead->lead?->assigned()?->whereHas('Agent', function ($q) {
-                $q->whereHas('roles', function ($q) {
-                    $q->where('name', 'LIKE', "%BC%");
-                });
-            })->first();
-
-            ?>
-
+    @foreach($orders as $order)
         <tr>
-            <td style="text-align: center; padding: 8px; border: 1px solid #ddd;">{{ $lead->full_name }}</td>
+            <td style="text-align: center; padding: 8px; border: 1px solid #ddd;">{{ encodeString($order->id) }}</td>
             <td style="text-align: center; padding: 8px; border: 1px solid #ddd;">{{ $lead->mobile }}</td>
             <td style="text-align: center; padding: 8px; border: 1px solid #ddd;">{{ $lead->lead?->agent?->full_name }}</td>
             <td style="text-align: center; padding: 8px; border: 1px solid #ddd;">{{ $advisorBc?->agent?->full_name}}</td>
