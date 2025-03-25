@@ -3,11 +3,13 @@
 namespace App\Http\Requests\v1\Frontend\Order;
 
 use App\Enums\OrderDeliveryMethodEnum;
+use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class F_GetInvoiceRequest extends FormRequest
 {
+    use DecodesInputTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -31,5 +33,13 @@ class F_GetInvoiceRequest extends FormRequest
             'order_products.*.quantity' => 'required|integer|min:1',
             'promo_code'=>'sometimes|string|exists:promo_codes,code'
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->decodeInput('address_id');
     }
 }
