@@ -90,7 +90,7 @@ class F_OrderController extends Controller
                 $totalDiscount += $discount;
 
                 $invoiceDetails[] = [
-                    'product_id' => $product['product_id'],
+                    'product_id' => (int)$product['product_id'],
                     'price' => $storeProduct->price,
                     'quantity' => $product['quantity'],
                     'discount' => round($discount, 2),
@@ -149,6 +149,7 @@ class F_OrderController extends Controller
 
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::IMPORTED), data: [
                 'invoice_details' => $invoiceDetails,
+                'delivery_amount' => 0,
                 'total_amount' => round($totalAmount, 2),
                 'total_discount' => round($totalDiscount + $promoCodeDiscount, 2),
                 'promo_code_discount' => round($promoCodeDiscount, 2),
