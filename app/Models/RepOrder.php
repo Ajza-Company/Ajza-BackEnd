@@ -50,6 +50,15 @@ class RepOrder extends Model
 
     /**
      *
+     * @return BelongsTo
+     */
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'address_id');
+    }
+
+    /**
+     *
      * @return HasMany
      */
     public function offers(): HasMany
