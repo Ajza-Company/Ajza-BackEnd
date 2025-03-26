@@ -41,5 +41,7 @@ class F_GetInvoiceRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->decodeInput('address_id');
+        $this->decodeInput('order_products.*.product_id');
+
     }
 }
