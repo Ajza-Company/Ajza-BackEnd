@@ -153,6 +153,7 @@ class F_OrderController extends Controller
                 'total_amount' => round($totalAmount, 2),
                 'total_discount' => round($totalDiscount + $promoCodeDiscount, 2),
                 'promo_code_discount' => round($promoCodeDiscount, 2),
+                'total_amount_after_discount' => round($totalAmount, 2),
             ]));
         } catch (\Exception $ex) {
             return response()->json(
