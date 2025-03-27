@@ -21,6 +21,8 @@ class A_ShortUserResource extends JsonResource
             'full_mobile' => $this->full_mobile,
             'avatar'=>$this->avatar,
             'orders_count' => $this->whenCounted('orders'),
+            'is_active' => (bool) $this->is_active,
+            'balance' => $this->wallet?->balance
         ];
     }
 }

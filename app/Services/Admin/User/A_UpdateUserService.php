@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Admin\RepSales;
+namespace App\Services\Admin\User;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
@@ -8,7 +8,7 @@ use App\Http\Resources\v1\User\UserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class F_UpdateRepSalesService
+class A_UpdateUserService
 {
     /**
      *
@@ -27,8 +27,7 @@ class F_UpdateRepSalesService
             $user->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'full_mobile' => $data['full_mobile'],
-                'password' => $data['password']
+                'full_mobile' => $data['full_mobile']
             ]);
 
             if (isset($data['avatar'])) {

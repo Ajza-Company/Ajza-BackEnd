@@ -96,5 +96,117 @@
         "guard_name": "api",
         "role_name": "Supplier",
         "friendly_name": "View Orders Statistics"
+    },
+    {
+        "name": "a.show-all-users",
+        "group_name": "Users",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Show All Users"
+    },
+    {
+        "name": "a.control-user",
+        "group_name": "Users",
+        "guard_name": "api",
+        "role_name": "Admin", 
+        "friendly_name": "Control User"
+    },
+    {
+        "name": "a.show-all-stores",
+        "group_name": "Stores",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Show All Stores"
+    },
+    {
+        "name": "a.control-store",
+        "group_name": "Stores",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Control Store"
+    },
+    {
+        "name": "a.show-all-repSales",
+        "group_name": "RepSales",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Show All RepSales"
+    },
+    {
+        "name": "a.control-repSales",
+        "group_name": "RepSales",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Control RepSales"
+    },
+    {
+        "name": "a.show-all-promos",
+        "group_name": "Promos",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Show All Promos"
+    },
+    {
+        "name": "a.control-promo",
+        "group_name": "Promos",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Control Promo"
+    },
+    {
+        "name": "a.show-all-products",
+        "group_name": "Products",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Show All Products"
+    },
+    {
+        "name": "a.control-product",
+        "group_name": "Products",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Control Product"
+    },
+    {
+        "name": "a.show-all-states",
+        "group_name": "States",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Show All States"
+    },
+    {
+        "name": "a.control-state",
+        "group_name": "States",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Control State"
+    },
+    {
+        "name": "a.show-all-offers",
+        "group_name": "Offers",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Show All Offers"
+    },
+    {
+        "name": "a.control-offers",
+        "group_name": "Offers",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Control Offers"
+    },
+    {
+        "name": "a.show-all-chat",
+        "group_name": "Chat",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Show All Chat"
+    },
+    {
+        "name": "a.control-chat",
+        "group_name": "Chat",
+        "guard_name": "api",
+        "role_name": "Admin",
+        "friendly_name": "Control Chat"
     }
 ]

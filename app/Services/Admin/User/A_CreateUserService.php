@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Admin\RepSales;
+namespace App\Services\Admin\User;
 
 use App\Enums\ErrorMessageEnum;
 use App\Enums\RoleEnum;
@@ -11,7 +11,7 @@ use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class F_CreateRepSalesService
+class A_CreateUserService
 {
     /**
      * Create a new instance.
@@ -52,8 +52,13 @@ class F_CreateRepSalesService
                 $user->update(['avatar' => $path]);
             }
 
-            $user->assignRole(RoleEnum::REPRESENTATIVE);
-
+            if (!empty($data['permissions'])) {
+                try {
+                    $user->givePermissionTo($data['permissions']);
+                } catch (\Exception $e) {
+                    \Log::error('Permission assignment failed: ' . $e->getMessage());
+                }
+            }        
 
 
             event(new F_UserCreatedEvent($user, $data['fcm_token'] ?? null));
