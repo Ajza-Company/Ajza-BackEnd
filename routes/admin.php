@@ -7,7 +7,8 @@ use App\Http\Controllers\api\v1\Admin\{
     A_PromoCodeController,
     F_RepSalesController,
     A_ProductController,
-    F_StateController
+    F_StateController,
+    A_SettingController
 };
 use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
@@ -52,6 +53,10 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::post('rep-sales/delete/{id}', [F_RepSalesController::class, 'delete']);
     Route::get('rep-sales', [F_RepSalesController::class, 'index']);
     Route::get('users', [A_UserController::class, 'index']);
+    Route::post('user/create', [A_UserController::class, 'store']);
+    Route::post('user/block/{user}', [A_UserController::class, 'blockUser']);
+    Route::post('user/credit/{user}', [A_UserController::class, 'credit']);
+    Route::post('user/debit/{user}', [A_UserController::class, 'debit']);
     Route::prefix('auth')->group(function () {
         Route::get('virtual-login/{user}', [A_AuthController::class, 'loginWithID']);
     });
@@ -71,4 +76,6 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('state/show/{state}', [F_StateController::class,'show']);
     Route::delete('state/delete/{state}', [F_StateController::class,'destroy']);
 
+    Route::post('setting', [A_SettingController::class,'index']);
+    Route::post('setting/create', [A_SettingController::class,'store']);
 });
