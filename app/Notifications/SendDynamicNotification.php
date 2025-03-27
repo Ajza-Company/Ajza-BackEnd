@@ -2,21 +2,34 @@
 
 namespace App\Notifications;
 
+use App\Broadcasting\FCM\FCMChannel;
+use App\Broadcasting\FCM\FCMContent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SendDynamicNotification extends Notification
+class SendDynamicNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+    private $message;
+    private $title;
+    private $dataObject;
 
     /**
      * Create a new notification instance.
+     *
+     * @param String $title
+     * @param String $message
+     * @param array $tokens
+     * @param String|null $image
+     * @param array $dataObject
      */
-    public function __construct()
+    public function __construct(String $title, String $message, array $dataObject = [])
     {
-        //
+        $this->title = $title;
+        $this->message = $message;
+        $this->dataObject = $dataObject;
     }
 
     /**
@@ -26,18 +39,25 @@ class SendDynamicNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return [FCMChannel::class];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toFcm(object $notifiable): FCMContent
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        $tokens = $this->getFcmTokens($notifiable);
+
+        $this->dataObject = json_encode(array_merge($this->dataObject, [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK'
+        ]));
+
+        return (new FCMContent)
+            ->title($this->title)
+            ->body($this->message)
+            ->to($tokens)
+            ->data(['json' => $this->dataObject]);
     }
 
     /**
@@ -50,5 +70,16 @@ class SendDynamicNotification extends Notification
         return [
             //
         ];
+    }
+
+    /**
+     * Get FCM tokens for the notifiable entity.
+     *
+     * @param object $notifiable
+     * @return array
+     */
+    private function getFcmTokens(object $notifiable): array
+    {
+        return $notifiable->userFcmTokens->pluck('token')->toArray() ?? [];
     }
 }
