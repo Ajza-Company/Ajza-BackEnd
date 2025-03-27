@@ -27,7 +27,8 @@ class F_CreateRepOrderRequest extends FormRequest
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'data.title' => 'required|string',
             'data.description' => 'required|string',
-            'data.city_id' => 'required|integer|exists:states,id',
+            'data.city_id' => 'sometimes|integer|exists:states,id',
+            'data.address_id' => 'required|integer|exists:addresses,id',
         ];
     }
 
@@ -37,6 +38,7 @@ class F_CreateRepOrderRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->decodeInput('data.city_id');
+        $this->decodeInput('data.address_id');
     }
 
     /**

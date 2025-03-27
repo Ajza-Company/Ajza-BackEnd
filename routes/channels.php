@@ -2,6 +2,7 @@
 
 use App\Enums\RoleEnum;
 use App\Models\RepChat;
+use App\Models\SupportChat;
 use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::routes(['middleware' => 'auth:sanctum']);
@@ -42,4 +43,28 @@ Broadcast::channel('rep-order', function ($user) {
         'user_id' => $user->id
     ]);
     return true;
+});
+
+Broadcast::channel('support.chat.{chatId}', function ($user, $chatId) {
+    try {
+        $decodedChatId = decodeString($chatId);
+        $chat = SupportChat::findOrFail($decodedChatId);
+
+        // Allow access if the user is the chat owner or an admin
+        $authorized = $user->id === $chat->user_id || $user->hasRole('admin');
+
+        \Log::info('Support Chat Channel Auth:', [
+            'user_id' => $user->id,
+            'chat_id' => $chatId,
+            'authorized' => $authorized
+        ]);
+
+        return $authorized;
+    } catch (\Exception $e) {
+        \Log::error('Support Chat Channel Auth Error:', [
+            'error' => $e->getMessage(),
+            'chat_id' => $chatId
+        ]);
+        return false;
+    }
 });

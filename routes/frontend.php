@@ -98,6 +98,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     });
 
     Route::post('stores/{store_id}/orders/create', [F_OrderController::class, 'store']);
+    Route::post('stores/{store_id}/orders/getInvoice', [F_OrderController::class, 'getInvoice']);
     Route::post('stores/cart', [F_CartController::class, 'show']);
 
     Route::prefix('orders')->group(function () {

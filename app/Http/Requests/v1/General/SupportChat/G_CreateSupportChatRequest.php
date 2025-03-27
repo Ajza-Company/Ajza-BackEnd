@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Supplier\Order;
+namespace App\Http\Requests\v1\General\SupportChat;
 
-use App\Enums\OrderStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class S_TakeActionRequest extends FormRequest
+class G_CreateSupportChatRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,17 +22,9 @@ class S_TakeActionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'action' => 'required|string|in:accepted,rejected,completed'
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+            'attachment' => 'nullable|file|max:10240'
         ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation(): void
-    {
-      if (in_array($this->action, ['accept', 'reject'])) {
-        $this->merge(['action' => $this->action . 'ed']);
-      }
     }
 }

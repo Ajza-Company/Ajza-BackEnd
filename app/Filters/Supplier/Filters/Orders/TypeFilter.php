@@ -16,11 +16,13 @@ class TypeFilter
      */
     public function filter(Builder $builder, $value): ?Builder
     {
-        if (in_array($value, ['current', 'previous'])) {
+        if (in_array($value, ['current', 'previous', 'new'])) {
             if ($value === 'current') {
                 return $builder->whereIn('status', [OrderStatusEnum::PENDING, OrderStatusEnum::ACCEPTED]);
             }elseif ($value === 'previous') {
                 return $builder->whereIn('status', [OrderStatusEnum::REJECTED, OrderStatusEnum::CANCELLED, OrderStatusEnum::COMPLETED]);
+            }elseif ($value === 'new') {
+                return $builder->whereIn('status', [OrderStatusEnum::PENDING]);
             }
         }
         return null;

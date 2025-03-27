@@ -20,6 +20,7 @@ class OrderNotification extends Notification implements ShouldQueue
         'order_processing' => 'clock',
         'order_shipped' => 'truck',
         'order_delivered' => 'box',
+        'order_completed' => 'box',
         'order_cancelled' => 'ban'
     ];
 

@@ -10,6 +10,7 @@ use App\Notifications\OrderNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class S_TakeActionService
 {
@@ -17,6 +18,7 @@ class S_TakeActionService
      * @param array $data
      * @param Order $order
      * @return JsonResponse
+     * @throws Throwable
      */
     public function execute(array $data, Order $order): JsonResponse
     {
@@ -31,16 +33,15 @@ class S_TakeActionService
                 );
             }*/
             // Update order status
-            $newStatus = $data['action'] === 'accept' ? OrderStatusEnum::ACCEPTED : OrderStatusEnum::REJECTED;
             $order->update([
-                'status' => $newStatus
+                'status' => $data['action']
             ]);
 
             $order->refresh();
             broadcast(new S_AcceptRejectOrderEvent($order))->toOthers();
 
             // Notify customer about order status
-            $notificationType = $newStatus === OrderStatusEnum::ACCEPTED ? 'order_accepted' : 'order_rejected';
+            $notificationType = 'order_' . $data['action'];
             $order->user->notify(new OrderNotification(
                 order: $order,
                 type: $notificationType
@@ -49,7 +50,7 @@ class S_TakeActionService
             DB::commit();
 
             return response()->json(
-                successResponse(message: "Order successfully {$newStatus}"),
+                successResponse(message: "Order successfully {$data['action']}"),
                 Response::HTTP_OK
             );
         } catch (\Exception $ex) {

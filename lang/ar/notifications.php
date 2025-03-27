@@ -27,6 +27,10 @@
                 'title' => 'تم توصيل الطلب',
                 'message' => 'تم توصيل طلبك رقم #:order_number',
             ],
+            'order_completed' => [
+                'title' => 'تم توصيل الطلب',
+                'message' => 'تم توصيل طلبك رقم #:order_number',
+            ],
             'order_cancelled' => [
                 'title' => 'تم إلغاء الطلب',
                 'message' => 'تم إلغاء الطلب رقم #:order_number',
