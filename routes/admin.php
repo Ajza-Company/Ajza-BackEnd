@@ -81,7 +81,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('state/show/{state}', [F_StateController::class,'show']);
     Route::delete('state/delete/{state}', [F_StateController::class,'destroy']);
 
-    Route::post('setting', [A_SettingController::class,'index']);
+    Route::get('setting', [A_SettingController::class,'index']);
     Route::post('setting/create', [A_SettingController::class,'store']);
     // Support Chat Routes for Admin
     Route::prefix('support')->group(function () {
