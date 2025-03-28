@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\api\v1\Admin;
 
+use App\Models\User;
 use App\Enums\RoleEnum;
 use Illuminate\Http\Request;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\RepSales\F_CreateRepSalesService;
+use App\Services\Admin\RepSales\F_DeleteRepSalesService;
+use App\Services\Admin\RepSales\F_UpdateRepSalesService;
 use App\Http\Resources\v1\Admin\User\A_ShortUserResource;
+use App\Repositories\Supplier\User\Find\S_FindUserInterface;
 use App\Http\Requests\v1\Admin\RepSales\F_CreateRepSalesRequest;
 use App\Http\Requests\v1\Admin\RepSales\F_UpdateRepSalesRequest;
 use App\Repositories\Admin\RepSales\Fetch\A_FetchRepSalesInterface;
-use App\Repositories\Supplier\User\Find\S_FindUserInterface;
-use App\Services\Admin\RepSales\F_UpdateRepSalesService;
-use App\Services\Admin\RepSales\F_DeleteRepSalesService;
 
 class F_RepSalesController extends Controller
 {
@@ -34,7 +35,7 @@ class F_RepSalesController extends Controller
     
     public function index() {
         return A_ShortUserResource::collection(
-            $this->fetchRepSales->fetch(isLocalized: false,withCount: ['orders'], role: RoleEnum::REPRESENTATIVE)
+            $this->fetchRepSales->fetch(isLocalized: false,with:['repChats'], role: RoleEnum::REPRESENTATIVE)
         );
     }
 

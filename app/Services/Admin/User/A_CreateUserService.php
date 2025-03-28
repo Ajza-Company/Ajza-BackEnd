@@ -2,14 +2,16 @@
 
 namespace App\Services\Admin\User;
 
-use App\Enums\ErrorMessageEnum;
 use App\Enums\RoleEnum;
-use App\Enums\SuccessMessagesEnum;
-use App\Events\v1\Frontend\F_UserCreatedEvent;
-use App\Http\Resources\v1\User\UserResource;
-use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use App\Enums\ErrorMessageEnum;
+use Illuminate\Http\JsonResponse;
+use App\Enums\SuccessMessagesEnum;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\v1\User\UserResource;
+use App\Events\v1\Frontend\F_UserCreatedEvent;
+use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 
 class A_CreateUserService
 {
@@ -43,7 +45,7 @@ class A_CreateUserService
                 'full_mobile' => $data['full_mobile'],
                 'is_registered' => true,
                 'gender' => $data['gender'],
-                'password' => $data['password'],
+                'password' => Hash::make($data['password']),
                 'preferred_language' => app()->getLocale()
             ]);
 
@@ -60,7 +62,9 @@ class A_CreateUserService
                 }
             }        
 
-
+            $role = Role::where('name', 'Admin')->first();
+            $user->syncRoles([$role]);
+    
             event(new F_UserCreatedEvent($user, $data['fcm_token'] ?? null));
 
             \DB::commit();

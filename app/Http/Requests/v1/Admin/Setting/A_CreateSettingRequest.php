@@ -23,7 +23,12 @@ class A_CreateSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'setting' => 'required|array|min:1',
+            'setting.order_percentage' => 'required|numeric|min:0',
+            'setting.rep_order_percentage'=> 'required|numeric|min:0',
+            'setting.km_initial_cost_rep_order'=> 'required|numeric|min:0',
+            'setting.delivery_initial_cost_rep_order'=> 'required|numeric|min:0',
+            'setting.max_delivery_cost_rep_order'=> 'required|numeric|min:0',
+
         ];
     }
 

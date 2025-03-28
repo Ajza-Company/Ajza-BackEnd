@@ -2,11 +2,12 @@
 
 namespace App\Services\Admin\User;
 
-use App\Enums\ErrorMessageEnum;
-use App\Enums\SuccessMessagesEnum;
-use App\Http\Resources\v1\User\UserResource;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use App\Enums\ErrorMessageEnum;
+use Illuminate\Http\JsonResponse;
+use App\Enums\SuccessMessagesEnum;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\v1\User\UserResource;
 
 class A_UpdateUserService
 {
@@ -27,6 +28,7 @@ class A_UpdateUserService
             $user->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'password' => Hash::make($data['password']),
                 'full_mobile' => $data['full_mobile']
             ]);
 

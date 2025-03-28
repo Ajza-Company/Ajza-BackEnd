@@ -55,9 +55,13 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('rep-sales', [F_RepSalesController::class, 'index']);
     Route::get('users', [A_UserController::class, 'index']);
     Route::post('user/create', [A_UserController::class, 'store']);
-    Route::post('user/block/{user}', [A_UserController::class, 'blockUser']);
-    Route::post('user/credit/{user}', [A_UserController::class, 'credit']);
-    Route::post('user/debit/{user}', [A_UserController::class, 'debit']);
+    Route::post('user/update/{id}', [A_UserController::class, 'update']);
+    Route::post('user/destroy/{id}', [A_UserController::class, 'destroy']);
+    Route::get('user/show/{id}', [A_UserController::class, 'show']);
+    Route::post('user/block/{id}', [A_UserController::class, 'blockUser']);
+    Route::post('user/credit/{id}', [A_UserController::class, 'credit']);
+    Route::post('user/debit/{id}', [A_UserController::class, 'debit']);
+    Route::post('user/sendNotification/{id}', [A_UserController::class, 'sendNotification']);
     Route::prefix('auth')->group(function () {
         Route::get('virtual-login/{user}', [A_AuthController::class, 'loginWithID']);
     });
