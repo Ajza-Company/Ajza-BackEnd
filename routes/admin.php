@@ -58,6 +58,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::post('user/update/{id}', [A_UserController::class, 'update']);
     Route::post('user/destroy/{id}', [A_UserController::class, 'destroy']);
     Route::get('user/show/{id}', [A_UserController::class, 'show']);
+    Route::get('user/admin/permissions', [A_UserController::class, 'getAdminPermission']);
     Route::post('user/block/{id}', [A_UserController::class, 'blockUser']);
     Route::post('user/credit/{id}', [A_UserController::class, 'credit']);
     Route::post('user/debit/{id}', [A_UserController::class, 'debit']);

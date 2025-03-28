@@ -6,14 +6,16 @@ use App\Models\User;
 use App\Models\Wallet;
 use App\Enums\RoleEnum;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Permission;
 use App\Services\Frontend\F_WalletService;
 use App\Notifications\SendDynamicNotification;
 use App\Services\Admin\User\A_CreateUserService;
-use App\Services\Admin\User\A_UpdateUserService;
 use App\Services\Admin\User\A_DeleteUserService;
+use App\Services\Admin\User\A_UpdateUserService;
 use App\Http\Requests\v1\Admin\User\CreateUserRequest;
 use App\Http\Requests\v1\Admin\User\UpdateUserRequest;
 use App\Http\Requests\v1\Admin\User\A_DebitUserRequest;
@@ -22,7 +24,7 @@ use App\Http\Resources\v1\Admin\User\A_ShortUserResource;
 use App\Repositories\Admin\User\Fetch\A_FetchUserInterface;
 use App\Repositories\Supplier\User\Find\S_FindUserInterface;
 use App\Http\Requests\v1\Admin\User\A_notificationUserRequest;
-use Illuminate\Http\Response;
+use App\Http\Resources\v1\Supplier\Permission\S_ShortPermissionResource;
 
 class A_UserController extends Controller
 {
@@ -83,6 +85,12 @@ class A_UserController extends Controller
         $user = $this->findUser->find(decodeString($id));
 
         return $this->deleteUser->delete($user);
+    }
+
+    public function getAdminPermission() {
+        $permissions =  Permission::select(['id', 'name', 'group_name', 'friendly_name'])->where('role_name','Admin')->get();
+
+        return S_ShortPermissionResource::collection($permissions);
     }
 
     public function blockUser(string $id)  {
