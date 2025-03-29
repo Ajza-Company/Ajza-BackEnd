@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Admin\RepSales\F_CreateRepSalesService;
 use App\Services\Admin\RepSales\F_DeleteRepSalesService;
 use App\Services\Admin\RepSales\F_UpdateRepSalesService;
-use App\Http\Resources\v1\Admin\User\A_ShortUserResource;
+use App\Http\Resources\v1\Admin\RepSales\A_ShortRepSalesResource;
 use App\Repositories\Supplier\User\Find\S_FindUserInterface;
 use App\Http\Requests\v1\Admin\RepSales\F_CreateRepSalesRequest;
 use App\Http\Requests\v1\Admin\RepSales\F_UpdateRepSalesRequest;
@@ -34,7 +34,7 @@ class F_RepSalesController extends Controller
     }
     
     public function index() {
-        return A_ShortUserResource::collection(
+        return A_ShortRepSalesResource::collection(
             $this->fetchRepSales->fetch(isLocalized: false,with:['repChats'], role: RoleEnum::REPRESENTATIVE)
         );
     }
