@@ -118,12 +118,14 @@ class A_UserController extends Controller
                 Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        if(!$user->wallet){
-            Wallet::create([
+        $wallet = $user->wallet;
+
+        if(!$wallet){
+           $wallet =  Wallet::create([
                 'user_id' => $user->id
             ]);
         }
-        return $this->wallet->credit($user->wallet ,$amount ,$description ,$metadata);
+        return $this->wallet->credit($wallet ,$amount ,$description ,$metadata);
     }
 
     public function debit(string $id ,A_DebitUserRequest $request) {
