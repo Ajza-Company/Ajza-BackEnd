@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\api\v1\General;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Admin\Settings\A_UpdateTermsRequest;
+use App\Http\Requests\v1\Admin\Setting\A_UpdateTermsRequest;
 use Illuminate\Http\Request;
 
 class G_TermsController extends Controller
