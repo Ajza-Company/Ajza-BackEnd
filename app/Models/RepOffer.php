@@ -13,12 +13,18 @@ class RepOffer extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['rep_order_id', 'price', 'status'];
+    protected $fillable = ['rep_order_id', 'price', 'status','rep_user_id'];
 
     public function order(): BelongsTo
     {
         return $this->belongsTo(RepOrder::class, 'rep_order_id');
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'rep_user_id');
+    }
+
 
     public function message(): HasOne
     {

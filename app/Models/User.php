@@ -181,8 +181,12 @@ class User extends Authenticatable
         return $this->hasOneThrough(Store::class, StoreUser::class, 'user_id', 'id', 'id', 'store_id');
     }
 
-    public function repChats(): HasMany
+    /**
+     *
+     * @return HasMany
+     */
+    public function offers(): HasMany
     {
-        return $this->hasMany(RepChat::class, 'user1_id');
+        return $this->hasMany(RepOffer::class, 'rep_user_id');
     }
 }

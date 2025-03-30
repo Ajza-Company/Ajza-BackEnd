@@ -22,8 +22,10 @@ class A_ShortRepSalesResource extends JsonResource
             'gender' => $this->gender,
             'avatar' => $this->avatar,
             'is_active' => (bool) $this->is_active,
-            'order_rep_count' => $this->repChats->count(),
-            'order_rep' => $this->whenLoaded('repChats')
+            'order_rep_count' => $this->offers->count(),
+            'order_rep_prices' => $this->whenLoaded('offers', function () {
+                return $this->offers->where('status', 'accepted')->sum('price');
+            })
         ];
     }
 }

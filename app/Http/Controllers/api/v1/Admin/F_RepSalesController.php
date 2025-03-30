@@ -35,7 +35,7 @@ class F_RepSalesController extends Controller
     
     public function index() {
         return A_ShortRepSalesResource::collection(
-            $this->fetchRepSales->fetch(isLocalized: false,with:['repChats'], role: RoleEnum::REPRESENTATIVE)
+            $this->fetchRepSales->fetch(isLocalized: false,with:['offers'], role: RoleEnum::REPRESENTATIVE)
         );
     }
 
