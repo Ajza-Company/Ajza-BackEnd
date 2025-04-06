@@ -22,6 +22,7 @@ class G_SupportChatMessageResource extends JsonResource
             'attachment' => $this->when($this->attachment, function () {
                 return Storage::url($this->attachment);
             }),
+            'status' => $this->chat->status,
             'is_from_support' => (bool) $this->is_from_support,
             'sender' => $this->whenLoaded('sender', function () {
                 return [
