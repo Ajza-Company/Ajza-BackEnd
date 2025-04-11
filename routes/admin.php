@@ -9,7 +9,8 @@ use App\Http\Controllers\api\v1\Admin\{
     F_RepSalesController,
     A_ProductController,
     F_StateController,
-    A_SettingController
+    A_SettingController,
+    A_CategoryController
 };
 use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
@@ -89,5 +90,11 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('/chats', [A_SupportChatController::class, 'index']);
         Route::post('/chats/{chat_id}/status', [A_SupportChatController::class, 'updateStatus']);
     });
+
+    Route::get('categories', [A_CategoryController::class, 'index']);
+    Route::post('category/create', [A_CategoryController::class, 'store']);
+    Route::post('category/update/{id}', [A_CategoryController::class, 'update']);
+    Route::post('category/destroy/{id}', [A_CategoryController::class, 'destroy']);
+    Route::get('category/show/{id}', [A_CategoryController::class, 'show']);
 
 });

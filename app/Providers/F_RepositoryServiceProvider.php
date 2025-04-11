@@ -46,6 +46,8 @@ use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 use App\Repositories\Frontend\User\Create\F_CreateUserRepository;
 use App\Repositories\Frontend\Wallet\Create\F_CreateWalletInterface;
 use App\Repositories\Frontend\Wallet\Create\F_CreateWalletRepository;
+use App\Repositories\Frontend\Category\Find\F_FindCategoryInterface;
+use App\Repositories\Frontend\Category\Find\F_FindCategoryRepository;
 use Illuminate\Support\ServiceProvider;
 
 class F_RepositoryServiceProvider extends ServiceProvider
@@ -55,6 +57,10 @@ class F_RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(
+            F_FindCategoryInterface::class,
+            F_FindCategoryRepository::class);
+
         $this->app->bind(
             F_CreateOtpCodeInterface::class,
             F_CreateOtpCodeRepository::class);
