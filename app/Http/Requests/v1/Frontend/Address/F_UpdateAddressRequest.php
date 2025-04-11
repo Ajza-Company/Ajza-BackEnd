@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\v1\Frontend\Address;
 
+use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class F_UpdateAddressRequest extends FormRequest
 {
+    use DecodesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,7 +31,17 @@ class F_UpdateAddressRequest extends FormRequest
             'apartment_number' => 'nullable|max:10',
             'latitude' => 'sometimes|numeric',
             'longitude' => 'sometimes|numeric',
-            'is_default' => 'sometimes|boolean'
+            'is_default' => 'sometimes|boolean',
+            'state_id'=>'required|integer|exists:states,id'
         ];
     }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->decodeInput('state_id');
+    }
+
 }

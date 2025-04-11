@@ -23,6 +23,17 @@ class Address extends Model
         'apartment_number',
         'level',
         'house_number',
-        'zip_code'
+        'zip_code',
+        'state_id'
     ];
+
+        
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
+    }
 }
