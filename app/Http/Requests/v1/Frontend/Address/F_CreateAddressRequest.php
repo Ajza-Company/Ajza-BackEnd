@@ -32,7 +32,7 @@ class F_CreateAddressRequest extends FormRequest
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'is_default' => 'required|boolean',
-            'state_id'=>'required|integer|exists:states,id'
+            'state_id'=>'sometimes|integer|exists:states,id'
         ];
     }
 
