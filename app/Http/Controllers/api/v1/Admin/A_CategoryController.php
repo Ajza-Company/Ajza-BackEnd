@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\Frontend\Category\F_CategoryResource;
+use App\Http\Resources\v1\Frontend\Category\F_ShortCategoryResource;
 use App\Repositories\Frontend\Category\Fetch\F_FetchCategoryInterface;
 use App\Http\Requests\v1\Admin\Category\CreateCategoryRequest;
 use App\Http\Requests\v1\Admin\Category\UpdateCategoryRequest;
@@ -50,7 +51,7 @@ class A_CategoryController extends Controller
     public function show(string $id)
     {
         $Category = $this->findCategory->find(decodeString($id));
-        return F_CategoryResource::make($Category);
+        return F_ShortCategoryResource::make($Category);
     }
 
     /**
