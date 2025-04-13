@@ -20,7 +20,7 @@ class F_FindCategoryRepository implements F_FindCategoryInterface
      */
     public function find(int $id): mixed
     {
-        return $this->model->with(['variants','localized','stores' => function ($q) {
+        return $this->model->with(['variants','translations','localized','stores' => function ($q) {
             $q->whereHas('localized');
         }])->findOrFail($id);
     }

@@ -43,6 +43,11 @@ class Category extends Model
             'category_id', 'id', 'id', 'store_id');
     }
 
+    public function translations(): HasMany
+    {
+        return $this->hasMany(CategoryLocale::class);
+    }
+
     /**
      *
      * @param Builder $builder

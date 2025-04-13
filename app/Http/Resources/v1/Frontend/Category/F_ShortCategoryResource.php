@@ -18,8 +18,12 @@ class F_ShortCategoryResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'name' => $this->localized?->name,
+            'name' => $this->translations->mapWithKeys(function ($translation) {
+                return [
+                    (string) $translation->locale?->locale => $translation->name
+                ];
+            }),
             'variants' => A_ShortVariantResource::collection($this->whenLoaded('variants'))
         ];
-    }
+    }    
 }
