@@ -50,7 +50,7 @@ class CreateCompanyServices
             $company = $this->createCompany($data['company'],$user);
 
             $data['store']['company_id'] = $company->id;
-            $this->createStore->create($data['store']);
+            $this->createStore->create($data['store'], $user->id);
 
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
@@ -68,7 +68,7 @@ class CreateCompanyServices
         if (isset($data['avatar'])) {
             $avatar = uploadFile('user/avatar', $data['avatar']);
         }
-    
+
         $user = $this->createUser->create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -79,16 +79,16 @@ class CreateCompanyServices
             'password' => Hash::make($data['password']),
             'preferred_language' => $data['preferred_language'] ?? app()->getLocale(),
         ]);
-    
+
         $role = Role::where('name', 'Supplier')->first();
         $user->syncRoles([$role]);
-    
-        $permissions = Permission::pluck('name'); 
-        $user->syncPermissions($permissions); 
-    
+
+        $permissions = Permission::pluck('name');
+        $user->syncPermissions($permissions);
+
         return $user;
     }
-    
+
     private function createCompany($data , $user) {
         $logo = null;
         $coverImage = null;

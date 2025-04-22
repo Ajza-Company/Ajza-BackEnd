@@ -24,7 +24,7 @@ class S_CreateStoreService
     public function __construct(private S_CreateStoreInterface $createStore,
                                 private S_InsertStoreHourInterface $insertStoreHour)
     {
-    } 
+    }
 
     /**
      *
@@ -32,7 +32,7 @@ class S_CreateStoreService
      *
      * @return JsonResponse
      */
-    public function create(array $data): JsonResponse
+    public function create(array $data, int $user_id = null): JsonResponse
     {
         try {
             $store = $this->createStore->create([
@@ -44,7 +44,7 @@ class S_CreateStoreService
 
             \DB::table('store_users')->insert([
                 'store_id' => $store->id,
-                'user_id' => auth('api')->id(),
+                'user_id' => $user_id ?? auth('api')->id(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
