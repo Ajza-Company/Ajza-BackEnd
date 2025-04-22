@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\api\v1\Admin;
 
+use App\Http\Requests\v1\Admin\Company\A_UpdateCompanyRequest;
+use App\Repositories\Frontend\Company\Find\F_FindCompanyInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\Company\CreateCompanyServices;
@@ -14,9 +16,12 @@ class A_CompanyController extends Controller
     /**
      *
      * @param A_FetchCompanyInterface $fetchCompany
+     * @param CreateCompanyServices $createCompany
+     * @param F_FindCompanyInterface $findCompany
      */
     public function __construct(private A_FetchCompanyInterface $fetchCompany,
-                                private CreateCompanyServices $createCompany)
+                                private CreateCompanyServices $createCompany,
+                                private F_FindCompanyInterface $findCompany)
     {
 
     }
@@ -26,7 +31,7 @@ class A_CompanyController extends Controller
      */
     public function index()
     {
-        return A_ShortCompanyResource::collection($this->fetchCompany->fetch(withCount: ['stores', 'usersPivot'], with: ['user']));
+        return A_ShortCompanyResource::collection($this->fetchCompany->fetch(withCount: ['stores', 'usersPivot'], with: ['user', 'stores']));
     }
 
     /**
@@ -49,9 +54,10 @@ class A_CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(A_UpdateCompanyRequest $request, string $id)
     {
-        //
+        $company = $this->findCompany->find(decodeString($id));
+        return $company->update($request->validated());
     }
 
     /**

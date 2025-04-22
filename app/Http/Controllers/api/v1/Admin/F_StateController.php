@@ -23,7 +23,6 @@ class F_StateController extends Controller
      * Create a new instance.
      *
      * @param F_CreateStateService $createState
-     * @param A_FetchStateInterface $fetchState
      * @param F_UpdateStateService $updateState
      * @param F_DeleteStateService $deleteState
      * @param S_FindStateInterface $findState

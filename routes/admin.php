@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\api\v1\Admin\{
-    A_CompanyController,
+use App\Http\Controllers\api\v1\Admin\{A_CompanyController,
+    A_StoreController,
     A_SupportChatController,
     A_UserController,
     A_AuthController,
@@ -10,8 +10,7 @@ use App\Http\Controllers\api\v1\Admin\{
     A_ProductController,
     F_StateController,
     A_SettingController,
-    A_CategoryController
-};
+    A_CategoryController};
 use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
 use App\Http\Controllers\api\v1\Supplier\S_CompanyController;
@@ -50,6 +49,7 @@ Route::middleware('guest:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::post('companies', [A_CompanyController::class, 'store']);
+    Route::post('stores/{id}/update', [A_StoreController::class, 'update']);
     Route::post('rep-sales', [F_RepSalesController::class, 'store']);
     Route::post('rep-sales/update/{id}', [F_RepSalesController::class, 'update']);
     Route::post('rep-sales/delete/{id}', [F_RepSalesController::class, 'delete']);

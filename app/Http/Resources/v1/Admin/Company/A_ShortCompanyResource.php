@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1\Admin\Company;
 
+use App\Http\Resources\v1\Admin\Store\A_ShortStoreResource;
 use App\Http\Resources\v1\User\ShortUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -23,7 +24,8 @@ class A_ShortCompanyResource extends JsonResource
             'logo' => getFullUrl($this->logo),
             'stores_count' => $this->whenCounted('stores'),
             'team_count' => $this->whenCounted('usersPivot'),
-            'owner' => $this->whenLoaded('user', ShortUserResource::make($this->user))
+            'owner' => $this->whenLoaded('user', ShortUserResource::make($this->user)),
+            'stores' => $this->whenLoaded('stores', A_ShortStoreResource::collection($this->stores))
         ];
     }
 }

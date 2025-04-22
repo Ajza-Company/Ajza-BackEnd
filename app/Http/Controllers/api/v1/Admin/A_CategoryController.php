@@ -18,7 +18,11 @@ class A_CategoryController extends Controller
 {
     /**
      *
-     * @param A_FetchCategoryInterface $fetchCategory
+     * @param F_FindCategoryInterface $findCategory
+     * @param F_FetchCategoryInterface $fetchCategory
+     * @param A_CreateCategoryService $createCategory
+     * @param A_UpdateCategoryService $updateCategory
+     * @param A_DeleteCategoryService $deleteCategory
      */
     public function __construct(private F_FindCategoryInterface $findCategory,
                                 private F_FetchCategoryInterface $fetchCategory,

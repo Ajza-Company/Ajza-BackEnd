@@ -21,12 +21,6 @@ class F_ShortStoreResource extends JsonResource
         $latitude = $location?->latitude ?? 0;
         $longitude = $location?->longitude ?? 0;
         $distanceAndTime = distanceTimeBetweenTwoLocations($latitude, $longitude, $this->latitude, $this->longitude);
-        $localizedDistanceTime = trans('general.distance_time_format', [
-            'distance' => $distanceAndTime['distance'],     // Value for :distance
-            'distanceUnit' => trans('general.km'),         // Value for :distanceUnit
-            'time' => $distanceAndTime['time'],             // Value for :time
-            'timeUnit' => trans('general.min'),             // Value for :timeUnit
-        ]);
         $localizedDistance = trans('general.distance', [
             'distance' => round($distanceAndTime['distance'], 1),     // Value for :distance
             'distanceUnit' => trans('general.km')
@@ -37,7 +31,6 @@ class F_ShortStoreResource extends JsonResource
             'rate' => 4.3,
             'image' => $this->image,
             'distanceAndTime' => '',
-            // 'address' => $this->area?->localized?->name . ', ' . $this->area?->state?->localized?->name,
             'address' => $localizedDistance,
             'is_open' => true
         ];

@@ -31,6 +31,11 @@ class A_UserController extends Controller
     /**
      *
      * @param A_FetchUserInterface $fetchUser
+     * @param F_WalletService $wallet
+     * @param S_FindUserInterface $findUser
+     * @param A_UpdateUserService $updateUser
+     * @param A_DeleteUserService $deleteUser
+     * @param A_CreateUserService $createUser
      */
     public function __construct(private A_FetchUserInterface $fetchUser,
                                 private F_WalletService $wallet,
@@ -105,9 +110,9 @@ class A_UserController extends Controller
 
     public function credit(string $id ,A_CreditUserRequest $request) {
         $amount = $request['amount'];
-        
+
         $description = $request['description'];
-        
+
         $metadata = $request['metadata']??[];
 
         $user = $this->findUser->find(decodeString($id));

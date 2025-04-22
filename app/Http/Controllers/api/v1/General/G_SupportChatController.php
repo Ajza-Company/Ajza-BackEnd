@@ -25,6 +25,7 @@ class G_SupportChatController extends Controller
             ->with(['user', 'latestMessage'])
             ->latest()
             ->filter(\request())
+            ->where('status', '!=', 'closed')
             ->paginate();
 
         return G_SupportChatResource::collection($chats);

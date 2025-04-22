@@ -22,7 +22,11 @@ class A_ProductController extends Controller
     /**
      * Create a new instance.
      *
-     * @param A_CreateProductService $createAccount
+     * @param A_CreateProductService $createProduct
+     * @param A_FetchProductInterface $fetchProduct
+     * @param A_UpdateProductService $updateProduct
+     * @param A_DeleteProductService $deleteProduct
+     * @param A_FindProductInterface $findProduct
      */
     public function __construct(
         private A_CreateProductService $createProduct,
@@ -39,15 +43,15 @@ class A_ProductController extends Controller
     {
         return A_ShortProductResource::collection(
             $this->fetchProduct->fetch(with:[
-                'variant', 
-                'variant.variantCategory', 
-                'variant.variantCategory.localized', 
-                'localized', 
+                'variant',
+                'variant.variantCategory',
+                'variant.variantCategory.localized',
+                'localized',
                 'category.localized'
             ])
         );
     }
-    
+
     public function store(F_CreateProductRequest $request)
     {
         $data = $request->validated();

@@ -21,7 +21,11 @@ class F_RepSalesController extends Controller
     /**
      * Create a new instance.
      *
-     * @param F_CreateRepSalesService $createAccount
+     * @param F_CreateRepSalesService $createRepSales
+     * @param A_FetchRepSalesInterface $fetchRepSales
+     * @param F_UpdateRepSalesService $updateRepSales
+     * @param F_DeleteRepSalesService $deleteRepSales
+     * @param S_FindUserInterface $findRepSales
      */
     public function __construct(
         private F_CreateRepSalesService $createRepSales,
@@ -32,7 +36,7 @@ class F_RepSalesController extends Controller
     {
 
     }
-    
+
     public function index() {
         return A_ShortRepSalesResource::collection(
             $this->fetchRepSales->fetch(isLocalized: false,with:['offers'], role: RoleEnum::REPRESENTATIVE)

@@ -12,20 +12,20 @@ use App\Http\Resources\v1\Admin\Setting\A_ShortSettingResource;
 
 class A_SettingController extends Controller
 {
-    
-    public function __construct(private F_CreateSettingService $createSetting,)
+
+    public function __construct(private F_CreateSettingService $createSetting)
 {
 }
 
     public function index()  {
         $setting = Setting::latest()->first();
-    
+
        return A_ShortSettingResource::make($setting);
     }
 
     public function store(A_CreateSettingRequest $request) {
         $setting = $request->validated();
-        
+
         return $this->createSetting->create($setting['setting']);
     }
 

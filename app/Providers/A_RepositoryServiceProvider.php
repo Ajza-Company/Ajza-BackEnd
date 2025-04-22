@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Admin\Company\Fetch\A_FetchCompanyInterface;
 use App\Repositories\Admin\Company\Fetch\A_FetchCompanyRepository;
+use App\Repositories\Admin\Store\Find\A_FindStoreInterface;
+use App\Repositories\Admin\Store\Find\A_FindStoreRepository;
 use App\Repositories\Admin\User\Fetch\A_FetchUserInterface;
 use App\Repositories\Admin\User\Fetch\A_FetchUserRepository;
 use App\Repositories\Admin\RepSales\Fetch\A_FetchRepSalesInterface;
@@ -101,6 +103,11 @@ class A_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             A_FindPromoCodeInterface::class,
             A_FindPromoCodeRepository::class
+        );
+
+        $this->app->bind(
+            A_FindStoreInterface::class,
+            A_FindStoreRepository::class
         );
     }
 

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Filters\Admin\CompanyFilter;
 use App\Traits\HasLocalized;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -68,5 +70,17 @@ class Company extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
+     * Filter Scope
+     *
+     * @param Builder $builder
+     * @param $request
+     * @return Builder
+     */
+    public function scopeFilter(Builder $builder, $request): Builder
+    {
+        return (new CompanyFilter($request))->filter($builder);
     }
 }
