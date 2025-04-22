@@ -4,6 +4,7 @@ namespace App\Http\Requests\v1\Supplier\Team;
 
 use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class S_CreateTeamMemberRequest extends FormRequest
 {
@@ -26,6 +27,12 @@ class S_CreateTeamMemberRequest extends FormRequest
         return [
             'data.name' => 'required|string',
             'data.full_mobile' => 'required|string',
+            'data.password' => [
+                'required', 'string',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+            ],
             'store_id' => 'required|integer|exists:stores,id',
             'permissions' => 'required|array|min:1',
             'permissions.*' => 'required|string|exists:permissions,name',

@@ -26,7 +26,7 @@ class F_AuthController extends Controller
      * @param F_VerifyOtpCodeService $verifyOtpCode
      * @param F_CreateAccountService $createAccount
      * @param F_SetupAccountService $setupAccount
-     * @param F_FindCompanyInterface $findUser
+     * @param F_FindCompanyInterface $findCompany
      */
     public function __construct(
         private F_SendOtpCodeService   $sendOtpCode,
