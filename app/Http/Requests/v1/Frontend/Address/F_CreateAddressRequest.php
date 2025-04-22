@@ -31,6 +31,7 @@ class F_CreateAddressRequest extends FormRequest
             'apartment_number' => 'nullable|max:10',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+            'address' => 'sometimes|string|max:255',
             'is_default' => 'required|boolean',
             'state_id'=>'sometimes|integer|exists:states,id'
         ];
