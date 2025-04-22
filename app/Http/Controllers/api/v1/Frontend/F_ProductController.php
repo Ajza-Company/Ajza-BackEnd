@@ -30,6 +30,7 @@ class F_ProductController extends Controller
                 ->when($store_id, function ($query) use ($store_id) {
                     $query->where('store_id', decodeString($store_id));
                 })
+                ->where('quantity', '>', 0)
                 ->whereHas('product.localized')
                 ->with([
                     'product' => function ($query) {
