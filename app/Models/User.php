@@ -3,8 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Filters\Admin\UserFilter;
 use DateTimeInterface;
 use App\Models\RepChat;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\NewAccessToken;
 use Spatie\Permission\Traits\HasRoles;
@@ -188,5 +190,17 @@ class User extends Authenticatable
     public function offers(): HasMany
     {
         return $this->hasMany(RepOffer::class, 'rep_user_id');
+    }
+
+    /**
+     * Filter Scope
+     *
+     * @param Builder $builder
+     * @param $request
+     * @return Builder
+     */
+    public function scopeFilter(Builder $builder, $request): Builder
+    {
+        return (new UserFilter($request))->filter($builder);
     }
 }

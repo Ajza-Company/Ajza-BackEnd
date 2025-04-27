@@ -51,8 +51,8 @@ class A_UserController extends Controller
      */
     public function index()
     {
-        $type=request()->type??'Supplier';
-        return A_ShortUserResource::collection($this->fetchUser->fetch(isLocalized:false, withCount: ['orders'],role: $type));
+        $type = request()->type ?? 'Supplier';
+        return A_ShortUserResource::collection($this->fetchUser->fetch(isLocalized:false, withCount: ['orders'], role: $type));
     }
 
     /**
