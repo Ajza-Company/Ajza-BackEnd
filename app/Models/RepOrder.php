@@ -69,6 +69,15 @@ class RepOrder extends Model
 
     /**
      *
+     * @return HasMany
+     */
+    public function tracking(): HasMany
+    {
+        return $this->hasMany(RepOrderTrack::class, 'rep_order_id');
+    }
+
+    /**
+     *
      * @param Builder $builder
      * @param $request
      * @return Builder
