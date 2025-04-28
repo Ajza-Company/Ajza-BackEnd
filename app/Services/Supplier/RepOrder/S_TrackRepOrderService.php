@@ -6,6 +6,8 @@ use App\Enums\ErrorMessageEnum;
 use App\Enums\OrderStatusEnum;
 use App\Enums\RepOrderStatusEnum;
 use App\Enums\SuccessMessagesEnum;
+use App\Events\v1\General\G_SupportMessageSent;
+use App\Events\v1\Supplier\S_TrackRepOrderEvent;
 use App\Http\Resources\v1\Supplier\RepOrder\S_ShortRepOrderResource;
 use App\Models\RepChat;
 use App\Notifications\OrderNotification;
@@ -42,6 +44,8 @@ class S_TrackRepOrderService
                 'rep_id' => auth('api')->id(),
                 ...$data
             ]);
+
+            broadcast(new S_TrackRepOrderEvent($order))->toOthers();
 
             \DB::commit();
             return response()->json(successResponse(trans(SuccessMessagesEnum::CREATED)));
