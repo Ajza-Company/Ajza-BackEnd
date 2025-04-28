@@ -20,6 +20,7 @@ class G_RepChatMessageResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'sender' => ShortUserResource::make($this->whenLoaded('sender')),
+            'sender_mobile' => $this->relationLoaded('sender') && ($this->relationLoaded('offer') && $this->offer->status === 'accepted') ? $this->sender->full_mobile : null,
             'message' => $this->message,
             'message_type' => $this->message_type,
             'is_hidden' => (bool)$this->is_hidden,
