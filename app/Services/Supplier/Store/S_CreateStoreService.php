@@ -35,6 +35,8 @@ class S_CreateStoreService
     public function create(array $data, int $user_id = null): JsonResponse
     {
         try {
+            $data['data']['is_active'] = false;
+
             $store = $this->createStore->create([
                 'company_id' => $data['company_id'] ?? userCompany()->id,
                 ...$data['data']

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\Supplier\RepOrderFilter;
+use App\Filters\Supplier\StatisticsFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -76,4 +77,16 @@ class RepOrder extends Model
     {
         return (new RepOrderFilter($request))->filter($builder);
     }
+
+    /**
+     *
+     * @param Builder $builder
+     * @param $request
+     * @return Builder
+     */
+    public function scopeStatisticsFilter(Builder $builder, $request): Builder
+    {
+        return (new StatisticsFilter($request))->filter($builder);
+    }
+
 }
