@@ -21,6 +21,7 @@ class A_ShortCompanyResource extends JsonResource
             'name' => $this->localized->name,
             'email' => $this->email,
             'phone' => $this->phone,
+            'is_approved'=> (bool) $this->is_approved,
             'logo' => getFullUrl($this->logo),
             'stores_count' => $this->whenCounted('stores'),
             'team_count' => $this->whenCounted('usersPivot'),

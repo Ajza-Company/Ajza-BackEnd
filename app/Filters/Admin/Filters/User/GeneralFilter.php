@@ -16,7 +16,7 @@ class GeneralFilter
     public function filter(Builder $builder, $value): Builder
     {
         return $builder->where('name', 'LIKE', "%{$value}%")
-            ->orWhere('email', 'LIKE', "%{$value}%")
-            ->orWhere('phone', 'LIKE', "%{$value}%");
+            ->orWhere('full_mobile', 'LIKE', "%{$value}%")
+            ->orWhere('email', 'LIKE', "%{$value}%");
     }
 }

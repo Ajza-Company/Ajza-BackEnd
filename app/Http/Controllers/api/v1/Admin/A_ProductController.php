@@ -47,7 +47,8 @@ class A_ProductController extends Controller
                 'variant.variantCategory',
                 'variant.variantCategory.localized',
                 'localized',
-                'category.localized'
+                'category.localized',
+                'storeProduct'
             ])
         );
     }

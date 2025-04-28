@@ -22,7 +22,8 @@ class StoreProduct extends Model
     protected $fillable = [
         'product_id',
         'price',
-        'store_id'
+        'store_id',
+        'quantity',
     ];
 
     /**
