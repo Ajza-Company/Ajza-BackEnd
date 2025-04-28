@@ -17,7 +17,6 @@ class DateFilter
      */
     public function filter(Builder $builder, $value): Builder
     {
-        dd($builder , $value);
         // First, decode the URL-encoded value
         $decodedValue = urldecode($value);
 
