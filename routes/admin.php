@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::post('companies', [A_CompanyController::class, 'store']);
     Route::post('stores/{id}/update', [A_StoreController::class, 'update']);
+    Route::post('stores/{id}/active', [A_StoreController::class, 'active']);
     Route::post('rep-sales', [F_RepSalesController::class, 'store']);
     Route::post('rep-sales/update/{id}', [F_RepSalesController::class, 'update']);
     Route::post('rep-sales/delete/{id}', [F_RepSalesController::class, 'delete']);
@@ -73,6 +74,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::post('product/{product}', [A_ProductController::class,'update']);
     Route::get('product/show/{product}', [A_ProductController::class,'show']);
     Route::delete('product/delete/{product}', [A_ProductController::class,'destroy']);
+    Route::post('activate-product/{product}', [A_ProductController::class,'active']);
 
     Route::apiResource('promo-codes', A_PromoCodeController::class)->except(['update']);
 

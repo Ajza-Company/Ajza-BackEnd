@@ -83,4 +83,13 @@ class A_ProductController extends Controller
         return $this->deleteProduct->delete($product);
     }
 
+    public function active(string $id){
+        $id = decodeString($id);
+
+        $product = Product::find($id);
+        $product->is_active = !$product->is_active;
+        $product->save();
+        return $product;
+    }
+
 }

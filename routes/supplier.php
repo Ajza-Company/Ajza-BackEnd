@@ -9,6 +9,7 @@ use App\Http\Controllers\api\v1\Supplier\{S_AuthController,
     S_ProductController,
     S_RepOrderController,
     S_StatisticsController,
+    S_StatisticsRepOrderController,
     S_StoreController,
     S_TeamController,
     S_TransactionController,
@@ -68,6 +69,8 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('/', [S_RepOrderController::class, 'orders']);
         Route::get('all', [S_RepOrderController::class, 'allOrders']);
         Route::get('{rep_order_id}/accept', [S_RepOrderController::class, 'accept']);
+        Route::get('{rep_order_id}/track', S_LocationTrackingController::class);
+        Route::get('statistics/{user}', S_StatisticsRepOrderController::class);
         Route::get('{rep_order_id}/track', S_LocationTrackingController::class);
     });
 
