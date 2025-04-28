@@ -24,6 +24,7 @@ class S_RepOrderController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @throws \Throwable
      */
     public function accept(string $rep_order_id)
     {

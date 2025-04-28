@@ -45,7 +45,7 @@ class G_RepMessageSent implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        return (G_RepChatMessageResource::make($this->message->load(['sender', 'offer'])))->resolve();
+        return (G_RepChatMessageResource::make($this->message->load(['sender', 'offer'])))->additional(['sender_mobile' => $this->message->sender?->full_mobile])->resolve();
     }
 
     /**
