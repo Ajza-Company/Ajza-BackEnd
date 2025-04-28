@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\api\v1\Supplier\{
-    S_AuthController,
+use App\Http\Controllers\api\v1\Supplier\{S_AuthController,
     S_CompanyController,
+    S_LocationTrackingController,
     S_OfferController,
     S_OrderController,
     S_PermissionController,
@@ -12,8 +12,7 @@ use App\Http\Controllers\api\v1\Supplier\{
     S_StoreController,
     S_TeamController,
     S_TransactionController,
-    S_SelectProductController
-};
+    S_SelectProductController};
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -55,7 +54,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
             Route::post('products/create', [S_ProductController::class, 'store']);
             Route::post('products/{product}', [S_ProductController::class,'update']);
             Route::get('products/show/{product}', [S_ProductController::class,'show']);
-            Route::delete('products/delete/{product}', [S_ProductController::class,'destroy']);        
+            Route::delete('products/delete/{product}', [S_ProductController::class,'destroy']);
             Route::get('offers', [S_OfferController::class, 'index']);
             Route::post('offers', [S_OfferController::class, 'store']);
         });
@@ -69,6 +68,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('/', [S_RepOrderController::class, 'orders']);
         Route::get('all', [S_RepOrderController::class, 'allOrders']);
         Route::get('{rep_order_id}/accept', [S_RepOrderController::class, 'accept']);
+        Route::get('{rep_order_id}/track', S_LocationTrackingController::class);
     });
 
 });
