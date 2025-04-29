@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\Supplier\RepOrderFilter;
 use App\Filters\Supplier\StatisticsFilter;
+use App\Traits\DateRangeFilterScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class RepOrder extends Model
 {
-    use HasFactory;
+    use HasFactory , DateRangeFilterScope;
 
     /**
      * The attributes that are mass assignable.
@@ -86,16 +87,4 @@ class RepOrder extends Model
     {
         return (new RepOrderFilter($request))->filter($builder);
     }
-
-    /**
-     *
-     * @param Builder $builder
-     * @param $request
-     * @return Builder
-     */
-    public function scopeStatisticsFilter(Builder $builder, $request): Builder
-    {
-        return (new StatisticsFilter($request))->filter($builder);
-    }
-
 }
