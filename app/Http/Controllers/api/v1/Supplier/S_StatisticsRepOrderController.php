@@ -23,7 +23,7 @@ class S_StatisticsRepOrderController extends Controller
      */
     public function __invoke(string $user_id)
     {
-        $user = $this->findUser->find(113);
+        $user = $this->findUser->find($user_id);
         return response()->json($this->getStatistics($user));
     }
 
