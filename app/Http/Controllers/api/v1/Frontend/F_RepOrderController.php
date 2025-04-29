@@ -72,8 +72,11 @@ class F_RepOrderController extends Controller
      */
     public function cancelOrder(string $order_id)
     {
+        \Log::info('cancel rep order');
         try {
             $order = RepOrder::findOrFail(decodeString($order_id));
+            \Log::info('cancel rep order: ' . json_encode($order));
+
             $order->update([
                 'status' => RepOrderStatusEnum::CANCELLED
             ]);
