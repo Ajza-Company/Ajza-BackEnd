@@ -4,8 +4,10 @@ namespace App\Http\Controllers\api\v1\Supplier;
 
 use App\Http\Controllers\Controller;
 use App\Models\RepOffer;
+use App\Models\Setting;
 use App\Models\User;
 use App\Repositories\Supplier\User\Find\S_FindUserInterface;
+use Illuminate\Http\Request;
 
 class S_StatisticsRepOrderController extends Controller
 {
@@ -21,9 +23,9 @@ class S_StatisticsRepOrderController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(string $user_id)
+    public function __invoke(Request $request, string $user_id)
     {
-        $user = $this->findUser->find($user_id);
+        $user = $this->findUser->find(decodeString($user_id));
         return response()->json($this->getStatistics($user));
     }
 
@@ -49,9 +51,9 @@ class S_StatisticsRepOrderController extends Controller
      * @param mixed $user
      * @return int
      */
-    private function getAllOrdersCount($user): int
+    private function getAllOrdersCount(User $user): int
     {
-        return $user->repOrders()->statisticsFilter(request())->count();
+        return $user->repOrders()->dateRangeFilter(request())->count();
     }
 
     /**
@@ -62,13 +64,16 @@ class S_StatisticsRepOrderController extends Controller
      */
     private function ordersAmountToday(User $user): float
     {
-        return RepOffer::whereHas('order', function ($query) use ($user) {
+        $query = RepOffer::whereHas('order', function ($query) use ($user) {
             $query->where('user_id', $user->id)
                 ->whereDate('created_at', now()->format('Y-m-d'));
         })
-            ->where('status', 'accepted')
-            ->sum('price');
+            ->where('status', 'accepted');
+
+        return $query->sum('price');
     }
+
+
     /**
      * Get orders amount today.
      *
@@ -77,8 +82,10 @@ class S_StatisticsRepOrderController extends Controller
      */
     private function getOrdersAmount(User $user): float
     {
-        // Get all rep orders with the applied statistics filter
-        $repOrders = $user->repOrders()->statisticsFilter(request())->get();
+        // Get all rep orders with the applied statistics filter and date range filter
+        $repOrders = $user->repOrders()
+            ->dateRangeFilter(request())
+            ->get();
 
         // Initialize the total
         $total = 0;
@@ -99,13 +106,17 @@ class S_StatisticsRepOrderController extends Controller
      */
     private function getAjzaAmount(User $user): float
     {
-        return $user->repOrders()->statisticsFilter(request())->get()->sum(function ($repOrder) {
+        $ajzaPercentage = json_decode(Setting::latest()->first()->setting);
 
-            $acceptedOffer = $repOrder->offers()->where('status', 'accepted')->first();
-            if ($acceptedOffer) {
-                return $acceptedOffer->price * ($repOrder->ajza_percentage / 100);
-            }
-            return 0;
-        });
+        return $user->repOrders()
+            ->dateRangeFilter(request())
+            ->get()
+            ->sum(function ($repOrder) use ($ajzaPercentage) {
+                $acceptedOffer = $repOrder->offers()->where('status', 'accepted')->first();
+                if ($acceptedOffer) {
+                    return $acceptedOffer->price * ($ajzaPercentage->rep_order_percentage / 100);
+                }
+                return 0;
+            });
     }
 }
