@@ -72,6 +72,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::post('{rep_order_id}/track', S_LocationTrackingController::class);
         Route::post('statistics/{user}', S_StatisticsRepOrderController::class);
         Route::get('{rep_order_id}/track', S_LocationTrackingController::class);
+        Route::get('{rep_order_id}/get-tracks', [S_LocationTrackingController::class, 'track']);
     });
 
 });
