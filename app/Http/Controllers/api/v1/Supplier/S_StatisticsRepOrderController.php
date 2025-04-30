@@ -23,10 +23,9 @@ class S_StatisticsRepOrderController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, string $user_id)
+    public function __invoke(Request $request)
     {
-//        $user = $this->findUser->find(decodeString($user_id));
-        $user = auth()->user();
+        $user = auth('api')->user();
         return response()->json($this->getStatistics($user));
     }
 

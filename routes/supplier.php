@@ -70,7 +70,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('all', [S_RepOrderController::class, 'allOrders']);
         Route::get('{rep_order_id}/accept', [S_RepOrderController::class, 'accept']);
         Route::post('{rep_order_id}/track', S_LocationTrackingController::class);
-        Route::post('statistics/{user}', S_StatisticsRepOrderController::class);
+        Route::post('statistics', S_StatisticsRepOrderController::class);
         Route::get('{rep_order_id}/track', S_LocationTrackingController::class);
         Route::get('{rep_order_id}/get-tracks', [S_LocationTrackingController::class, 'track']);
     });
