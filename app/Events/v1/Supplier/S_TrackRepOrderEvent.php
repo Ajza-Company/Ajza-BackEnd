@@ -44,11 +44,26 @@ class S_TrackRepOrderEvent implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        $tracking = $this->order->tracking()->latest()->first();
+        $trackingFirst = $this->order->tracking()->latest()->first();
+        $trackingLast = $this->order->address();
+        $trackingCurrent = $this->order->tracking()->first();
+
         return [
+            [
             'rep_order_id' => $this->order->id,
-            'latitude' => $tracking->latitude,
-            'longitude' => $tracking->longitude
+            'latitude' => $trackingFirst->latitude,
+            'longitude' => $trackingFirst->longitude
+            ],
+            [
+                'rep_order_id' => $this->order->id,
+                'latitude' => $trackingLast->latitude,
+                'longitude' => $trackingLast->longitude
+            ],
+            [
+                'rep_order_id' => $this->order->id,
+                'latitude' => $trackingCurrent->latitude,
+                'longitude' => $trackingCurrent->longitude
+            ]
         ];
     }
 
