@@ -27,7 +27,7 @@ class S_StatisticsRepOrderController extends Controller
     {
         $user = $request->user();
 
-        dd( $user->repOrders());
+        dd( $user->repOrders()->get());
 
         return response()->json($this->getStatistics($user));
     }
