@@ -31,7 +31,7 @@ class S_StatisticsRepOrderController extends Controller
         $user = $request->user();
 
         dd($user);
-        
+
         return response()->json($this->getStatistics($user));
     }
 
