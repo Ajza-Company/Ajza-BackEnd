@@ -26,9 +26,7 @@ class S_StatisticsRepOrderController extends Controller
     public function __invoke(Request $request)
     {
         $user = $request->user();
-
-        dd( $user->repOrders()->get());
-
+        
         return response()->json($this->getStatistics($user));
     }
 
