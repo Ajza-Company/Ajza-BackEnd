@@ -38,24 +38,23 @@ class S_LocationTrackingController extends Controller
         $trackingLast = $order->address;
         $trackingCurrent = $order->tracking()->first();
 
-        return [
-            [
+        return[
+            'first' => [
                 'rep_order_id' => $order->id,
                 'latitude' => $trackingFirst?->latitude,
                 'longitude' => $trackingFirst?->longitude
             ],
-            [
+            'last' => [
                 'rep_order_id' => $order->id,
                 'latitude' => $trackingLast?->latitude,
                 'longitude' => $trackingLast?->longitude
             ],
-            [
+            'current' => [
                 'rep_order_id' => $order->id,
                 'latitude' => $trackingCurrent?->latitude,
                 'longitude' => $trackingCurrent?->longitude
             ]
         ];
-
     }
 
 }
