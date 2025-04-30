@@ -25,7 +25,9 @@ class S_StatisticsRepOrderController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $user = auth('api')->user();
+        $user = $request->user();
+
+        dd( $user->repOrders()->dateRangeFilter(request())->count());
 
         return response()->json($this->getStatistics($user));
     }
