@@ -49,6 +49,7 @@ Route::middleware('guest:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('companies', [A_CompanyController::class, 'index']);
     Route::post('companies', [A_CompanyController::class, 'store']);
+    Route::get('company/{id}/active', [A_CompanyController::class, 'active']);
     Route::post('stores/{id}/update', [A_StoreController::class, 'update']);
     Route::post('stores/{id}/active', [A_StoreController::class, 'active']);
     Route::post('rep-sales', [F_RepSalesController::class, 'store']);

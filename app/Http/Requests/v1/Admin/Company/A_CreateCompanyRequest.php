@@ -29,15 +29,15 @@ class A_CreateCompanyRequest extends FormRequest
             'store.data.area_id' => 'required|integer|exists:areas,id',
             'store.data.address' => 'required|string|max:255',
             'store.data.address_url' => 'nullable|string|url|max:255',
-            'store.data.phone_number' => 'required|string|max:20',
+            'store.data.phone_number' => 'sometimes|string|max:20',
             'store.data.latitude' => 'nullable|numeric',
             'store.data.longitude' => 'nullable|numeric',
-            
+
             'store.hours' => 'required|array',
             'store.hours.*.day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
             'store.hours.*.open_time' => 'nullable|date_format:H:i',
             'store.hours.*.close_time' => 'nullable|date_format:H:i|after:store.hours.*.open_time',
-            
+
             'user.name' => 'required|string|max:255',
             'user.email' => 'required|email|max:50|unique:users,email',
             'user.full_mobile' => 'required|string|max:20|unique:users,full_mobile',
@@ -45,7 +45,7 @@ class A_CreateCompanyRequest extends FormRequest
             'user.avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user.password' => 'required|string|min:8',
             'user.preferred_language' => 'nullable|string|max:5',
-            
+
             'company.country_id' => 'required|integer|exists:countries,id',
             'company.email' => 'required|email|max:50|unique:companies,email',
             'company.phone' => 'required|string|max:20|unique:companies,phone',

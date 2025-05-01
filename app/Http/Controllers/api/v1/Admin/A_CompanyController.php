@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\api\v1\Admin;
 
+use App\Enums\SuccessMessagesEnum;
 use App\Http\Requests\v1\Admin\Company\A_UpdateCompanyRequest;
+use App\Models\Company;
 use App\Repositories\Frontend\Company\Find\F_FindCompanyInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -66,5 +68,15 @@ class A_CompanyController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function active(string $id)
+    {
+        $id = decodeString($id);
+
+        $company = Company::find($id);
+        $company->is_active = !$company->is_active;
+        $company->save();
+        return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
     }
 }

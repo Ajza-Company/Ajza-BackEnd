@@ -22,6 +22,7 @@ class A_ShortCompanyResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'is_approved'=> (bool) $this->is_approved,
+            'is_active' => (bool) $this->is_active,
             'logo' => getFullUrl($this->logo),
             'stores_count' => $this->whenCounted('stores'),
             'team_count' => $this->whenCounted('usersPivot'),
