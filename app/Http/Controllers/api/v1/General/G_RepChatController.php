@@ -80,14 +80,24 @@ class G_RepChatController extends Controller
     {
         $chat = RepChat::findOrFail(decodeString($chat_id));
 
+        // Check if any message in this chat has an accepted offer
+        $hasAcceptedOffer = $chat->messages()
+            ->whereHas('offer', function($query) {
+                $query->where('status', 'accepted');
+            })
+            ->exists();
+
         $messages = $chat->messages()
             ->whereIsHidden(false)
             ->where('message_type', '!=', MessageTypeEnum::ENDED)
-            ->with(['sender', 'offer','chat','chat.user1'])
+            ->with(['sender', 'offer', 'chat', 'chat.user1'])
             ->latest()
             ->paginate();
 
-        return G_RepChatMessageResource::collection($messages);
+        return G_RepChatMessageResource::collection($messages)
+            ->additional(['meta' => [
+                'has_accepted_offer' => $hasAcceptedOffer
+            ]]);
     }
 
     /**

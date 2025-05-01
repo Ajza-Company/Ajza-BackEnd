@@ -17,10 +17,24 @@ class G_RepChatMessageResource extends JsonResource
      */
     public function toArray($request): array
     {
+        // Check if any message in this chat has an offer with accepted status
+        $hasAcceptedOffer = false;
+
+        if ($this->relationLoaded('chat')) {
+            $hasAcceptedOffer = $request->has('meta.has_accepted_offer') ?
+                $request->input('meta.has_accepted_offer') :
+                $this->chat->messages()
+                    ->whereHas('offer', function($query) {
+                        $query->where('status', 'accepted');
+                    })
+                    ->exists();
+        }
+
         return [
             'id' => encodeString($this->id),
             'sender' => ShortUserResource::make($this->whenLoaded('sender')),
-            'sender_mobile' => $this->relationLoaded('chat') && $this->chat->relationLoaded('user1') && ($this->relationLoaded('offer') && $this->offer?->status === 'accepted') ? $this->chat->user1->full_mobile : null,
+            'sender_mobile' => $hasAcceptedOffer && $this->relationLoaded('chat') && $this->chat->relationLoaded('user1') ?
+                $this->chat->user1->full_mobile : null,
             'message' => $this->message,
             'message_type' => $this->message_type,
             'is_hidden' => (bool)$this->is_hidden,
