@@ -54,7 +54,7 @@ class G_RepChatController extends Controller
         }
 
         $chat->messages()->save($message);
-        $message->load(['sender','chat']);
+        $message->load(['sender','chat','chat.user1']);
 
         broadcast(new G_RepMessageSent($message))->toOthers();
 
