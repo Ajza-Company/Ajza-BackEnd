@@ -33,7 +33,7 @@ class S_TrackRepOrderEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('rep-order.' . $this->order->id),
+            new PrivateChannel('rep-order.' . encodeString($this->order->id)),
         ];
     }
 

@@ -28,7 +28,7 @@ class F_CreateRepOrderRequest extends FormRequest
             'data.title' => 'required|string',
             'data.description' => 'required|string',
             'data.city_id' => 'sometimes|integer|exists:states,id',
-            // 'data.address_id' => 'required|integer|exists:addresses,id',
+            'data.address_id' => 'sometimes|integer|exists:addresses,id',
         ];
     }
 

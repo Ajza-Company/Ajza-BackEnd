@@ -54,7 +54,7 @@ class S_AcceptRepOrderService
                 type: RepOrderStatusEnum::ACCEPTED
             ));
 
-            $repOrder->update(['status' => RepOrderStatusEnum::ACCEPTED]);
+            $repOrder->update(['status' => RepOrderStatusEnum::ACCEPTED, 'rep_id' => auth('api')->id()]);
             $repOrder->refresh();
 
             \DB::commit();

@@ -2,6 +2,7 @@
 
 use App\Enums\RoleEnum;
 use App\Models\RepChat;
+use App\Models\RepOrder;
 use App\Models\SupportChat;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -43,6 +44,28 @@ Broadcast::channel('rep-order', function ($user) {
         'user_id' => $user->id
     ]);
     return true;
+});
+
+Broadcast::channel('rep-order.{orderId}', function ($user, $orderId) {
+    try {
+        $decodedOrderId = decodeString($orderId);
+        $order = RepOrder::findOrFail($decodedOrderId);
+
+        // Allow access if the user is the chat owner or an admin
+        $authorized = $user->id === $order->user_id || $order->rep_id === $user->id;
+
+        \Log::info('Rep Order Tracking Channel Auth:', [
+            'user_id' => $user->id,
+            'authorized' => $authorized
+        ]);
+
+        return $authorized;
+    } catch (\Exception $e) {
+        \Log::error('Rep Order Tracking Channel Auth Error:', [
+            'error' => $e->getMessage(),
+        ]);
+        return false;
+    }
 });
 
 Broadcast::channel('support.chat.{chatId}', function ($user, $chatId) {
