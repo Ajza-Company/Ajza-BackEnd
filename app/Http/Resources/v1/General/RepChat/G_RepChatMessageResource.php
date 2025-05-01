@@ -18,6 +18,16 @@ class G_RepChatMessageResource extends JsonResource
     public function toArray($request): array
     {
         return [
+          'chat' => $this->whenLoaded('chat', function() {
+            return [
+                'id' => encodeString($this->chat->id),
+                'rep_order_id' => encodeString($this->chat->rep_order_id),
+                'user1' => ShortUserResource::make($this->chat->whenLoaded('user1')),
+                'user2' => ShortUserResource::make($this->chat->whenLoaded('user2')),
+            ];
+          })
+        ];
+        return [
             'id' => encodeString($this->id),
             'sender' => ShortUserResource::make($this->whenLoaded('sender')),
             'sender_mobile' => $this->relationLoaded('chat') && $this->chat->relationLoaded('user1') && ($this->relationLoaded('offer') && $this->offer?->status === 'accepted') ? $this->chat->user1->full_mobile : null,
