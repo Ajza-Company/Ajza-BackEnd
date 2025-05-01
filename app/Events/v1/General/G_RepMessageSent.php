@@ -45,7 +45,7 @@ class G_RepMessageSent implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        return (G_RepChatMessageResource::make($this->message->load(['sender', 'offer'])))->resolve();
+        return (G_RepChatMessageResource::make($this->message->load(['sender', 'offer','chat','chat.user1'])))->resolve();
     }
 
     /**
