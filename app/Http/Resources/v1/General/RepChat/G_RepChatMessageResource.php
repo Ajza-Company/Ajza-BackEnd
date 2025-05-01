@@ -17,6 +17,9 @@ class G_RepChatMessageResource extends JsonResource
      */
     public function toArray($request): array
     {
+        return  [
+            'chat' => $this->chat
+        ];
         return [
             'id' => encodeString($this->id),
             'sender' => ShortUserResource::make($this->whenLoaded('sender')),
