@@ -133,6 +133,14 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
+    public function repVendorOrders(): HasMany
+    {
+        return $this->hasMany(RepOrder::class, 'rep_id');
+    }
+    /**
+     *
+     * @return HasMany
+     */
     public function userFcmTokens(): HasMany
     {
         return $this->hasMany(UserFcmToken::class, 'user_id');
