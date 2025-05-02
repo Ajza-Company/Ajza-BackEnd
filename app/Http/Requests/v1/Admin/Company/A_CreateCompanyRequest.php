@@ -29,7 +29,6 @@ class A_CreateCompanyRequest extends FormRequest
             'store.data.area_id' => 'required|integer|exists:areas,id',
             'store.data.address' => 'required|string|max:255',
             'store.data.address_url' => 'nullable|string|url',
-            'store.data.phone_number' => 'sometimes|string|max:20',
             'store.data.latitude' => 'nullable|numeric',
             'store.data.longitude' => 'nullable|numeric',
 

@@ -107,7 +107,6 @@ class CreateCompanyServices
             'country_id'=>$data['country_id'],
             'user_id'=>$user->id,
             'email'=>$data['email'],
-            'phone'=>$data['phone'],
             'logo'=>$logo,
             'cover_image'=>$coverImage,
             'commercial_register'=>$data['commercial_register'],
