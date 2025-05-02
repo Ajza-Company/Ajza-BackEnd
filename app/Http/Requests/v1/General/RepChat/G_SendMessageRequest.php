@@ -24,7 +24,7 @@ class G_SendMessageRequest extends FormRequest
         return [
             'message' => 'required_without:attachment|nullable|string',
             'attachment' => 'required_without:message|nullable|file|max:10240',
-            'message_type' => 'sometimes|in:text,offer,attachment,invoice',
+            'message_type' => 'sometimes|in:text,offer,attachment,invoice,start_delivery',
             'is_invoice' => 'sometimes|boolean'
         ];
     }

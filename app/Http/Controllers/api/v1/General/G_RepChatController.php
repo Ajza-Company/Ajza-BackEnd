@@ -41,9 +41,14 @@ class G_RepChatController extends Controller
     {
         $chat = RepChat::findOrFail(decodeString($chat_id));
 
+        $message_type = MessageTypeEnum::TEXT;
+        if ($request->has('message_type')) {
+            $message_type = $request->message_type;
+        }
+
         $message = new RepChatMessage([
             'sender_id' => auth('api')->id(),
-            'message_type' => $request->hasFile('attachment') ? MessageTypeEnum::ATTACHMENT : MessageTypeEnum::TEXT,
+            'message_type' => $request->hasFile('attachment') ? MessageTypeEnum::ATTACHMENT : $message_type,
             'message' => $request->message,
             'is_invoice' => $request->has('is_invoice') && (bool)$request->is_invoice
         ]);
@@ -79,15 +84,19 @@ class G_RepChatController extends Controller
     public function messages(string $chat_id)
     {
         $chat = RepChat::findOrFail(decodeString($chat_id));
+        $messagesQuery = $chat->messages();
 
         // Check if any message in this chat has an accepted offer
-        $hasAcceptedOffer = $chat->messages()
+        $hasAcceptedOffer = $messagesQuery
             ->whereHas('offer', function($query) {
                 $query->where('status', 'accepted');
             })
             ->exists();
 
-        $messages = $chat->messages()
+        $hasInvoice = $messagesQuery->whereIsInvoice(true)->exists();
+        $startDelivery = $messagesQuery->where('message_type', 'start_delivery')->exists();
+
+        $messages = $messagesQuery
             ->whereIsHidden(false)
             ->where('message_type', '!=', MessageTypeEnum::ENDED)
             ->with(['sender', 'offer', 'chat', 'chat.user1','chat.user2'])
@@ -96,7 +105,9 @@ class G_RepChatController extends Controller
 
         return G_RepChatMessageResource::collection($messages)
             ->additional(['meta' => [
-                'has_accepted_offer' => $hasAcceptedOffer
+                'has_accepted_offer' => $hasAcceptedOffer,
+                'has_invoice' => $hasInvoice,
+                'start_delivery' => $startDelivery
             ]]);
     }
 
