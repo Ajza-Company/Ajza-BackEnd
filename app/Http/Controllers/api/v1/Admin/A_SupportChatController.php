@@ -18,7 +18,7 @@ class A_SupportChatController extends Controller
             ->filter(request())
             ->orderBy('created_at')
             ->paginate();
-        
+
         return G_SupportChatResource::collection($chats);
     }
 
