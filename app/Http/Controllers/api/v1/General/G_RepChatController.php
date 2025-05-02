@@ -54,7 +54,7 @@ class G_RepChatController extends Controller
         }
 
         $chat->messages()->save($message);
-        $message->load(['sender','chat','chat.user1']);
+        $message->load(['sender','chat','chat.user1','chat.user2']);
 
         broadcast(new G_RepMessageSent($message))->toOthers();
 
@@ -90,7 +90,7 @@ class G_RepChatController extends Controller
         $messages = $chat->messages()
             ->whereIsHidden(false)
             ->where('message_type', '!=', MessageTypeEnum::ENDED)
-            ->with(['sender', 'offer', 'chat', 'chat.user1'])
+            ->with(['sender', 'offer', 'chat', 'chat.user1','chat.user2'])
             ->latest()
             ->paginate();
 
@@ -119,7 +119,7 @@ class G_RepChatController extends Controller
         ]);
 
         $chat->messages()->save($message);
-        $message->load(['sender', 'offer','chat','chat.user1']);
+        $message->load(['sender', 'offer','chat','chat.user1','chat.user2']);
 
         broadcast(new G_RepMessageSent($message))->toOthers();
 
