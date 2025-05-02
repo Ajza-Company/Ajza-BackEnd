@@ -16,6 +16,7 @@ use App\Services\Supplier\Store\S_CreateStoreService;
 use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 use App\Repositories\Admin\Company\Create\F_CreateCompanyInterface;
 use App\Repositories\Frontend\Wallet\Create\F_CreateWalletInterface;
+use Throwable;
 
 class CreateCompanyServices
 {
@@ -36,6 +37,7 @@ class CreateCompanyServices
      * @param array $data
      *
      * @return JsonResponse
+     * @throws Throwable
      */
     public function create(array $data): JsonResponse
     {
