@@ -18,7 +18,7 @@ class S_ShortStoreResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'name' => $this->localized?->name,
+            'name' => $this->company?->localized?->name,
             'phone' => $this->phone_number,
             'address_url' => $this->address_url,
             'isActive' => (bool)$this->is_active,
