@@ -33,7 +33,7 @@ class F_UpdateRepSalesRequest extends FormRequest
                 Rule::unique('users', 'email')->ignore($this->id),
             ],
             'full_mobile' => [
-                'required',
+                'sometimes',
                 'string',
                 Rule::unique('users', 'full_mobile')->ignore($this->id),
             ],
@@ -41,7 +41,7 @@ class F_UpdateRepSalesRequest extends FormRequest
             'avatar' => 'sometimes|nullable|file|max:2408'
         ];
     }
-    
+
     /**
      * Prepare the data for validation.
      */
