@@ -3,11 +3,11 @@
 namespace App\Filters\General;
 
 use App\Filters\FilterClass;
-use App\Filters\General\Filters\StatusFilter;
+use App\Filters\General\Filters\SupportChatStatusFilter;
 
 class SupportChatsFilter extends FilterClass
 {
     protected array $filters = [
-        'status' => StatusFilter::class
+        'status' => SupportChatStatusFilter::class
     ];
 }

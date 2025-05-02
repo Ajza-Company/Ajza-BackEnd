@@ -15,10 +15,10 @@ class A_SupportChatController extends Controller
     public function index()
     {
         $chats = SupportChat::with(['user', 'latestMessage'])
-            ->latest()
-            ->filter(\request())
+            ->filter(request())
+            ->orderBy('created_at')
             ->paginate();
-
+        
         return G_SupportChatResource::collection($chats);
     }
 
