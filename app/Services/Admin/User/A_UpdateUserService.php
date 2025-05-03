@@ -28,7 +28,7 @@ class A_UpdateUserService
             $user->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => Hash::make($data['password']),
+                'password' =>$data['password'] ? Hash::make($data['password']): $user->password,
                 'full_mobile' => $data['full_mobile']
             ]);
 
