@@ -25,7 +25,7 @@ class A_ShortProductResource extends JsonResource
             'price' => $this->price,
             'is_original' => (bool) $this->is_original,
             'is_active' => (bool) $this->is_active,
-            'locales' => $this->whenLoaded('locales', A_ProductLocalesResource::collection($this->locales)),
+            //'locales' => $this->whenLoaded('locales', A_ProductLocalesResource::collection($this->locales)),
             'variants' => $this->variant ? $this->variant->map(function($variant) {
                 return [
                     'id' => encodeString($variant->variantCategory->id),
