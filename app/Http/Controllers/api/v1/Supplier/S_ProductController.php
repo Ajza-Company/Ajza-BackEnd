@@ -56,8 +56,8 @@ class S_ProductController extends Controller
         $store = $this->findStore->find(decodeString($store_id));
         $category = $store->category->category_id;
         $data['category_id']=$category;
-        $data['is_active'] = false;
-        $data['is_default'] = false;
+        $data['is_active'] = 0;
+        $data['is_default'] = 0;
         return $this->createProduct->create($data,$store->id);
     }
 

@@ -48,7 +48,7 @@ class A_CreateProductService
                     'product_id'=>$product->id
                 ]);
             }
-    
+
 
             foreach($data['localized'] as $local){
                 ProductLocale::create([
@@ -64,7 +64,7 @@ class A_CreateProductService
                 'product_id'=>$product->id,
                 'store_id'=>$store
             ]);
-    
+
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: A_ShortProductResource::make($product->load('variant','variant.variantCategory','variant.variantCategory.localized','localized'))));
         } catch (\Exception $ex) {
