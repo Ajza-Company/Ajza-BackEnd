@@ -12,5 +12,5 @@ final class MessageTypeEnum extends Enum
     const ATTACHMENT = 'attachment';
     const OFFER = 'offer';
     const ENDED = 'ended';
-
+    const START_DELIVERY = 'start_delivery';
 }
