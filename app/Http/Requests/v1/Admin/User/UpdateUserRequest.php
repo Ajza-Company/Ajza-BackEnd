@@ -38,7 +38,7 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 Rule::unique('users', 'full_mobile')->ignore($this->id),
             ],
-            'data.password' => [
+            'password' => [
                 'sometimes', 'string',
                 Password::min(8)
                     ->mixedCase()
