@@ -31,8 +31,18 @@ class S_UpdateStoreService
     public function update(array $data, Store $store): JsonResponse
     {
         try {
+            $data['data']->except('image');
+
             if (isset($data['data'])) {
                 $store->update($data['data']);
+            }
+
+            if (isset($data['image'])) {
+                if ($store->image) {
+                    deleteFile($store->image);
+                }
+                $path = uploadFile("store-$store->id", $data['image']);
+                $store->update(['image' => $path]);
             }
 
             if (isset($data['hours'])) {

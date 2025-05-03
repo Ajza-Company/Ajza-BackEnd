@@ -20,10 +20,10 @@ class PermissionSeeder extends Seeder
         $roles = json_decode(File::get("database/data/permissions.json"));
 
         foreach ($roles as $value) {
-            Permission::firstOrCreate(
-                ['name' => $value->name],
+            Permission::updateOrCreate(
+                ['name' => $value->name,
+                    "friendly_name" => $value->friendly_name],
                 [
-                    "friendly_name" => $value->friendly_name,
                     "group_name" => $value->group_name,
                     "guard_name" => $value->guard_name,
                     "role_name" => $value->role_name

@@ -26,6 +26,10 @@ class S_UpdateStoreRequest extends FormRequest
     {
         return [
             'data.area_id' => 'sometimes|integer|exists:areas,id',
+            'data.image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'data.address' => 'sometimes|string|max:255',
+            'data.latitude' => 'required|numeric',
+            'data.longitude' => 'required|numeric',
             'data.address_url' => 'sometimes|string|url',
             'data.phone_number' => 'sometimes|string',
             'data.is_active' => 'sometimes|boolean',

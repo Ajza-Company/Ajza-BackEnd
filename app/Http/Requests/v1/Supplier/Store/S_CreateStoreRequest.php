@@ -27,8 +27,12 @@ class S_CreateStoreRequest extends FormRequest
     {
         return [
             'data.area_id' => 'required|integer|exists:areas,id',
-            'data.address_url' => 'required|string|url',
-            'data.phone_number' => 'required|string',
+            'data.image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'data.address' => 'sometimes|string|max:255',
+            'data.address_url' => 'sometimes|string|url',
+            'data.phone_number' => 'sometimes|string',
+            'data.latitude' => 'required|numeric',
+            'data.longitude' => 'required|numeric',
             'hours' => 'required|array',
             'hours.*.day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
             'hours.*.open_time' => 'nullable|date_format:H:i',

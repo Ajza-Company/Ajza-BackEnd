@@ -37,10 +37,19 @@ class S_CreateStoreService
         try {
             $data['data']['is_active'] = false;
 
+            // data without image
+
+            $data['data']->except('image');
+
             $store = $this->createStore->create([
                 'company_id' => $data['company_id'] ?? userCompany()->id,
                 ...$data['data']
             ]);
+
+            if (isset($data['image'])) {
+                $path = uploadFile("store-$store->id", $data['image']);
+                $store->update(['image' => $path]);
+            }
 
             $this->insertStoreHour->insert($this->prepareBulkInsert($data['hours'], $store));
 
