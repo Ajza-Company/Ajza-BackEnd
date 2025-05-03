@@ -112,7 +112,7 @@ class G_SupportChatController extends Controller
             ->whereIsHidden(false)
             ->where('message_type', '!=', MessageTypeEnum::ENDED)
             ->with(['sender'])
-            ->latest()
+            ->orderBy('created_at')
             ->paginate();
 
         return G_SupportChatMessageResource::collection($messages);
