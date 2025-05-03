@@ -35,6 +35,16 @@ return [
         ],
     ],
 
+    'payment' => [
+        'default' => env('DEFAULT_PAYMENT_GATEWAY', 'clickpay'),
+        'clickpay' => [
+            'base_url' => env('CLICKPAY_BASE_URL'),
+            'profile_id' => env('CLICKPAY_PROFILE_ID'),
+            'server_key' => env('CLICKPAY_SERVER_KEY'),
+            'client_key' => env('CLICKPAY_CLIENT_KEY'),
+        ]
+
+    ],
     'sms' => [
         'default' => env('SMS_PROVIDER', 'provider1'),
 
