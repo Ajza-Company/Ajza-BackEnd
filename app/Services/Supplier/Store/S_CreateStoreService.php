@@ -29,7 +29,7 @@ class S_CreateStoreService
     /**
      *
      * @param array $data
-     *
+     * @param int|null $user_id
      * @return JsonResponse
      */
     public function create(array $data, int $user_id = null): JsonResponse
@@ -41,6 +41,8 @@ class S_CreateStoreService
                 'company_id' => $data['company_id'] ?? userCompany()->id,
                 ...$data['data']
             ]);
+
+            \Log::info('store: ' . $store);
 
             $this->insertStoreHour->insert($this->prepareBulkInsert($data['hours'], $store));
 

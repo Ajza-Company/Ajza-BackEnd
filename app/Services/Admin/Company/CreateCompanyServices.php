@@ -49,9 +49,13 @@ class CreateCompanyServices
 
             $user = $this->createUser($data['user']);
 
+            \Log::info('create company user: '.json_encode($user));
+
             $company = $this->createCompany($data['company'],$user);
+            \Log::info('create company company: '.json_encode($company));
 
             $data['store']['company_id'] = $company->id;
+            \Log::info('create company store: '.json_encode($data['store']));
             $this->createStore->create($data['store'], $user->id);
 
             \DB::commit();
