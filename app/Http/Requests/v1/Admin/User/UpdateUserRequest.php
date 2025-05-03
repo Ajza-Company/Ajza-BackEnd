@@ -37,7 +37,7 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 Rule::unique('users', 'full_mobile')->ignore($this->id),
             ],
-            'password' => 'required|min:8',
+            'password' => 'sometimes|min:8',
             'avatar' => 'sometimes|file|max:2408',
             'permissions'=>'array|min:1',
             'permissions.*'=>'required_with:permissions|string'
