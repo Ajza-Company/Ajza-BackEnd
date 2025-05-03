@@ -46,19 +46,35 @@ class G_RepMessageSent implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
+        // Load necessary relationships
+        $this->message->load(['sender', 'offer', 'chat', 'chat.user1', 'chat.user2']);
+
+        // Get additional data
         $hasAcceptedOffer = $this->message->chat->messages()
             ->whereHas('offer', function($query) {
                 $query->where('status', 'accepted');
             })
             ->exists();
 
-        $hasInvoice = $this->message->chat->messages()->whereIsInvoice(true)->exists();
-        $startDelivery = $this->message->chat->messages()->where('message_type', MessageTypeEnum::START_DELIVERY)->exists();
-        return (G_RepChatMessageResource::make($this->message->load(['sender', 'offer','chat','chat.user1','chat.user2']))->additional(['meta' => [
-            'has_accepted_offer' => $hasAcceptedOffer,
-            'has_invoice' => $hasInvoice,
-            'start_delivery' => $startDelivery
-        ]]))->resolve();
+        $hasInvoice = $this->message->chat->messages()
+            ->whereIsInvoice(true)
+            ->exists();
+
+        $startDelivery = $this->message->chat->messages()
+            ->where('message_type', MessageTypeEnum::START_DELIVERY)
+            ->exists();
+
+        // Create the resource and merge additional data
+        $resource = new G_RepChatMessageResource($this->message);
+
+        // Merge the resource data with additional data
+        return array_merge($resource->resolve(), [
+            'additional' => [
+                'has_accepted_offer' => $hasAcceptedOffer,
+                'has_invoice' => $hasInvoice,
+                'start_delivery' => $startDelivery
+            ]
+        ]);
     }
 
     /**
