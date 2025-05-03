@@ -139,38 +139,31 @@ class CreateCompanyServices
      *
      * @param array $data
      * @param int|null $user_id
-     * @return JsonResponse
+     * @return mixed
      */
-    public function createStore(array $data, int $user_id = null): JsonResponse
+    public function createStore(array $data, int $user_id = null): mixed
     {
-        try {
-            $data['data']['is_active'] = false;
+        \Log::info('start create store');
 
-            $store = $this->createStoreInterface->create([
-                'company_id' => $data['company_id'] ?? userCompany()->id,
-                ...$data['data']
-            ]);
+        $data['data']['is_active'] = false;
 
-            \Log::info('store: ' . $store);
+        $store = $this->createStoreInterface->create([
+            'company_id' => $data['company_id'] ?? userCompany()->id,
+            ...$data['data']
+        ]);
 
-            $this->insertStoreHour->insert($this->prepareBulkInsert($data['hours'], $store));
+        \Log::info('store: ' . $store);
 
-            \DB::table('store_users')->insert([
-                'store_id' => $store->id,
-                'user_id' => $user_id ?? auth('api')->id(),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
+        $this->insertStoreHour->insert($this->prepareBulkInsert($data['hours'], $store));
 
-            return response()->json(
-                successResponse(message: trans(SuccessMessagesEnum::CREATED),
-                    data: S_StoreResource::make($store->load('company', 'company.localized', 'hours'))));
-        } catch (\Exception $ex) {
-            return response()->json(errorResponse(
-                message: trans(ErrorMessageEnum::CREATE),
-                error: $ex->getMessage()),
-                Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        \DB::table('store_users')->insert([
+            'store_id' => $store->id,
+            'user_id' => $user_id ?? auth('api')->id(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        return $store;
     }
 
     /**
