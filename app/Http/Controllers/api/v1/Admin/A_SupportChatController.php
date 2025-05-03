@@ -16,6 +16,7 @@ class A_SupportChatController extends Controller
     {
         $chats = SupportChat::with(['user', 'latestMessage'])
             ->filter(request())
+            ->orderBy('created_at', 'desc')
             ->paginate();
 
         return G_SupportChatResource::collection($chats);
