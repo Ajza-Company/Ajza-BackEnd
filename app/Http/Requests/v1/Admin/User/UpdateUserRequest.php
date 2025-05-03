@@ -5,6 +5,7 @@ namespace App\Http\Requests\v1\Admin\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Traits\DecodesInputTrait;
+use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -37,7 +38,12 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 Rule::unique('users', 'full_mobile')->ignore($this->id),
             ],
-            'password' => 'sometimes|min:8',
+            'data.password' => [
+                'sometimes', 'string',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+            ],
             'avatar' => 'sometimes|file|max:2408',
             'permissions'=>'array|min:1',
             'permissions.*'=>'required_with:permissions|string'

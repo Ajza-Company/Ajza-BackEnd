@@ -4,6 +4,7 @@ namespace App\Http\Requests\v1\Supplier\Team;
 
 use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class S_UpdateTeamMemberRequest extends FormRequest
 {
@@ -26,6 +27,12 @@ class S_UpdateTeamMemberRequest extends FormRequest
         return [
             'data.name' => 'sometimes|string',
             'data.full_mobile' => 'sometimes|string',
+              'data.password' => [
+                'sometimes', 'string',
+                  Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+              ],
             'data.is_active' => 'sometimes|boolean',
             'permissions' => 'sometimes|array|min:1',
             'permissions.*' => 'required_with:permissions|string|exists:permissions,name',
