@@ -24,12 +24,20 @@ class F_UpdateRepSalesService
                 return response()->json(errorResponse(message: 'Invalid number detected! Let’s try a different one.'),Response::HTTP_BAD_REQUEST);
             }
 
-            $user->update([
+            $updateArray = [
                 'name' => $data['name'],
-                'email' => $data['email'],
-                'full_mobile' => $data['full_mobile'],
-                'password' => $data['password']
-            ]);
+                'email' => $data['email']
+            ];
+
+            if (isset($data['full_mobile'])) {
+                $updateArray['full_mobile'] = $data['full_mobile'];
+            }
+
+            if (isset($data['password'])) {
+                $updateArray['password'] = $data['password'];
+            }
+
+            $user->update($updateArray);
 
             if (isset($data['avatar'])) {
                 $path = uploadFile("user-$user->id", $data['avatar']);
