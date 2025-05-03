@@ -2,7 +2,12 @@
 
 namespace App\Services\Admin\Company;
 
+use App\Http\Resources\v1\Supplier\Store\S_StoreResource;
 use App\Models\CompanyLocale;
+use App\Models\Store;
+use App\Repositories\Supplier\Store\Create\S_CreateStoreInterface;
+use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use App\Enums\ErrorMessageEnum;
 use Illuminate\Http\JsonResponse;
@@ -10,12 +15,8 @@ use App\Enums\SuccessMessagesEnum;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
-use App\Http\Resources\v1\User\UserResource;
-use App\Events\v1\Frontend\F_UserCreatedEvent;
-use App\Services\Supplier\Store\S_CreateStoreService;
 use App\Repositories\Frontend\User\Create\F_CreateUserInterface;
 use App\Repositories\Admin\Company\Create\F_CreateCompanyInterface;
-use App\Repositories\Frontend\Wallet\Create\F_CreateWalletInterface;
 use Throwable;
 
 class CreateCompanyServices
@@ -24,10 +25,14 @@ class CreateCompanyServices
      * Create a new instance.
      *
      * @param F_CreateUserInterface $createUser
+     * @param F_CreateCompanyInterface $createCompany
+     * @param S_CreateStoreInterface $createStore
+     * @param S_InsertStoreHourInterface $insertStoreHour
      */
     public function __construct(private F_CreateUserInterface $createUser,
                                 private F_CreateCompanyInterface $createCompany,
-                                private S_CreateStoreService $createStore)
+                                private S_CreateStoreInterface $createStoreInterface,
+                                private S_InsertStoreHourInterface $insertStoreHour)
     {
 
     }
@@ -49,10 +54,14 @@ class CreateCompanyServices
 
             $user = $this->createUser($data['user']);
 
+            \Log::info('create company user: '.json_encode($user));
+
             $company = $this->createCompany($data['company'],$user);
+            \Log::info('create company company: '.json_encode($company));
 
             $data['store']['company_id'] = $company->id;
-            $this->createStore->create($data['store'], $user->id);
+            \Log::info('create company store: '.json_encode($data['store']));
+            $this->createStore($data['store'], $user->id);
 
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED)));
@@ -123,6 +132,62 @@ class CreateCompanyServices
                 'company_id'=>$company->id
             ]);
         }
-    return $company;
+        return $company;
+    }
+
+    /**
+     *
+     * @param array $data
+     * @param int|null $user_id
+     * @return mixed
+     */
+    public function createStore(array $data, int $user_id = null): mixed
+    {
+        \Log::info('start create store');
+
+        $data['data']['is_active'] = false;
+
+        $store = $this->createStoreInterface->create([
+            'company_id' => $data['company_id'] ?? userCompany()->id,
+            ...$data['data']
+        ]);
+
+        \Log::info('store: ' . $store);
+
+        $this->insertStoreHour->insert($this->prepareBulkInsert($data['hours'], $store));
+
+        \DB::table('store_users')->insert([
+            'store_id' => $store->id,
+            'user_id' => $user_id ?? auth('api')->id(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        return $store;
+    }
+
+    /**
+     *
+     * @param array $hours
+     * @param Store $store
+     * @return array
+     */
+    private function prepareBulkInsert(array $hours, Store $store): array
+    {
+        $resultArr = [];
+
+        foreach ($hours as $hour) {
+
+            $resultArr[] = [
+                "store_id" => $store->id,
+                'day' => $hour['day'],
+                "open_time" => $hour['open_time'],
+                "close_time" => $hour['close_time'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
+        }
+
+        return $resultArr;
     }
 }
