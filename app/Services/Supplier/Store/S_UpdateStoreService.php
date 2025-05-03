@@ -10,6 +10,7 @@ use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 
 class S_UpdateStoreService
 {
@@ -31,10 +32,10 @@ class S_UpdateStoreService
     public function update(array $data, Store $store): JsonResponse
     {
         try {
-            $data['data']->except('image');
+            $dataToUpdate = Arr::except($data['data'], ['image']);
 
-            if (isset($data['data'])) {
-                $store->update($data['data']);
+            if (!empty($dataToUpdate)) {
+                $store->update($dataToUpdate);
             }
 
             if (isset($data['image'])) {

@@ -12,6 +12,7 @@ use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 
 class S_CreateStoreService
 {
@@ -37,13 +38,9 @@ class S_CreateStoreService
         try {
             $data['data']['is_active'] = false;
 
-            // data without image
-
-            $data['data']->except('image');
-
             $store = $this->createStore->create([
                 'company_id' => $data['company_id'] ?? userCompany()->id,
-                ...$data['data']
+                ...Arr::except($data['data'], ['image'])
             ]);
 
             if (isset($data['image'])) {
