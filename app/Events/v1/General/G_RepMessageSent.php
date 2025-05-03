@@ -2,6 +2,7 @@
 
 namespace App\Events\v1\General;
 
+use App\Enums\MessageTypeEnum;
 use App\Http\Resources\v1\General\RepChat\G_RepChatMessageResource;
 use App\Models\RepChatMessage;
 use Illuminate\Broadcasting\Channel;
@@ -45,7 +46,35 @@ class G_RepMessageSent implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        return (G_RepChatMessageResource::make($this->message->load(['sender', 'offer','chat','chat.user1','chat.user2'])))->resolve();
+        // Load necessary relationships
+        $this->message->load(['sender', 'offer', 'chat', 'chat.user1', 'chat.user2']);
+
+        // Get additional data
+        $hasAcceptedOffer = $this->message->chat->messages()
+            ->whereHas('offer', function($query) {
+                $query->where('status', 'accepted');
+            })
+            ->exists();
+
+        $hasInvoice = $this->message->chat->messages()
+            ->whereIsInvoice(true)
+            ->exists();
+
+        $startDelivery = $this->message->chat->messages()
+            ->where('message_type', MessageTypeEnum::START_DELIVERY)
+            ->exists();
+
+        // Create the resource and merge additional data
+        $resource = new G_RepChatMessageResource($this->message);
+
+        // Merge the resource data with additional data
+        return array_merge($resource->resolve(), [
+            'meta' => [
+                'has_accepted_offer' => $hasAcceptedOffer,
+                'has_invoice' => $hasInvoice,
+                'start_delivery' => $startDelivery
+            ]
+        ]);
     }
 
     /**
