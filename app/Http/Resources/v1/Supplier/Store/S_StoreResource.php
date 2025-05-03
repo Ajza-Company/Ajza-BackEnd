@@ -20,7 +20,10 @@ class S_StoreResource extends JsonResource
             'state_id' => encodeString($this->area?->state_id),
             'area_id' => encodeString($this->area_id),
             'address_url' => $this->address_url,
-            'phone_number' => $this->phone_number
+            'phone_number' => $this->phone_number,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'address' => $this->address,
         ];
     }
 }
