@@ -69,7 +69,7 @@ class G_RepMessageSent implements ShouldBroadcast
 
         // Merge the resource data with additional data
         return array_merge($resource->resolve(), [
-            'additional' => [
+            'meta' => [
                 'has_accepted_offer' => $hasAcceptedOffer,
                 'has_invoice' => $hasInvoice,
                 'start_delivery' => $startDelivery
