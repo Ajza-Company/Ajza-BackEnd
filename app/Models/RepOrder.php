@@ -21,7 +21,7 @@ class RepOrder extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['user_id', 'image', 'description', 'state_id', 'title'];
+    protected $fillable = ['user_id', 'image', 'description', 'state_id', 'title', 'address_id', 'status','rep_id'];
 
     /**
      *

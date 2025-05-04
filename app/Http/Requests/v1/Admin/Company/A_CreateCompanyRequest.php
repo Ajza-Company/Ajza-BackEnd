@@ -56,6 +56,10 @@ class A_CreateCompanyRequest extends FormRequest
             'company.localized'=>'required|array|min:1',
             'company.localized.*.local_id'=>'required_with:company.localized|integer|exists:locales,id',
             'company.localized.*.name'=>'required_with:company.localized|string|max:100|min:5',
+
+            'category.localized' => 'sometimes|array|min:1',
+            'category.localized.*.local_id' => 'sometimes|integer|exists:locales,id',
+            'category.localized.*.name' => 'sometimes|string|max:100',
         ];
     }
 
@@ -66,6 +70,7 @@ class A_CreateCompanyRequest extends FormRequest
     {
         $this->decodeInput('store.data.area_id');
         $this->decodeInput('company.country_id');
+        $this->decodeInput('category.localized.*.local_id');
         $this->decodeInput('company.localized.*.local_id');
     }
 }

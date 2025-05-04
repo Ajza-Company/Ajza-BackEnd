@@ -32,14 +32,14 @@ class A_UpdateProductService
     {
         \DB::beginTransaction();
         try {
-
+            $data['category_id'] = isset($data['category_id']) ? $data['category_id'] : $product->category->category_id;
             $product->update(Arr::except($data, ['localized','variate']));
 
             if (isset($data['image'])) {
                 if ($product->image) {
                     deleteFile($product->image);
                 }
-                
+
                 $path = uploadFile("product-$product->id", $data['image']);
                 $product->update(['image' => $path]);
             }
@@ -63,7 +63,7 @@ class A_UpdateProductService
                         ],
                     [
                         'description'=>$local['description'],
-                        'name'=>$local['name'],    
+                        'name'=>$local['name'],
                     ]
                 );
 

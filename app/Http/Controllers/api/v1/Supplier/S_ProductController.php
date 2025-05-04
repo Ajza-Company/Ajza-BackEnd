@@ -54,7 +54,7 @@ class S_ProductController extends Controller
     {
         $data = $request->validated();
         $store = $this->findStore->find(decodeString($store_id));
-        $category = $store->category->category_id;
+        $category =isset($data['category_id']) ? $data['category_id'] : $store->category->category_id;
         $data['category_id']=$category;
         $data['is_active'] = 0;
         $data['is_default'] = 0;

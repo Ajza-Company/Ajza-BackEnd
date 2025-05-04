@@ -6,6 +6,7 @@ use App\Http\Controllers\api\v1\Admin\{A_CompanyController,
     A_UserController,
     A_AuthController,
     A_PromoCodeController,
+    F_RepOrderController,
     F_RepSalesController,
     A_ProductController,
     F_StateController,
@@ -56,6 +57,8 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::post('rep-sales/update/{id}', [F_RepSalesController::class, 'update']);
     Route::post('rep-sales/delete/{id}', [F_RepSalesController::class, 'delete']);
     Route::get('rep-sales', [F_RepSalesController::class, 'index']);
+    Route::get('rep-orders/{id?}', [F_RepOrderController::class, 'index']);
+    Route::get('rep-chat/{id}', [F_RepOrderController::class, 'repChat']);
     Route::get('users', [A_UserController::class, 'index']);
     Route::post('user/create', [A_UserController::class, 'store']);
     Route::post('user/update/{id}', [A_UserController::class, 'update']);

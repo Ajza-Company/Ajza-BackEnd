@@ -7,6 +7,7 @@ use App\Models\CompanyLocale;
 use App\Models\Store;
 use App\Repositories\Supplier\Store\Create\S_CreateStoreInterface;
 use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
+use App\Services\Admin\Category\A_CreateCategoryService;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use App\Enums\ErrorMessageEnum;
@@ -32,6 +33,7 @@ class CreateCompanyServices
     public function __construct(private F_CreateUserInterface $createUser,
                                 private F_CreateCompanyInterface $createCompany,
                                 private S_CreateStoreInterface $createStoreInterface,
+                                private A_CreateCategoryService $createCategory,
                                 private S_InsertStoreHourInterface $insertStoreHour)
     {
 
@@ -55,6 +57,9 @@ class CreateCompanyServices
             $user = $this->createUser($data['user']);
 
             \Log::info('create company user: '.json_encode($user));
+
+            $this->createCategory->create($data['category']);
+
 
             $company = $this->createCompany($data['company'],$user);
             \Log::info('create company company: '.json_encode($company));

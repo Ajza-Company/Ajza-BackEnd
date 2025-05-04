@@ -35,7 +35,8 @@ class S_CreateProductRequest extends FormRequest
             'variate' => 'sometimes|array',
             'variate.*.variant_category_id' => 'required_with:variate|integer|exists:variant_categories,id',
             'variate.*.value' => 'required_with:variate|string|max:100',
-            'is_original'=>'required|boolean'
+            'is_original'=>'required|boolean',
+            'category_id' => 'sometimes|integer|exists:categories,id'
         ];
     }
 
