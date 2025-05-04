@@ -56,6 +56,14 @@ class Product extends Model
         return $this->hasMany(VariantValue::class, 'product_id');
     }
 
+    /**
+     *
+     * @return HasMany
+     */
+    public function locales(): HasMany
+    {
+        return $this->hasMany(ProductLocale::class, 'product_id');
+    }
 
     /**
      *

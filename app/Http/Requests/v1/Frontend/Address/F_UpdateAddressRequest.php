@@ -32,7 +32,7 @@ class F_UpdateAddressRequest extends FormRequest
             'latitude' => 'sometimes|numeric',
             'longitude' => 'sometimes|numeric',
             'is_default' => 'sometimes|boolean',
-            'state_id'=>'required|integer|exists:states,id'
+            'state_id'=>'sometimes|integer|exists:states,id'
         ];
     }
 
