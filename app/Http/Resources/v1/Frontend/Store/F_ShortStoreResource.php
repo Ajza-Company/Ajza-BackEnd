@@ -17,7 +17,7 @@ class F_ShortStoreResource extends JsonResource
     public function toArray(Request $request): array
     {
         // Get location from request attributes (set earlier) or cache
-        $location = $request->attributes->get('user_location') ?? getUserLocation($request);
+        $location = $request->attributes->get('user_location_'.$request->ip()) ?? getUserLocation($request);
         $latitude = $location?->latitude ?? 0;
         $longitude = $location?->longitude ?? 0;
         $distanceAndTime = distanceTimeBetweenTwoLocations($latitude, $longitude, $this->latitude, $this->longitude);
