@@ -34,7 +34,9 @@ class A_CreateCategoryService
         \DB::beginTransaction();
         try {
 
-            $category = Category::create();
+            $category = Category::create([
+                'parent_id'=>$data['parent_id'],
+            ]);
 
             foreach($data['localized'] as $local){
                 $loc =CategoryLocale::create([
@@ -42,7 +44,7 @@ class A_CreateCategoryService
                     'name'=>$local['name'],
                     'category_id'=>$category->id
                 ]);
-            }    
+            }
 
             \DB::commit();
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: F_CategoryResource::make($category)));
