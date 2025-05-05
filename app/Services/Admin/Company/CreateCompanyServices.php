@@ -5,6 +5,7 @@ namespace App\Services\Admin\Company;
 use App\Http\Resources\v1\Supplier\Store\S_StoreResource;
 use App\Models\CompanyLocale;
 use App\Models\Store;
+use App\Models\StoreCategory;
 use App\Repositories\Supplier\Store\Create\S_CreateStoreInterface;
 use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
 use App\Services\Admin\Category\A_CreateCategoryService;
@@ -57,9 +58,6 @@ class CreateCompanyServices
             $user = $this->createUser($data['user']);
 
             \Log::info('create company user: '.json_encode($user));
-
-            $this->createCategory->create($data['category']);
-
 
             $company = $this->createCompany($data['company'],$user);
             \Log::info('create company company: '.json_encode($company));
@@ -125,6 +123,7 @@ class CreateCompanyServices
             'email'=>$data['email'],
             'logo'=>$logo,
             'cover_image'=>$coverImage,
+            'category_id'=>$data['category_id'],
             'commercial_register'=>$data['commercial_register'],
             'vat_number'=>$data['vat_number'],
             'commercial_register_file'=>$commercialRegisterFile,
@@ -155,6 +154,11 @@ class CreateCompanyServices
         $store = $this->createStoreInterface->create([
             'company_id' => $data['company_id'] ?? userCompany()->id,
             ...$data['data']
+        ]);
+
+        StoreCategory::create([
+            'store_id' => $store->id,
+            'category_id' => $data['category_id']
         ]);
 
         \Log::info('store: ' . $store);

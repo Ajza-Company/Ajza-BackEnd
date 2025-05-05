@@ -30,6 +30,7 @@ class S_UpdateStoreRequest extends FormRequest
             'data.address' => 'sometimes|string|max:255',
             'data.latitude' => 'required|numeric',
             'data.longitude' => 'required|numeric',
+            'data.category_id' => 'sometimes|integer|exists:categories,id',
             'data.address_url' => 'sometimes|string|url',
             'data.phone_number' => 'sometimes|string',
             'data.is_active' => 'sometimes|boolean',
@@ -45,5 +46,6 @@ class S_UpdateStoreRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->decodeInput('data.area_id');
+        $this->decodeInput('data.category_id');
     }
 }

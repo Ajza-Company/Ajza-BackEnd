@@ -26,7 +26,7 @@ class G_TermsController extends Controller
      */
     public function updateTerms(string $name, A_UpdateTermsRequest $request)
     {
-        if (!in_array($name, ['rep_terms', 'client_terms', 'privacy_partner', 'privacy_client'])) {
+        if (!in_array($name, ['rep_terms', 'client_terms', 'privacy_partner', 'privacy_client','company_terms'])) {
             return response()->json(['error' => 'Invalid name'], 400);
         }
         $directory = storage_path('app/settings');

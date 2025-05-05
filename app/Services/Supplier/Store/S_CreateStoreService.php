@@ -6,6 +6,7 @@ use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\Supplier\Store\S_StoreResource;
 use App\Models\Store;
+use App\Models\StoreCategory;
 use App\Models\StoreUser;
 use App\Repositories\Supplier\Store\Create\S_CreateStoreInterface;
 use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
@@ -38,9 +39,18 @@ class S_CreateStoreService
         try {
             $data['data']['is_active'] = false;
 
+            $category = $data['data']['category_id'];
+
+            unset($data['data']['category_id']);
+
             $store = $this->createStore->create([
                 'company_id' => $data['company_id'] ?? userCompany()->id,
                 ...Arr::except($data['data'], ['image'])
+            ]);
+
+            StoreCategory::create([
+                'store_id' => $store->id,
+                'category_id' => userCompany()->category_id??$category
             ]);
 
             if (isset($data['image'])) {

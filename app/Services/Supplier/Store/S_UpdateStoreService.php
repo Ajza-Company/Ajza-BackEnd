@@ -6,6 +6,7 @@ use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Resources\v1\Supplier\Store\S_StoreResource;
 use App\Models\Store;
+use App\Models\StoreCategory;
 use App\Repositories\Supplier\StoreHour\Insert\S_InsertStoreHourInterface;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -32,11 +33,22 @@ class S_UpdateStoreService
     public function update(array $data, Store $store): JsonResponse
     {
         try {
+
+            $category = $data['data']['category_id'];
+
+            unset($data['data']['category_id']);
+
             $dataToUpdate = Arr::except($data['data'], ['image']);
 
             if (!empty($dataToUpdate)) {
                 $store->update($dataToUpdate);
             }
+
+            StoreCategory::updateOrCreate([
+                'store_id' => $store->id],[
+                'category_id' => userCompany()->category_id??$category
+            ]);
+
 
             if (isset($data['image'])) {
                 if ($store->image) {

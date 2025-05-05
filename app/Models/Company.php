@@ -18,6 +18,8 @@ class Company extends Model
 {
     use HasFactory, HasLocalized, SoftDeletes;
 
+    protected $guarded = [];
+
     /**
      *
      * @return HasOne
