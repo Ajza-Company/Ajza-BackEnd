@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             CompanyLocaleSeeder::class,
             CarBrandSeeder::class,
-            CarBrandLocaleSeeder::class,
             CarModelSeeder::class,
             CarModelLocaleSeeder::class,
             CarTypeSeeder::class,

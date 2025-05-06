@@ -102,6 +102,9 @@ class A_UserController extends Controller
 
         $user = $this->findUser->find(decodeString($id));
 
+        $user->tokens()->delete();
+        $user->userFcmTokens()->delete();
+
         $user->update([
             'is_active'=>!$user->is_active
         ]);

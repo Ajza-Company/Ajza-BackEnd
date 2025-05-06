@@ -22,7 +22,7 @@ class WithStoreFilter
         if ($isTrue) {
             if (request()->has('stores-count-limit') && request('stores-count-limit') > 0) {
                 $builder->whereHas('stores')->with(['stores' => function ($query) {
-                    $query->limit(request('stores-count-limit'));
+                    $query->whereHas('company', fn ($query) => $query->where('is_active', true))->limit(request('stores-count-limit'));
                 }]);
             }
         }
