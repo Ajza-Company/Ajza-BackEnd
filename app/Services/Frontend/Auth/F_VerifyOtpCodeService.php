@@ -41,7 +41,11 @@ class F_VerifyOtpCodeService
             // $isValid = $this->smsService->verifyOTP($data['full_mobile'], $data['code']);
 
             if ($isValid) {
-                $user = User::where('full_mobile', $data['full_mobile'])->first();
+                $user = User::where([
+                    'full_mobile' => $data['full_mobile'],
+                    'is_registered' => true,
+                    'is_active' => true
+                ])->first();
 
                 $returnArr = [];
                 $token = null;

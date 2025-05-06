@@ -29,4 +29,13 @@ class CarModel extends Model
     {
         return $this->localizedRelation(CarModelLocale::class);
     }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function locales(): HasMany
+    {
+        return $this->hasMany(CarModelLocale::class);
+    }
 }
