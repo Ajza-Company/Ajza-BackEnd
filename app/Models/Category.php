@@ -48,6 +48,11 @@ class Category extends Model
         return $this->hasMany(CategoryLocale::class);
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
     /**
      *
      * @param Builder $builder

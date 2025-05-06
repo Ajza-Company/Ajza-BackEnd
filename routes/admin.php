@@ -11,7 +11,8 @@ use App\Http\Controllers\api\v1\Admin\{A_CompanyController,
     A_ProductController,
     F_StateController,
     A_SettingController,
-    A_CategoryController};
+    A_CategoryController,
+    A_SubCategoryController};
 use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
 use App\Http\Controllers\api\v1\Supplier\S_CompanyController;
@@ -103,4 +104,9 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::post('category/destroy/{id}', [A_CategoryController::class, 'destroy']);
     Route::get('category/show/{id}', [A_CategoryController::class, 'show']);
 
+    Route::get('sub-categories/{category_id}', [A_SubCategoryController::class, 'index']);
+    Route::post('sub-category/create', [A_SubCategoryController::class, 'store']);
+    Route::post('sub-category/update/{id}', [A_SubCategoryController::class, 'update']);
+    Route::post('sub-category/destroy/{id}', [A_SubCategoryController::class, 'destroy']);
+    Route::get('sub-category/show/{id}', [A_SubCategoryController::class, 'show']);
 });

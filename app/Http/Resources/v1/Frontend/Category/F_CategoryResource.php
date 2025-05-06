@@ -19,6 +19,7 @@ class F_CategoryResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'name' => $this->localized?->name,
+            'parent' => $this->whenLoaded('parent'),
             'stores' => F_ShortStoreResource::collection($this->whenLoaded('stores')),
             'variants' => A_ShortVariantResource::collection($this->whenLoaded('variants'))
         ];

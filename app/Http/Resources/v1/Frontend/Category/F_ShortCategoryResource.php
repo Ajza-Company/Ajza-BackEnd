@@ -23,7 +23,8 @@ class F_ShortCategoryResource extends JsonResource
                     (string) $translation->locale?->locale => $translation->name
                 ];
             }),
+            'parent' => $this->whenLoaded('parent'),
             'variants' => A_ShortVariantResource::collection($this->whenLoaded('variants'))
         ];
-    }    
+    }
 }
