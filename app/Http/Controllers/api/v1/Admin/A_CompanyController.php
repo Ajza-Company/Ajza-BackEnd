@@ -77,6 +77,14 @@ class A_CompanyController extends Controller
         $company = Company::find($id);
         $company->is_active = !$company->is_active;
         $company->save();
+
+        if (!$company->is_active) {
+            $company->users()->update(['is_active' => false]);
+            foreach ($company->users as $user) {
+                $user->tokens()->delete();
+                $user->userFcmTokens()->delete();
+            }
+        }
         return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
     }
 }
