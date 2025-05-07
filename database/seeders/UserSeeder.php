@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-
+use Faker\Factory as Faker;
 class UserSeeder extends Seeder
 {
     /**
@@ -17,11 +17,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $store_owner = User::create([
-            "name" => fake()->name(),
+            "name" => 'store',
             'email' => 'store@ajza.net',
             'full_mobile' => '+966553275000',
             'password' => '1Alqarawi1',
-            'avatar' => fake()->imageUrl(),
             'is_active' => true,
             'is_registered' => true,
         ]);
@@ -52,11 +51,10 @@ class UserSeeder extends Seeder
 
         // Create representative user
         $representative = User::create([
-            "name" => fake()->name(),
+            "name" => 'representative',
             'email' => 'representative@ajza.net',
             'full_mobile' => '+966553275001',
             'password' => '1Alqarawi1',
-            'avatar' => fake()->imageUrl(),
             'is_active' => true,
             'is_registered' => true,
         ]);
