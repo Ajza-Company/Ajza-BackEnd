@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             LocaleSeeder::class,
             UserSeeder::class,
-            CompanySeeder::class,
+            // CompanySeeder::class,
             CompanyLocaleSeeder::class,
             CarBrandSeeder::class,
             CarModelSeeder::class,
@@ -31,18 +31,18 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             // CategoryLocaleSeeder::class,
             CountrySeeder::class,
-            StoreSeeder::class,
-            StoreLocaleSeeder::class,
-            StoreCategorySeeder::class,
+            // StoreSeeder::class,
+            // StoreLocaleSeeder::class,
+            // StoreCategorySeeder::class,
 //            ProductSeeder::class,
 //            ProductLocaleSeeder::class,
-            StoreProductSeeder::class,
+            // StoreProductSeeder::class,
             SliderImageSeeder::class,
-            NotificationSeeder::class,
-            AjzaOfferSeeder::class,
-            AjzaOfferLocaleSeeder::class,
-            ProductCarAttributeSeeder::class,
-            StoreHourSeeder::class
+            // NotificationSeeder::class,
+            // AjzaOfferSeeder::class,
+            // AjzaOfferLocaleSeeder::class,
+            // ProductCarAttributeSeeder::class,
+            // StoreHourSeeder::class
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
