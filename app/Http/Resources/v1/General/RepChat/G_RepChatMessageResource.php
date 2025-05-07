@@ -24,7 +24,7 @@ class G_RepChatMessageResource extends JsonResource
             $hasAcceptedOffer = $request->has('meta.has_accepted_offer') ?
                 $request->input('meta.has_accepted_offer') :
                 $this->chat->messages()
-                    ->whereHas('offer', function($query) {
+                    ?->whereHas('offer', function($query) {
                         $query->where('status', 'accepted');
                     })
                     ->exists();
