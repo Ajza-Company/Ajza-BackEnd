@@ -32,7 +32,7 @@ class F_RepOrderController extends Controller
         $repOrder = $this->findOrder->find(decodeString($id));
 
         return G_RepChatMessageResource::collection(
-            $repOrder->repChat->messages()->with(['sender','chat','chat.user1','chat.user2'])->latest()->get()
+            $repOrder?->repChat?->messages()->with(['sender','chat','chat.user1','chat.user2'])->latest()->get()
         );
     }
 }
