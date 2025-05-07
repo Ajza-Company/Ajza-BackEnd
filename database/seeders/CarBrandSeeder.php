@@ -20,6 +20,7 @@ class CarBrandSeeder extends Seeder
         foreach ($brands as $value) {
             // Create Car Brand
             $carBrand = CarBrand::create([
+                'external_id' => $value->id,
                 "is_active" => $value->include_in_menu
             ]);
 
@@ -61,6 +62,7 @@ class CarBrandSeeder extends Seeder
                 // Create Car Models
                 foreach ($models as $model) {
                     $carModel = CarModel::create([
+                        'external_id' => $model['id'],
                         'car_brand_id' => $carBrand->id
                     ]);
 
