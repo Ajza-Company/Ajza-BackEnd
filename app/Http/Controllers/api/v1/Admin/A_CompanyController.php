@@ -35,7 +35,7 @@ class A_CompanyController extends Controller
      */
     public function index()
     {
-        return A_ShortCompanyResource::collection($this->fetchCompany->fetch(withCount: ['stores', 'usersPivot'], with: ['user', 'stores']));
+        return A_ShortCompanyResource::collection($this->fetchCompany->fetch(withCount: ['stores', 'usersPivot'], with: ['user', 'stores','stores.area', 'stores.hours']));
     }
 
     /**
