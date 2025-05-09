@@ -26,7 +26,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'parent_id'=>'required|integer|exists:categories,id',
+            'parent_id'=>'sometimes|integer|exists:categories,id',
             'localized' => 'required|array|min:1',
             'localized.*.local_id' => 'required|integer|exists:locales,id',
             'localized.*.name' => 'required|string|max:100',
