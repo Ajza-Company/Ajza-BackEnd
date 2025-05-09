@@ -17,6 +17,6 @@ class StatusFilter
     {
         $isActive = filter_var($value, FILTER_VALIDATE_BOOLEAN);
 
-        return $builder->where('is_active', $isActive);
+        return $builder->where('is_active', !$isActive);
     }
 }

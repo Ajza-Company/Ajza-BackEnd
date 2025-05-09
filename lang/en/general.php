@@ -12,5 +12,6 @@ return [
     'fixed' => 'Fixed',
     'percentage' => 'Percentage',
     'delete_account' => 'We have received your account deletion request and will contact you soon.',
-    'products_created_successfully'=>'Product Created Successfully'
+    'products_created_successfully'=>'Product Created Successfully',
+    'Insufficient_wallet_balance'=>'Insufficient wallet balance',
 ];

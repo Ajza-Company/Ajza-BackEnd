@@ -30,7 +30,7 @@ class F_WalletService
     {
         return DB::transaction(function () use ($wallet, $amount, $description, $metadata) {
             if ($wallet->balance < $amount) {
-                throw new \Exception('Insufficient wallet balance');
+                throw new \Exception(trans('general.Insufficient_wallet_balance'));
             }
 
             $transaction = $wallet->transactions()->create([

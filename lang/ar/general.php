@@ -12,5 +12,6 @@ return [
     'fixed' => 'خصم علي السعر',
     'percentage' => 'نسبة',
     'delete_account' => 'لقد استلمنا طلب حذف حسابك وسيتم التواصل معك قريبا.',
-    'products_created_successfully'=>'تم انشاء المنتج بنجاح'
+    'products_created_successfully'=>'تم انشاء المنتج بنجاح',
+    'Insufficient_wallet_balance'=>'المحفظة غير كافية',
 ];
