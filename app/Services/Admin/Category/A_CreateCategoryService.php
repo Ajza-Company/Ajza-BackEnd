@@ -35,7 +35,7 @@ class A_CreateCategoryService
         try {
 
             $category = Category::create([
-                'parent_id'=>$data['parent_id'],
+                'parent_id'=>isset($data['parent_id'])?$data['parent_id']:null,
             ]);
 
             foreach($data['localized'] as $local){

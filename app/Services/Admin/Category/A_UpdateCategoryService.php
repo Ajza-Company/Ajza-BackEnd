@@ -23,7 +23,9 @@ class A_UpdateCategoryService
         \DB::beginTransaction();
         try {
 
-            $Category->update();
+            $Category->update([
+                'parent_id'=>isset($data['parent_id'])?$data['parent_id']:null,
+            ]);
 
             foreach($data['localized'] as $local){
                 CategoryLocale::updateOrCreate(
@@ -32,7 +34,7 @@ class A_UpdateCategoryService
                         'category_id'=>$Category->id
                     ],
                     [
-                        'name'=>$local['name'],    
+                        'name'=>$local['name'],
                     ]
                 );
             }
