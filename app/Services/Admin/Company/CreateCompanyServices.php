@@ -63,6 +63,7 @@ class CreateCompanyServices
             \Log::info('create company company: '.json_encode($company));
 
             $data['store']['company_id'] = $company->id;
+            $data['store']['category_id'] = $data['company']['category_id'];
             \Log::info('create company store: '.json_encode($data['store']));
             $this->createStore($data['store'], $user->id);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\Admin;
 
+use App\Enums\ErrorMessageEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Http\Requests\v1\Admin\Company\A_UpdateCompanyRequest;
 use App\Models\Company;
@@ -12,6 +13,7 @@ use App\Services\Admin\Company\CreateCompanyServices;
 use App\Http\Requests\v1\Admin\Company\A_CreateCompanyRequest;
 use App\Http\Resources\v1\Admin\Company\A_ShortCompanyResource;
 use App\Repositories\Admin\Company\Fetch\A_FetchCompanyInterface;
+use Illuminate\Support\Facades\DB;
 
 class A_CompanyController extends Controller
 {
@@ -67,7 +69,19 @@ class A_CompanyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+                $company = $this->findCompany->find(decodeString($id));
+                $company->delete();
+            DB::commit();
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::DELETED)));
+        }catch (\Exception $ex) {
+            DB::rollBack();
+            return response()->json(errorResponse(
+                message: trans(ErrorMessageEnum::DELETE),
+                error: $ex->getMessage()),
+                500);
+        }
     }
 
     public function active(string $id)
