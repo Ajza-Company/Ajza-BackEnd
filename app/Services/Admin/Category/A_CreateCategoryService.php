@@ -34,27 +34,27 @@ class A_CreateCategoryService
         \DB::beginTransaction();
         try {
 
-            $category = Category::create([
-                'parent_id'=>isset($data['parent_id'])?$data['parent_id']:null,
-            ]);
+            $existingCategory = CategoryLocale::where(function($query) use ($data) {
+                $query->where(['name' => $data['localized'][0]['name'], 'locale_id' => $data['localized'][0]['local_id']])
+                    ->orWhere(['name' => $data['localized'][1]['name'], 'locale_id' => $data['localized'][1]['local_id']]);
+            })->first();
 
-            $cat = CategoryLocale::where(['name'=> $data['localized'][0]['name'],'locale_id'=> $data['localized'][0]['local_id']])
-                ->orWhere(['name'=> $data['localized'][1]['name'],'locale_id'=> $data['localized'][1]['local_id']])
-                ->where('category_id','!=', $category->id)
-                ->first();
-
-            if ($cat) {
+            if ($existingCategory) {
                 return response()->json(errorResponse(
-                    message: 'Category already exist',
-                    error: 'category already exist'),
+                    message: 'Category already exists',
+                    error: 'category already exists'),
                     Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            foreach($data['localized'] as $local){
-                $loc =CategoryLocale::create([
-                    'locale_id'=>$local['local_id'],
-                    'name'=>$local['name'],
-                    'category_id'=>$category->id
+            $category = Category::create([
+                'parent_id' => isset($data['parent_id']) ? $data['parent_id'] : null,
+            ]);
+
+            foreach ($data['localized'] as $local) {
+                CategoryLocale::create([
+                    'category_id' => $category->id,
+                    'name' => $local['name'],
+                    'locale_id' => $local['local_id']
                 ]);
             }
 
