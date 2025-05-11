@@ -34,10 +34,6 @@ class S_UpdateStoreService
     {
         try {
 
-            $category = $data['data']['category_id'];
-
-            unset($data['data']['category_id']);
-
             $dataToUpdate = Arr::except($data['data'], ['image']);
 
             if (!empty($dataToUpdate)) {
@@ -46,7 +42,7 @@ class S_UpdateStoreService
 
             StoreCategory::updateOrCreate([
                 'store_id' => $store->id],[
-                'category_id' => userCompany()->category_id??$category
+                'category_id' => userCompany()->category_id
             ]);
 
 

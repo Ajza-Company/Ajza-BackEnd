@@ -39,18 +39,14 @@ class S_CreateStoreService
         try {
             $data['data']['is_active'] = false;
 
-            $category = $data['data']['category_id'];
-
-            unset($data['data']['category_id']);
-
             $store = $this->createStore->create([
-                'company_id' => $data['company_id'] ?? userCompany()->id,
+                'company_id' => userCompany()->id,
                 ...Arr::except($data['data'], ['image'])
             ]);
 
             StoreCategory::create([
                 'store_id' => $store->id,
-                'category_id' => userCompany()->category_id??$category
+                'category_id' => userCompany()->category_id
             ]);
 
             if (isset($data['image'])) {
