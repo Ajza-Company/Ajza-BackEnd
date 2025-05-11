@@ -34,6 +34,17 @@ class A_CreateCategoryService
         \DB::beginTransaction();
         try {
 
+            $cat = CategoryLocale::where(['name'=> $data['localized'][0]['name'],'locale_id'=> $data['localized'][0]['local_id']])
+                ->orWhere(['name'=> $data['localized'][1]['name'],'locale_id'=> $data['localized'][1]['local_id']])
+                ->first();
+
+            if ($cat) {
+                return response()->json(errorResponse(
+                    message: 'Category already exist',
+                    error: 'category already exist'),
+                    Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
             $category = Category::create([
                 'parent_id'=>isset($data['parent_id'])?$data['parent_id']:null,
             ]);
