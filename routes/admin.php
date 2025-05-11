@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\Admin\{A_CompanyController,
+    A_StatisticsController,
     A_StoreController,
     A_SupportChatController,
     A_UserController,
@@ -110,4 +111,6 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::post('sub-category/update/{id}', [A_SubCategoryController::class, 'update']);
     Route::post('sub-category/destroy/{id}', [A_SubCategoryController::class, 'destroy']);
     Route::get('sub-category/show/{id}', [A_SubCategoryController::class, 'show']);
+
+    Route::get('statistics', [A_StatisticsController::class, 'index']);
 });
