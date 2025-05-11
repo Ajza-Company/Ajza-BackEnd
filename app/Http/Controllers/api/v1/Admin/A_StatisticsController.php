@@ -54,7 +54,7 @@ class A_StatisticsController extends Controller
                 'total' => User::whereHas('roles')->count(),
                 'client' => User::role(RoleEnum::CLIENT)->count(),
                 'supplier' => User::role(RoleEnum::SUPPLIER)->count(),
-                'workshop' => User::role(RoleEnum::WORKSHOP)->count(),
+                'admin' => User::role(RoleEnum::ADMIN)->count(),
                 'representative' => User::role(RoleEnum::REPRESENTATIVE)->count()
             ],
             'products_count' => Product::count(),
