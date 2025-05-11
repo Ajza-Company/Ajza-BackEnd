@@ -43,7 +43,7 @@ class A_CreateCategoryService
                 return response()->json(errorResponse(
                     message: 'Category already exists',
                     error: 'category already exists'),
-                    Response::HTTP_INTERNAL_SERVER_ERROR);
+                    Response::HTTP_BAD_REQUEST);
             }
 
             $category = Category::create([
