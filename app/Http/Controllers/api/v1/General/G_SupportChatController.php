@@ -12,6 +12,7 @@ use App\Http\Resources\v1\General\SupportChat\G_SupportChatResource;
 use App\Models\SupportChat;
 use App\Models\SupportChatMessage;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class G_SupportChatController extends Controller
 {
@@ -68,6 +69,10 @@ class G_SupportChatController extends Controller
     public function sendMessage(G_SendMessageRequest $request, string $chat_id)
     {
         $chat = SupportChat::findOrFail(decodeString($chat_id));
+
+        if ($chat->status == 'closed') {
+            return response()->json(errorResponse(message: 'Support Chat is closed'), 400);
+        }
 
         $message = new SupportChatMessage([
             'sender_id' => auth('api')->id(),
