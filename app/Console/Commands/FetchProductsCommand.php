@@ -97,6 +97,8 @@ class FetchProductsCommand extends Command
 
                                 $products = $response['data']['products'];
                                 $totalPages = $products['page_info']['total_pages'];
+                                $pageSize = $products['page_info']['page_size'] ?? 50;
+                                $itemsCount = count($products['items']);
 
                                 $this->info("        Found {$products['total_count']} products (Page {$currentPage} of {$totalPages})");
 
@@ -170,12 +172,19 @@ class FetchProductsCommand extends Command
                                             ]);
                                         }
                                     });
+
                                 }
 
                                 $currentPage++;
 
                                 // Add a small delay to avoid overwhelming the API
                                 sleep(2);
+
+                                // Optimization: If fewer items than page size, break early
+                                if ($itemsCount < $pageSize) {
+                                    $this->info("        Fewer products ({$itemsCount}) than page size ({$pageSize}) returned. No more products to fetch for this combination.");
+                                    break;
+                                }
 
                             } catch (\Exception $e) {
                                 $this->error("        Error fetching products: " . $e->getMessage());
