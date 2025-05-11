@@ -3,6 +3,7 @@
 namespace App\Http\Resources\v1\User;
 
 use App\Enums\RoleEnum;
+use App\Http\Resources\v1\Frontend\Category\F_CategoryResource;
 use App\Http\Resources\v1\Frontend\Store\F_ShortStoreResource;
 use App\Http\Resources\v1\Supplier\Store\S_ShortStoreResource;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class UserResource extends JsonResource
             'fullMobile' => $this->full_mobile,
             'gender' => $this->gender,
             'isRegistered' => (bool)$this->is_registered,
+            'category' => $this->whenLoaded('company', function () {return F_CategoryResource::make($this->company->category);}),
             'role' => $this->whenLoaded('roles', function () {
                 return $this->roles->first()?->name;
             }),

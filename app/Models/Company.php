@@ -74,6 +74,11 @@ class Company extends Model
         return $this->belongsTo(Country::class, 'country_id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
     /**
      * Filter Scope
      *

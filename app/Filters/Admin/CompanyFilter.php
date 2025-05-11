@@ -8,6 +8,7 @@ use App\Filters\FilterClass;
 class CompanyFilter extends FilterClass
 {
     protected array $filters = [
-        'search' => GeneralFilter::class
+        'search' => GeneralFilter::class,
+        'category' => GeneralFilter::class
     ];
 }

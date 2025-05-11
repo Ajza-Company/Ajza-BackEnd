@@ -50,7 +50,7 @@ class S_LoginService
 
                 return response()->json(successResponse(
                     message: trans(SuccessMessagesEnum::LOGGEDIN),
-                    data: UserResource::make($user->load('stores', 'roles')),
+                    data: UserResource::make($user->load('stores', 'roles','company')),
                     token: $user->createToken('auth_token')->plainTextToken
                 ));
             }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\v1\Admin\Company;
 
 use App\Http\Resources\v1\Admin\Store\A_ShortStoreResource;
+use App\Http\Resources\v1\Frontend\Category\F_CategoryResource;
 use App\Http\Resources\v1\User\ShortUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,6 +25,7 @@ class A_ShortCompanyResource extends JsonResource
             'is_approved'=> (bool) $this->is_approved,
             'is_active' => (bool) $this->is_active,
             'logo' => getFullUrl($this->logo),
+            'category' => $this->whenLoaded('category',F_CategoryResource::make($this->category)),
             'stores_count' => $this->whenCounted('stores'),
             'team_count' => $this->whenCounted('usersPivot'),
             'owner' => $this->whenLoaded('user', ShortUserResource::make($this->user)),

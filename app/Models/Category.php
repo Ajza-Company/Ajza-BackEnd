@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory, HasLocalized, SoftDeletes;
+    use HasFactory, HasLocalized;
 
     /**
      *
