@@ -36,6 +36,7 @@ class A_CreateCompanyRequest extends FormRequest
             'store.hours.*.day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
             'store.hours.*.open_time' => 'nullable|date_format:H:i',
             'store.hours.*.close_time' => 'nullable|date_format:H:i',
+//            'store.hours.*.close_time' => 'nullable|date_format:H:i|after:store.hours.*.open_time',
 
             'user.name' => 'required|string|max:255',
             'user.email' => 'required|email|max:50|unique:users,email',
