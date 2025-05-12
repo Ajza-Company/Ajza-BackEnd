@@ -32,7 +32,7 @@ class F_CreateAccountRequest extends FormRequest
                 'required',
                 'string',
                 function ($attribute, $value, $fail) {
-                    return User::where('full_mobile', $value)->whereDosentHave('roles', function ($query) { $query->whereIn('name', [RoleEnum::CLIENT]); })->exists();
+                    return User::where('full_mobile', $value)->whereDoesntHave('roles', function ($query) { $query->whereIn('name', [RoleEnum::CLIENT]); })->exists();
                 },
             ],
             'account_type' => 'sometimes|string|in:personal,workshop',
