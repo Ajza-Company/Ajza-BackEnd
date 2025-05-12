@@ -36,7 +36,7 @@ class FetchProductsCommand extends Command
         $this->info('Starting to fetch products...');
 
         // Get active car brands
-        $activeBrands = CarBrand::where('is_active', true)->get();
+        $activeBrands = CarBrand::where('is_active', true)->where('id', '>', 7)->get();
         $this->info("Found " . $activeBrands->count() . " active car brands");
 
         // Get locale IDs
@@ -104,7 +104,6 @@ class FetchProductsCommand extends Command
 
                                 // Process products
                                 foreach ($products['items'] as $item) {
-                                    sleep(2);
                                     $this->info('          Processing product...' . $item['sku']);
                                     DB::transaction(function () use ($item, $category, $carModel, $brand, $year, $enLocaleId, $arLocaleId) {
                                         // Check if product already exists by SKU
@@ -128,7 +127,7 @@ class FetchProductsCommand extends Command
                                                 ]);
                                                 $this->info('          Added new year relation: ' . $year);
                                             } else {
-                                                $this->info('          Year relation already exists for this product and model');
+                                                $this->info('          Year relation already exists for this ' . $existingProduct->id . ' and model ' . $carModel->id . ' and year ' . $year);
                                             }
                                         } else {
                                             $this->info('          Creating new product...');
