@@ -36,7 +36,7 @@ class FetchProductsCommand extends Command
         $this->info('Starting to fetch products...');
 
         // Get active car brands
-        $activeBrands = CarBrand::where('is_active', true)->where('id', '>', 7)->get();
+        $activeBrands = CarBrand::where('is_active', true)->where('id', '>', 8)->get();
         $this->info("Found " . $activeBrands->count() . " active car brands");
 
         // Get locale IDs
