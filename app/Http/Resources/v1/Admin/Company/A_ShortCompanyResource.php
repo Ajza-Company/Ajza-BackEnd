@@ -25,6 +25,8 @@ class A_ShortCompanyResource extends JsonResource
             'is_approved'=> (bool) $this->is_approved,
             'is_active' => (bool) $this->is_active,
             'logo' => getFullUrl($this->logo),
+            'commercial_register' => $this->commercial_register,
+            'vat_number' => $this->vat_number,
             'category' => $this->whenLoaded('category',F_CategoryResource::make($this->category)),
             'stores_count' => $this->whenCounted('stores'),
             'team_count' => $this->whenCounted('usersPivot'),
