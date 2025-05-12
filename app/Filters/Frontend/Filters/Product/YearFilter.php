@@ -5,7 +5,7 @@ namespace App\Filters\Frontend\Filters\Product;
 use App\Enums\EncodingMethodsEnum;
 use Illuminate\Database\Eloquent\Builder;
 
-class CarBrandFilter
+class YearFilter
 {
     /**
      * Filter Function
@@ -16,6 +16,6 @@ class CarBrandFilter
      */
     public function filter(Builder $builder, mixed $value): Builder
     {
-        return $builder->whereRelation('carAttributes', 'car_brand_id', decodeString($value));
+        return $builder->whereRelation('carAttributes', 'year', $value);
     }
 }
