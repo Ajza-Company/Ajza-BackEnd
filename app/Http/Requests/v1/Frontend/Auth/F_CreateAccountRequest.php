@@ -3,6 +3,8 @@
 namespace App\Http\Requests\v1\Frontend\Auth;
 
 use App\Enums\EncodingMethodsEnum;
+use App\Enums\RoleEnum;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
@@ -26,7 +28,13 @@ class F_CreateAccountRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'full_mobile' => 'required|string|unique:users,full_mobile',
+            'full_mobile' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    return User::where('full_mobile', $value)->whereDosentHave('roles', function ($query) { $query->whereIn('name', [RoleEnum::CLIENT]); })->exists();
+                },
+            ],
             'account_type' => 'sometimes|string|in:personal,workshop',
             'personal.gender' => 'required_if:account_type,personal|string|in:male,female',
             'workshop.data.name' => 'required_if:account_type,workshop|string',

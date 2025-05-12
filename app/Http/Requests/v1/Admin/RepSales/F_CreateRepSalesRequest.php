@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\v1\Admin\RepSales;
 
+use App\Enums\RoleEnum;
+use App\Models\User;
 use App\Traits\DecodesInputTrait;
 use App\Enums\EncodingMethodsEnum;
 use Illuminate\Validation\Rules\Password;
@@ -29,7 +31,13 @@ class F_CreateRepSalesRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'full_mobile' => 'required|string|unique:users,full_mobile',
+            'full_mobile' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    return User::where('full_mobile', $value)->whereDosentHave('roles', function ($query) { $query->whereIn('name', [RoleEnum::SUPPLIER, RoleEnum::REPRESENTATIVE]); })->exists();
+                },
+            ],
             'gender' => 'required|string|in:male,female',
             'avatar' => 'sometimes|file|max:2408',
             'password' => 'required|min:8',

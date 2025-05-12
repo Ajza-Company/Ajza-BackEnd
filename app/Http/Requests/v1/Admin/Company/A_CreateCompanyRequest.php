@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\v1\Admin\Company;
 
+use App\Models\User;
 use App\Traits\DecodesInputTrait;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -40,7 +41,18 @@ class A_CreateCompanyRequest extends FormRequest
 
             'user.name' => 'required|string|max:255',
             'user.email' => 'required|email|max:50|unique:users,email',
-            'user.full_mobile' => 'required|string|max:20|unique:users,full_mobile',
+            'user.full_mobile' => [
+                'required',
+                'max:20|',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $user = User::where('full_mobile', $value)->first();
+                    if ($user && $user->hasRole('client')) {
+                        return true;
+                    }
+                    $fail('The ' . $attribute . ' has already been used.');
+                },
+            ],
             'user.gender' => 'nullable|in:male,female',
             'user.avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user.password' => 'required|string|min:8',

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\v1\Supplier\Team;
 
+use App\Enums\RoleEnum;
+use App\Models\User;
 use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
@@ -26,7 +28,13 @@ class S_CreateTeamMemberRequest extends FormRequest
     {
         return [
             'data.name' => 'required|string',
-            'data.full_mobile' => 'required|string',
+            'full_mobile' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                        return User::where('full_mobile', $value)->whereDosentHave('roles', function ($query) { $query->whereIn('name', [RoleEnum::SUPPLIER, RoleEnum::REPRESENTATIVE, RoleEnum::ADMIN]); })->exists();
+                },
+            ],
             'data.password' => [
                 'required', 'string',
                 Password::min(8)
