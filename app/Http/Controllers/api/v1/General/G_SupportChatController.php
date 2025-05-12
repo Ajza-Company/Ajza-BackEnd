@@ -24,9 +24,9 @@ class G_SupportChatController extends Controller
         $user_id = auth('api')->id();
         $chats = SupportChat::where('user_id', $user_id)
             ->with(['user', 'latestMessage'])
-            ->latest()
             ->filter(\request())
             ->where('status', '!=', 'closed')
+            ->latest()
             ->paginate();
 
         return G_SupportChatResource::collection($chats);
