@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\v1\Admin\Company;
 
+use App\Enums\RoleEnum;
 use App\Models\User;
 use App\Traits\DecodesInputTrait;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -46,11 +47,8 @@ class A_CreateCompanyRequest extends FormRequest
                 'max:20',
                 'string',
                 function ($attribute, $value, $fail) {
-                    $user = User::where('full_mobile', $value)->first();
-                    if ($user && $user->hasRole('client')) {
-                        return true;
-                    }
-                    $fail('The ' . $attribute . ' has already been used.');
+                    return User::where('full_mobile', $value)->whereDosentHave('roles', function ($query) { $query->whereIn('name', [RoleEnum::SUPPLIER, RoleEnum::REPRESENTATIVE, RoleEnum::ADMIN]); })->exists();
+
                 },
             ],
             'user.gender' => 'nullable|in:male,female',
