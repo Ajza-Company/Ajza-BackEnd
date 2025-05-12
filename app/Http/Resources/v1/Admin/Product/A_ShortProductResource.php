@@ -21,7 +21,7 @@ class A_ShortProductResource extends JsonResource
             'category' => $this->category,
             'part_number' => $this->part_number,
             'quantity' => $this->storeProduct?->quantity,
-            'image' => getFullUrl('https://d2tipm51pavj8p.cloudfront.net/' . $this->image),
+            'image' => 'https://d2tipm51pavj8p.cloudfront.net/' . $this->image,
             'price' => $this->price,
             'is_original' => (bool) $this->is_original,
             'is_active' => (bool) $this->is_active,
