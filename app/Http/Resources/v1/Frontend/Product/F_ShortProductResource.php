@@ -40,7 +40,7 @@ class F_ShortProductResource extends JsonResource
             'discount' => $this->whenLoaded('offer', function (){
                 return trans($this->offer?->type === 'fixed' ? 'general.product_discount' : 'general.product_discount_percentage', ['discount' => $this->offer?->discount ?? 0]);
             }),
-            'image' => $this->product?->image,
+            'image' => getFullUrl('https://d2tipm51pavj8p.cloudfront.net/' . $this->product?->image),
             'is_favorite' => $this->when($this->relationLoaded('favorite'), function () {
                 return $this->favorite !== null;
             }),
