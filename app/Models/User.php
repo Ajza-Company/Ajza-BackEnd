@@ -38,7 +38,8 @@ class User extends Authenticatable
         'avatar',
         'is_active',
         'is_registered',
-        'gender'
+        'gender',
+        'state_id',
     ];
 
     /**
@@ -198,6 +199,11 @@ class User extends Authenticatable
     public function offers(): HasMany
     {
         return $this->hasMany(RepOffer::class, 'rep_user_id');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state_id');
     }
 
     /**

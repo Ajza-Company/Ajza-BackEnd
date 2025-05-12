@@ -41,12 +41,7 @@ class F_CreateRepSalesRequest extends FormRequest
             'gender' => 'required|string|in:male,female',
             'avatar' => 'sometimes|file|max:2408',
             'password' => 'required|min:8',
-            'workshop.data.name' => 'sometimes|string',
-            'workshop.data.city_id' => 'sometimes|integer|exists:cities,id',
-            'workshop.data.commercial_registration' => 'sometimes|string',
-            'workshop.data.national_identity' => 'sometimes|string',
-            'workshop.data.added_tax' => 'sometimes|string',
-            'workshop.commercial_registration_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
+            'city_id' => 'required|integer|exists:states,id',
         ];
     }
 
@@ -55,7 +50,7 @@ class F_CreateRepSalesRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        $this->decodeInput('workshop.data.city_id');
+        $this->decodeInput('city_id');
     }
 
 }
