@@ -3,6 +3,10 @@
 namespace App\Filters\General;
 
 use App\Filters\FilterClass;
+use App\Filters\Frontend\Filters\Product\CarBrandFilter;
+use App\Filters\Frontend\Filters\Product\CarModelFilter;
+use App\Filters\Frontend\Filters\Product\CarTypeFilter;
+use App\Filters\Frontend\Filters\Product\YearFilter;
 use App\Filters\General\Filters\Product\CategoryFilter;
 use App\Filters\General\Filters\Product\NameFilter;
 use App\Filters\General\Filters\Product\StoreProductOutOfQuantityFilter;
@@ -14,5 +18,8 @@ class ProductFilter extends FilterClass
         'category' => CategoryFilter::class,
         'has_stock' => StoreProductQuantityFilter::class,
         'out_of_stock' => StoreProductOutOfQuantityFilter::class,
+        'car_brand' => CarBrandFilter::class,
+        'car_model' => CarModelFilter::class,
+        'year' => YearFilter::class
     ];
 }
