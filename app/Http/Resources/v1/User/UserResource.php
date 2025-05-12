@@ -4,7 +4,7 @@ namespace App\Http\Resources\v1\User;
 
 use App\Enums\RoleEnum;
 use App\Http\Resources\v1\Frontend\Category\F_CategoryResource;
-use App\Http\Resources\v1\Frontend\Store\F_ShortStoreResource;
+use App\Http\Resources\v1\Frontend\State\F_StateResource;
 use App\Http\Resources\v1\Supplier\Store\S_ShortStoreResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -36,7 +36,8 @@ class UserResource extends JsonResource
                     return $this->permissions()->pluck('name')->toArray();
                 }
             ),
-            'stores' => $this->whenLoaded('stores', S_ShortStoreResource::collection($this->stores))
+            'stores' => $this->whenLoaded('stores', S_ShortStoreResource::collection($this->stores)),
+            'city' => $this->whenLoaded('state', function () {return F_StateResource::make($this->state);}),
         ];
     }
 }

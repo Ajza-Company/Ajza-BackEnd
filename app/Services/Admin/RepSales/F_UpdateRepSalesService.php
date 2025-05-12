@@ -37,6 +37,14 @@ class F_UpdateRepSalesService
                 $updateArray['password'] = $data['password'];
             }
 
+            if (isset($data['gender'])) {
+                $updateArray['gender'] = $data['gender'];
+            }
+
+            if (isset($data['city_id'])) {
+                $updateArray['state_id'] = $data['city_id'];
+            }
+
             $user->update($updateArray);
 
             if (isset($data['avatar'])) {
@@ -46,7 +54,7 @@ class F_UpdateRepSalesService
 
 
             \DB::commit();
-            return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED), data: UserResource::make($user)));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED), data: UserResource::make($user->load('state'))));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(

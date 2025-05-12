@@ -38,7 +38,8 @@ class F_UpdateRepSalesRequest extends FormRequest
                 Rule::unique('users', 'full_mobile')->ignore($this->id),
             ],
             'password' => 'sometimes|min:8',
-            'avatar' => 'sometimes|nullable|file|max:2408'
+            'avatar' => 'sometimes|nullable|file|max:2408',
+            'city_id' => 'required|integer|exists:states,id',
         ];
     }
 
@@ -47,6 +48,7 @@ class F_UpdateRepSalesRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
+        $this->decodeInput('city_id');
         $this->merge([
             'id' => decodeString($this->route('id')), // Decode the ID and merge it back into the request
         ]);

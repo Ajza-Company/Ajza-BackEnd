@@ -44,6 +44,7 @@ class F_CreateRepSalesService
                 'is_registered' => true,
                 'gender' => $data['gender'],
                 'password' => $data['password'],
+                'state_id' => $data['city_id'],
                 'preferred_language' => app()->getLocale()
             ]);
 
@@ -59,7 +60,7 @@ class F_CreateRepSalesService
             event(new F_UserCreatedEvent($user, $data['fcm_token'] ?? null));
 
             \DB::commit();
-            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: UserResource::make($user)));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: UserResource::make($user->load('state'))));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(errorResponse(
