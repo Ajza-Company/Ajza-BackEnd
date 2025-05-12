@@ -43,7 +43,7 @@ class A_CreateCompanyRequest extends FormRequest
             'user.email' => 'required|email|max:50|unique:users,email',
             'user.full_mobile' => [
                 'required',
-                'max:20|',
+                'max:20',
                 'string',
                 function ($attribute, $value, $fail) {
                     $user = User::where('full_mobile', $value)->first();
