@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('locale_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('name', 50);
+            $table->string('name', 100);
             $table->longText('description')->nullable();
             $table->timestamps();
         });
