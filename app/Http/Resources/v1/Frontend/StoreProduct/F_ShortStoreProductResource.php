@@ -17,7 +17,7 @@ class F_ShortStoreProductResource extends JsonResource
         return [
             'id' => encodeString($this->id),
             'name' => $this->product?->localized?->name,
-            'image' => $this->product?->image,
+            'image' => 'https://s3.me-south-1.amazonaws.com/images.rafraf.com/' . $this->product?->image,
         ];
     }
 }

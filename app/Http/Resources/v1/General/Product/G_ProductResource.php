@@ -20,7 +20,7 @@ class G_ProductResource extends JsonResource
             'id' => encodeString($this->id),
             'name' => $this->localized?->name,
             'price' => round($this->price, 2),
-            'image' => $this->image,
+            'image' => 'https://s3.me-south-1.amazonaws.com/images.rafraf.com/' . $this->image,
         ];
     }
 

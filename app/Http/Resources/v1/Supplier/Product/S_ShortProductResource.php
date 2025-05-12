@@ -16,7 +16,7 @@ class S_ShortProductResource extends JsonResource
     {
         return [
             'name' => $this->localized?->name,
-            'image' => $this->image,
+            'image' => 'https://s3.me-south-1.amazonaws.com/images.rafraf.com/' . $this->image,
         ];
     }
 }
