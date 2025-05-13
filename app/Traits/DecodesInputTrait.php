@@ -33,27 +33,10 @@ trait DecodesInputTrait
         if ($value && decodeString($value)) {
             $decoded = decodeString($value);
 
-            // Handle nested keys
-            $parts = explode('.', $field);
-
-            if (count($parts) > 1) {
-                // Get the base array (e.g., 'personal')
-                $baseKey = $parts[0];
-                // Get the actual field (e.g., 'car_brand_id')
-                $field = $parts[1];
-
-                // Get current values
-                $current = $this->input($baseKey, []);
-
-                // Merge the decoded value while preserving other fields
-                $current[$field] = $decoded;
-
-                // Update the request
-                $this->merge([$baseKey => $current]);
-            } else {
-                // Non-nested key, use original behavior
-                $this->merge([$field => $decoded]);
-            }
+            // Use arraySet to set the value at the correct nested path
+            $data = $this->all(); // Get all request data as array
+            $this->arraySet($data, $field, $decoded);
+            $this->replace($data); // Replace the request data
         }
     }
 
@@ -87,6 +70,21 @@ trait DecodesInputTrait
         $this->merge([$arrayKey => $array]);
     }
 
+    protected function arraySet(&$array, $path, $value)
+    {
+        $keys = explode('.', $path);
+
+        while (count($keys) > 1) {
+            $key = array_shift($keys);
+            if (!isset($array[$key]) || !is_array($array[$key])) {
+                $array[$key] = [];
+            }
+            $array = &$array[$key];
+        }
+
+        $array[array_shift($keys)] = $value;
+    }
+
     /**
      * Decode input values for array fields with wildcards.
      *
@@ -99,19 +97,19 @@ trait DecodesInputTrait
     $pathParts = explode('.*', $field);
     $beforeWildcard = $pathParts[0]; // e.g., 'company.localized'
     $afterWildcard = $pathParts[1]; // e.g., '.local_id'
-    
+
     // Handle nested paths before the wildcard
     $baseKeys = explode('.', $beforeWildcard);
     $arrayKey = $baseKeys[0]; // e.g., 'company'
-    
+
     // Get the array from input
     $data = $this->input($arrayKey, []);
-    
+
     // If we have a nested path like 'company.localized'
     if (count($baseKeys) > 1) {
         $currentData = $data;
         $pointer = &$currentData;
-        
+
         // Navigate to the nested array
         for ($i = 1; $i < count($baseKeys); $i++) {
             if (!isset($pointer[$baseKeys[$i]]) || !is_array($pointer[$baseKeys[$i]])) {
@@ -119,37 +117,37 @@ trait DecodesInputTrait
             }
             $pointer = &$pointer[$baseKeys[$i]];
         }
-        
+
         // Get the field key from after the wildcard
         $fieldKey = ltrim($afterWildcard, '.'); // e.g., 'local_id'
-        
+
         // Process each item in the array
         foreach ($pointer as $index => $item) {
             $value = $item[$fieldKey] ?? null;
-            
+
             if ($value && function_exists('decodeString')) {
                 $decoded = decodeString($value);
                 $pointer[$index][$fieldKey] = $decoded;
             }
         }
-        
+
         // Update the request with the modified data
         $this->merge([$arrayKey => $currentData]);
     } else {
         // Handle simple case (no nesting before wildcard)
         // This is your existing implementation
         $fieldKey = ltrim($afterWildcard, '.'); // e.g., 'voice_id'
-        
+
         // Process each item in the array
         foreach ($data as $index => $item) {
             $value = $item[$fieldKey] ?? null;
-            
+
             if ($value && function_exists('decodeString')) {
                 $decoded = decodeString($value);
                 $data[$index][$fieldKey] = $decoded;
             }
         }
-        
+
         // Update the request with the modified array
         $this->merge([$arrayKey => $data]);
     }

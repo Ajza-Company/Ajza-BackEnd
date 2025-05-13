@@ -28,7 +28,7 @@ class A_CreateCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store.data.area_id' => 'required|integer|exists:areas,id',
+            'store.data.area_id' => 'required|integer|exists:states,id',
             'store.data.address' => 'required|string|max:255',
             'store.data.address_url' => 'nullable|string|url',
             'store.data.latitude' => 'nullable|numeric',
