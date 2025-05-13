@@ -15,7 +15,7 @@ class ParentFilter
      */
     public function filter(Builder $builder, $value): Builder
     {
-        if ($value === 'null') {
+        if ($value === null) {
             return $builder->whereNull('parent_id');
         }
         return $builder->where('parent_id', decodeString($value));
