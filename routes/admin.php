@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\Admin\{A_CompanyController,
+    A_SliderController,
     A_StatisticsController,
     A_StoreController,
     A_SupportChatController,
@@ -98,6 +99,12 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::prefix('support')->group(function () {
         Route::get('/chats', [A_SupportChatController::class, 'index']);
         Route::post('/chats/{chat_id}/status', [A_SupportChatController::class, 'updateStatus']);
+    });
+
+    Route::prefix('slider')->group(function () {
+        Route::get('/', [A_SliderController::class, 'index']);
+        Route::post('/', [A_SliderController::class, 'store']);
+        Route::delete('{id}', [A_SliderController::class, 'destroy']);
     });
 
     Route::get('categories', [A_CategoryController::class, 'index']);
