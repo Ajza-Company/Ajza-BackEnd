@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\api\v1\Supplier;
 
+use App\Http\Requests\v1\Supplier\Product\UpdateQuantityProductRequest;
+use App\Services\Supplier\Product\S_UpdateProductQuantityService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
@@ -19,6 +21,7 @@ class S_SelectProductController extends Controller
      * @param S_FindStoreInterface $findStore
      */
     public function __construct(private S_FindStoreInterface $findStore,
+                                private S_UpdateProductQuantityService $updateProductQuantity,
                                 private S_CreateSelectProductService $createProduct)
     {
 
@@ -45,7 +48,7 @@ class S_SelectProductController extends Controller
     public function store(StoreProductRequest $request,string $store_id)
     {
         $store = $this->findStore->find(decodeString($store_id));
-        
+
         return $this->createProduct->create($request->validated(),$store);
     }
     /**
@@ -70,5 +73,9 @@ class S_SelectProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateQuantity(UpdateQuantityProductRequest $request){
+        return $this->updateProductQuantity->updateQuantity($request->validated());
     }
 }

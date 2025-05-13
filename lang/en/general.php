@@ -14,4 +14,5 @@ return [
     'delete_account' => 'We have received your account deletion request and will contact you soon.',
     'products_created_successfully'=>'Product Created Successfully',
     'Insufficient_wallet_balance'=>'Insufficient wallet balance',
+    'products_quantity_updated_successfully'=>'Product Quantity Updated Successfully',
 ];

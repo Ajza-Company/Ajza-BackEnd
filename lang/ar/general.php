@@ -14,4 +14,5 @@ return [
     'delete_account' => 'لقد استلمنا طلب حذف حسابك وسيتم التواصل معك قريبا.',
     'products_created_successfully'=>'تم انشاء المنتج بنجاح',
     'Insufficient_wallet_balance'=>'المحفظة غير كافية',
+    'products_quantity_updated_successfully'=>'تم تحديث كمية المنتج بنجاح',
 ];

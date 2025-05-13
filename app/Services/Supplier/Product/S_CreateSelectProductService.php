@@ -23,11 +23,11 @@ class S_CreateSelectProductService
             DB::beginTransaction();
 
             $store_id = $store->id;
-    
+
             if ($data['is_select_all'] == true) {
                 $data['product_ids'] = Product::where('category_id', $store->category->id)->pluck('id')->toArray();
             }
-    
+
             Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($store_id) {
                 foreach ($products as $product) {
                     StoreProduct::updateOrCreate(
@@ -42,13 +42,13 @@ class S_CreateSelectProductService
                     );
                 }
             });
-    
+
             DB::commit();
-    
+
             return response()->json(successResponse(message: trans('general.products_created_successfully')));
         } catch (\Exception $ex) {
             DB::rollBack();
-    
+
             return response()->json(errorResponse(
                 message: ErrorMessageEnum::CREATE,
                 error: $ex->getMessage()),
@@ -56,5 +56,5 @@ class S_CreateSelectProductService
             );
         }
     }
-    
+
 }
