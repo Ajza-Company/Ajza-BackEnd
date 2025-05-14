@@ -68,7 +68,7 @@ class ClickPayGateway implements PaymentGatewayInterface
         }
     }
 
-    public function verifyPayment(string $transactionRef): PaymentResponseDTO
+    public function verifyPayment(array $transactionRef): PaymentResponseDTO
     {
         try {
             $response = Http::withHeaders([
@@ -180,7 +180,7 @@ class ClickPayGateway implements PaymentGatewayInterface
             'cart_description' => $request->description,
             'cart_currency' => 'SAR',
             'cart_amount' => $request->amount,
-            'callback' => route('payment.callback')
+            'callback' => 'https://example.com/callback',
         ];
     }
 

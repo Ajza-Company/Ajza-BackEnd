@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\api\v1\Frontend;
 
+use App\DTOs\PaymentRequestDTO;
 use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Order\Find\F_FindOrderInterface;
 use App\Services\Payment\ClickPayGateway;
 use App\Services\Payment\PaymentService;
+use Exception;
 use Illuminate\Http\Request;
 
 class F_PayController extends Controller
@@ -21,6 +23,7 @@ class F_PayController extends Controller
 
     /**
      * Handle the incoming request.
+     * @throws Exception
      */
     public function __invoke(string $order_id)
     {
@@ -28,11 +31,11 @@ class F_PayController extends Controller
 
         $gateway = match(config('services.payment.default')) {
             'clickpay' => new ClickPayGateway(),
-            default => throw new \Exception('Invalid gateway'),
+            default => throw new Exception('Invalid gateway'),
         };
 
         $paymentService = new PaymentService($gateway);
-        $result = $paymentService->createPayment($request->all());
+        $result = $paymentService->createPayment(new PaymentRequestDTO(amount: $order->amount, description: 'Order Payment', cartId: $order->id));
 
         return response()->json($result);
     }

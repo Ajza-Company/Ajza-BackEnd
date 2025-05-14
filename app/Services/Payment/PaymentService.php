@@ -17,7 +17,7 @@ class PaymentService
         return $this->gateway->createPayment($data);
     }
 
-    public function verifyPayment(array $data): array
+    public function verifyPayment(array $data): PaymentResponseDTO
     {
         return $this->gateway->verifyPayment($data);
     }
