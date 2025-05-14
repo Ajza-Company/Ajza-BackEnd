@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\Admin\{A_CompanyController,
+    A_NotificationController,
     A_StatisticsController,
     A_StoreController,
     A_SupportChatController,
@@ -113,4 +114,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('sub-category/show/{id}', [A_SubCategoryController::class, 'show']);
 
     Route::get('statistics', [A_StatisticsController::class, 'index']);
+    Route::get('orders', [A_StatisticsController::class, 'orders']);
+
+    Route::post('send-notification', A_NotificationController::class);
 });

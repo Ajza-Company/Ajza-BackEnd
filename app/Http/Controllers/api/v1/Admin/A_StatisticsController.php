@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api\v1\Admin;
 use App\Enums\OrderStatusEnum;
 use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\Frontend\Order\F_OrderResource;
+use App\Http\Resources\v1\Frontend\Order\F_ShortOrderResource;
 use App\Models\Company;
 use App\Models\Order;
 use App\Models\Product;
@@ -87,5 +89,12 @@ class A_StatisticsController extends Controller
         return Order::statisticsFilter(request())->get()->sum(function ($order) {
             return $order->amount * ($order->ajza_percentage / 100);
         });
+    }
+
+    public function orders()
+    {
+        $orders = Order::statisticsFilter(request())->adaptivePaginate();
+
+        return F_ShortOrderResource::collection($orders);
     }
 }

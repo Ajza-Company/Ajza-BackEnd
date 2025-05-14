@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests\v1\Admin\User;
 
+use App\Traits\DecodesInputTrait;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class A_notificationUserRequest extends FormRequest
 {
-
+    use DecodesInputTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -26,7 +27,17 @@ class A_notificationUserRequest extends FormRequest
         return [
             'title' => 'required|string',
             'message' => 'required|string',
+            'users' => 'sometimes|array|min:1',
+            'users.*' => [
+                'required_with:users',
+                'integer',
+                Rule::exists('users', 'id'),
+            ]
         ];
     }
-    
+
+    protected function prepareForValidation(): void
+    {
+        $this->decodeInput('users.*');
+    }
 }

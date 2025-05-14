@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Filters\Admin\GetUserFilter;
 use App\Filters\Admin\UserFilter;
 use DateTimeInterface;
 use App\Models\RepChat;
@@ -216,5 +217,10 @@ class User extends Authenticatable
     public function scopeFilter(Builder $builder, $request): Builder
     {
         return (new UserFilter($request))->filter($builder);
+    }
+
+    public function scopeGetUserFilter (Builder $builder, $request): Builder
+    {
+        return (new GetUserFilter($request))->filter($builder);
     }
 }

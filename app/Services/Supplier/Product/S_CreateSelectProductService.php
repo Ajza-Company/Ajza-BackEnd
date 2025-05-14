@@ -25,7 +25,24 @@ class S_CreateSelectProductService
             $store_id = $store->id;
 
             if ($data['is_select_all'] == true) {
-                $data['product_ids'] = Product::where('category_id', $store->category->id)->pluck('id')->toArray();
+                $data['product_ids'] = Product::where('category_id', $store->company->category_id)
+                    ->when(request()->has('car_brand'), function ($q) use ($data) {
+                        return $q->whereHas('carAttributes', function ($query) use ($data) {
+                            $query->where('car_brand_id', request()->car_brand);
+                        });
+                    })
+                    ->when(request()->has('car_model'), function ($q) use ($data) {
+                        return $q->whereHas('carAttributes', function ($query) use ($data) {
+                            $query->where('car_model_id', request()->car_model);
+                        });
+                    })
+                    ->when(request()->has('year'), function ($q) use ($data) {
+                        return $q->whereHas('carAttributes', function ($query) use ($data) {
+                            $query->where('year', request()->year);
+                        });
+                    })
+                    ->pluck('id')
+                    ->toArray();
             }
 
             Product::whereIn('id', $data['product_ids'])->chunk(100, function ($products) use ($store_id) {
