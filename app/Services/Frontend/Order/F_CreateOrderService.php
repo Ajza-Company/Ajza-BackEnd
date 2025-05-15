@@ -76,8 +76,7 @@ class F_CreateOrderService
                 'order_id' => $order->id,
                 'amount' => $totalAmount,
                 'type' => 'manual',
-                'currency_code' => 'SAR',
-                'payment_status' => 'pending'
+                'currency_code' => 'SAR'
             ]);
 
             $gateway = match(config('services.payment.default')) {
