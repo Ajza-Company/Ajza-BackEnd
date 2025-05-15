@@ -184,7 +184,7 @@ class ClickPayGateway implements PaymentGatewayInterface
             'cart_currency' => 'SAR',
             'cart_amount' => $request->amount,
             'callback' => route('payment.callback'),
-            'return' => config('app.url'),
+            'return' => route('payment.status'),
             'customer_details' => [
                 'name' => $client->name,
                 'email' => $client->email,
