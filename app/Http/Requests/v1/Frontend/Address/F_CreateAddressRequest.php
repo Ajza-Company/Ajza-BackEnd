@@ -34,7 +34,7 @@ class F_CreateAddressRequest extends FormRequest
             'address' => 'sometimes|string|max:255',
             'is_default' => 'required|boolean',
             'state_id'=>'sometimes|integer|exists:states,id',
-            'metadata' => 'sometimes|array'
+            'metadata' => 'sometimes'
         ];
     }
 
