@@ -5,7 +5,7 @@ namespace App\Http\Requests\v1\Supplier\Product;
 use App\Traits\DecodesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateQuantityProductRequest extends FormRequest
+class   UpdateQuantityProductRequest extends FormRequest
 {
     use DecodesInputTrait;
 

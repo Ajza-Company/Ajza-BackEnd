@@ -27,6 +27,7 @@ class A_notificationUserRequest extends FormRequest
         return [
             'title' => 'required|string',
             'message' => 'required|string',
+            'is_select_all'=>'sometimes|boolean',
             'users' => 'sometimes|array|min:1',
             'users.*' => [
                 'required_with:users',
