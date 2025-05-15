@@ -32,7 +32,7 @@ class ClickPayGateway implements PaymentGatewayInterface
                 'content-type' => 'application/json',
             ])->post($this->baseUrl . 'payment/request', $this->buildPaymentPayload($request));
 
-            if (!$response->successful()) {
+            if (!$response->ok()) {
                 throw new PaymentGatewayException(
                     "ClickPay API error: " . ($response['message'] ?? 'Unknown error'),
                     $response->status()
@@ -40,6 +40,7 @@ class ClickPayGateway implements PaymentGatewayInterface
             }
 
             $data = $response->json();
+            Log::info('ClickPay payment created', $data);
 
             // If redirect URL exists, payment needs additional steps
             if (isset($data['redirect_url'])) {
