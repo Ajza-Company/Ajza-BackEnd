@@ -86,7 +86,7 @@ class F_CreateOrderService
 
             $paymentService = new PaymentService($gateway);
             $result = $paymentService->createPayment(
-                new PaymentRequestDTO(amount: $totalAmount, description: 'Order Payment', cartId: $order->id)
+                new PaymentRequestDTO(amount: $totalAmount, description: 'Order Payment', cartId: encodeString($order->id))
             );
 
             \DB::commit();
