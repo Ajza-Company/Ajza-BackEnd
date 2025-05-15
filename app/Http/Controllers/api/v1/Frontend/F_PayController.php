@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\Frontend;
 
 use App\DTOs\PaymentRequestDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\Frontend\Order\F_PayRequest;
 use App\Repositories\Frontend\Order\Find\F_FindOrderInterface;
 use App\Services\Payment\ClickPayGateway;
 use App\Services\Payment\PaymentService;
@@ -25,7 +26,7 @@ class F_PayController extends Controller
      * Handle the incoming request.
      * @throws Exception
      */
-    public function __invoke(string $order_id)
+    public function __invoke(string $order_id, F_PayRequest $request)
     {
         $order = $this->findOrder->find(decodeString($order_id));
 
@@ -35,8 +36,14 @@ class F_PayController extends Controller
         };
 
         $paymentService = new PaymentService($gateway);
-        $result = $paymentService->createPayment(new PaymentRequestDTO(amount: $order->amount, description: 'Order Payment', cartId: $order->id));
+        $result = $paymentService->createPayment(
+            new PaymentRequestDTO(amount: $request->validated()['amount'], description: 'Order Payment', cartId: $order->id)
+        );
 
-        return response()->json($result);
+        return response()->json([
+            'status' => $result->status,
+            'message' => $result->message,
+            'redirectUrl' => $result->redirectUrl
+        ]);
     }
 }
