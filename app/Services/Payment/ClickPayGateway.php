@@ -188,7 +188,7 @@ class ClickPayGateway implements PaymentGatewayInterface
             'customer_details' => [
                 'name' => $client->name,
                 'email' => $client->email,
-                'street1' => $order->address->address,
+                'street1' => $order->address?->address,
                 'city' => '',
                 'state' => '',
                 'country' => 'SA',
