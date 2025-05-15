@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
+use Throwable;
 
 class F_CreateOrderService
 {
@@ -38,6 +39,7 @@ class F_CreateOrderService
      * @param User $user
      * @param Store $store
      * @return JsonResponse
+     * @throws Throwable
      */
     public function create(array $data, User $user, Store $store): JsonResponse
     {
@@ -45,6 +47,7 @@ class F_CreateOrderService
         try {
             // Create the order with an initial amount of 0
             $order = $this->createOrder->create([
+                'order_id' => generateOrderId($store->category->category->order_prefix),
                 'user_id' => $user->id,
                 'store_id' => $store->id,
                 'status' => OrderStatusEnum::PENDING,

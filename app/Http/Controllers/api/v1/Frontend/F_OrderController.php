@@ -18,6 +18,7 @@ use App\Repositories\Frontend\Store\Find\F_FindStoreInterface;
 use App\Services\Frontend\Order\F_CancelOrderService;
 use App\Services\Frontend\Order\F_CreateOrderService;
 use Illuminate\Http\Response;
+use Throwable;
 
 class F_OrderController extends Controller
 {
@@ -51,6 +52,7 @@ class F_OrderController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws Throwable
      */
     public function store(F_CreateOrderRequest $request, string $store_id)
     {
