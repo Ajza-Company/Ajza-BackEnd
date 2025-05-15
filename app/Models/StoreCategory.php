@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class StoreCategory extends Model
@@ -22,10 +23,10 @@ class StoreCategory extends Model
 
     /**
      *
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function category(): HasOne
+    public function category(): BelongsTo
     {
-        return $this->hasOne(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }
