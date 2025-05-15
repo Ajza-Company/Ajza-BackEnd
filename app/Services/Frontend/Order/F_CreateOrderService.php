@@ -90,9 +90,13 @@ class F_CreateOrderService
             );
 
             \DB::commit();
-            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: F_ShortOrderResource::make($order)->additional([
-                'redirectUrl' => $result->redirectUrl
-            ])));
+            return response()->json(
+                successResponse(
+                    message: trans(SuccessMessagesEnum::CREATED),
+                    data: F_ShortOrderResource::make($order),
+                    additional_data: [
+                        'redirectUrl' => $result->redirectUrl
+                    ]));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(
