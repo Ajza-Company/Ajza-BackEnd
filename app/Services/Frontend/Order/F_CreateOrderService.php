@@ -72,7 +72,7 @@ class F_CreateOrderService
             // Update the order with the total amount
             $order = tap($order)->update(['amount' => $totalAmount]);
 
-            TransactionAttempt::create([
+            $transaction = TransactionAttempt::create([
                 'order_id' => $order->id,
                 'amount' => $totalAmount,
                 'type' => 'manual',
@@ -86,8 +86,12 @@ class F_CreateOrderService
 
             $paymentService = new PaymentService($gateway);
             $result = $paymentService->createPayment(
-                new PaymentRequestDTO(amount: $totalAmount, description: 'Order Payment', cartId: encodeString($order->id))
+                new PaymentRequestDTO(amount: $totalAmount, description: 'Order Payment', cartId: encodeString($transaction->id))
             );
+
+            $transaction->update([
+                'paymob_iframe_token' => $result->redirectUrl
+            ]);
 
             \DB::commit();
             return response()->json(
