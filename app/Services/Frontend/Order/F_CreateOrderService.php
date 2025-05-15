@@ -2,6 +2,7 @@
 
 namespace App\Services\Frontend\Order;
 
+use App\DTOs\PaymentRequestDTO;
 use App\Enums\ErrorMessageEnum;
 use App\Enums\OrderDeliveryMethodEnum;
 use App\Enums\OrderStatusEnum;
@@ -10,11 +11,15 @@ use App\Http\Resources\v1\Frontend\Order\F_ShortOrderResource;
 use App\Models\Order;
 use App\Models\Store;
 use App\Models\StoreProduct;
+use App\Models\TransactionAttempt;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use App\Repositories\Frontend\Order\Create\F_CreateOrderInterface;
 use App\Repositories\Frontend\OrderProduct\Insert\F_InsertOrderProductInterface;
+use App\Services\Payment\ClickPayGateway;
+use App\Services\Payment\PaymentService;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
@@ -65,10 +70,30 @@ class F_CreateOrderService
             $totalAmount = array_sum(array_column($orderProducts, 'amount'));
 
             // Update the order with the total amount
-            $order->update(['amount' => $totalAmount]);
+            $order = tap($order)->update(['amount' => $totalAmount]);
+
+            TransactionAttempt::create([
+                'order_id' => $order->id,
+                'amount' => $totalAmount,
+                'type' => 'manual',
+                'currency_code' => 'SAR',
+                'payment_status' => 'pending'
+            ]);
+
+            $gateway = match(config('services.payment.default')) {
+                'clickpay' => new ClickPayGateway(),
+                default => throw new Exception('Invalid gateway'),
+            };
+
+            $paymentService = new PaymentService($gateway);
+            $result = $paymentService->createPayment(
+                new PaymentRequestDTO(amount: $totalAmount, description: 'Order Payment', cartId: $order->id)
+            );
 
             \DB::commit();
-            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: F_ShortOrderResource::make($order)));
+            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: F_ShortOrderResource::make($order)->additional([
+                'redirectUrl' => $result->redirectUrl
+            ])));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(
