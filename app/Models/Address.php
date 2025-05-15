@@ -24,10 +24,11 @@ class Address extends Model
         'level',
         'house_number',
         'zip_code',
-        'state_id'
+        'state_id',
+        'metadata'
     ];
 
-        
+
     /**
      *
      * @return BelongsTo
