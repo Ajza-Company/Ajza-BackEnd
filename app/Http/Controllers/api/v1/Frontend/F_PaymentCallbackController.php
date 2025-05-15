@@ -18,7 +18,7 @@ class F_PaymentCallbackController extends Controller
         \Log::info('payment callback: '.json_encode($request->all()));
 
         if ($request->has('payment_result')) {
-            if ($request->payment_result->response_status == 'A') {
+            if ($request->payment_result['response_status'] == 'A') {
                 $transaction = TransactionAttempt::findOrFail(decodeString($request->cart_id));
                 $transaction = tap($transaction)->update([
                     'payment_status' => true,
