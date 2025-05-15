@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\Frontend;
 
 use App\Enums\OrderStatusEnum;
+use App\Events\v1\Frontend\F_OrderCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\TransactionAttempt;
@@ -26,6 +27,8 @@ class F_PaymentCallbackController extends Controller
                     'paymob_callback' => json_encode($request->all()),
                     'paymob_transaction_id' => $request->tran_ref
                 ]);
+
+                broadcast(new F_OrderCreatedEvent($transaction->order))->toOthers();
 
                 $transaction->order->update([
                     'status' => OrderStatusEnum::ACCEPTED
