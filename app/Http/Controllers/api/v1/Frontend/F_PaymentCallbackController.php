@@ -50,8 +50,8 @@ class F_PaymentCallbackController extends Controller
 
                 // create delivery shipment
                 if ($transaction->order->delivery_method == OrderDeliveryMethodEnum::DELIVERY) {
-                    $shipment = $this->otoGateway->createShipment($transaction->order);
-                    \Log::info('shipment: '.json_encode($shipment));
+                    // $shipment = $this->otoGateway->createShipment($transaction->order);
+                    //\Log::info('shipment: '.json_encode($shipment));
                 }
 
                 return response()->json([
