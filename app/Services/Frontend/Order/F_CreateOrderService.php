@@ -2,6 +2,7 @@
 
 namespace App\Services\Frontend\Order;
 
+use App\DTOs\PaymentRequestDTO;
 use App\Enums\ErrorMessageEnum;
 use App\Enums\OrderDeliveryMethodEnum;
 use App\Enums\OrderStatusEnum;
@@ -10,14 +11,19 @@ use App\Http\Resources\v1\Frontend\Order\F_ShortOrderResource;
 use App\Models\Order;
 use App\Models\Store;
 use App\Models\StoreProduct;
+use App\Models\TransactionAttempt;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use App\Repositories\Frontend\Order\Create\F_CreateOrderInterface;
 use App\Repositories\Frontend\OrderProduct\Insert\F_InsertOrderProductInterface;
+use App\Services\Payment\ClickPayGateway;
+use App\Services\Payment\PaymentService;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
+use Throwable;
 
 class F_CreateOrderService
 {
@@ -38,6 +44,7 @@ class F_CreateOrderService
      * @param User $user
      * @param Store $store
      * @return JsonResponse
+     * @throws Throwable
      */
     public function create(array $data, User $user, Store $store): JsonResponse
     {
@@ -45,6 +52,7 @@ class F_CreateOrderService
         try {
             // Create the order with an initial amount of 0
             $order = $this->createOrder->create([
+                'order_id' => generateOrderId($store->category->category->order_prefix),
                 'user_id' => $user->id,
                 'store_id' => $store->id,
                 'status' => OrderStatusEnum::PENDING,
@@ -62,10 +70,38 @@ class F_CreateOrderService
             $totalAmount = array_sum(array_column($orderProducts, 'amount'));
 
             // Update the order with the total amount
-            $order->update(['amount' => $totalAmount]);
+            $order = tap($order)->update(['amount' => $totalAmount]);
+
+            $transaction = TransactionAttempt::create([
+                'order_id' => $order->id,
+                'amount' => $totalAmount,
+                'type' => 'manual',
+                'currency_code' => 'SAR'
+            ]);
+
+            $gateway = match(config('services.payment.default')) {
+                'clickpay' => new ClickPayGateway(),
+                default => throw new Exception('Invalid gateway'),
+            };
+
+            $paymentService = new PaymentService($gateway);
+            $result = $paymentService->createPayment(
+                new PaymentRequestDTO(amount: $totalAmount, description: 'Order Payment', cartId: encodeString($transaction->id)),
+                $order
+            );
+
+            $transaction->update([
+                'paymob_iframe_token' => $result->redirectUrl
+            ]);
 
             \DB::commit();
-            return response()->json(successResponse(message: trans(SuccessMessagesEnum::CREATED), data: F_ShortOrderResource::make($order)));
+            return response()->json(
+                successResponse(
+                    message: trans(SuccessMessagesEnum::CREATED),
+                    data: F_ShortOrderResource::make($order),
+                    additional_data: [
+                        'redirectUrl' => $result->redirectUrl
+                    ]));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(

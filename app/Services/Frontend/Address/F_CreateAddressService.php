@@ -35,6 +35,10 @@ class F_CreateAddressService
                 $user->addresses()->update(['is_default' => false]);
             }
 
+            if (isset($data['metadata'])) {
+                $data['metadata'] = json_encode($data['metadata']);
+            }
+
             $data = [
                 'user_id' => $user->id,
                 ...$data

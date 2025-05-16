@@ -4,6 +4,7 @@ namespace App\Services\Payment;
 
 use App\DTOs\PaymentRequestDTO;
 use App\DTOs\PaymentResponseDTO;
+use App\Models\Order;
 
 class PaymentService
 {
@@ -12,9 +13,9 @@ class PaymentService
     {
     }
 
-    public function createPayment(PaymentRequestDTO $data): PaymentResponseDTO
+    public function createPayment(PaymentRequestDTO $data, Order $order): PaymentResponseDTO
     {
-        return $this->gateway->createPayment($data);
+        return $this->gateway->createPayment($data, $order);
     }
 
     public function verifyPayment(array $data): PaymentResponseDTO

@@ -18,7 +18,8 @@ if (!function_exists('successResponse')) {
     function successResponse(
         string $message,
         mixed $data = null,
-        string $token = null
+        string $token = null,
+        array $additional_data = null
     ): array
     {
         return array_filter([
@@ -26,6 +27,7 @@ if (!function_exists('successResponse')) {
             'message' => $message,
             'token' => $token,
             'data' => $data,
+            'additional_data' => $additional_data,
         ]);
     }
 }

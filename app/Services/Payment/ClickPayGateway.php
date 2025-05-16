@@ -5,6 +5,7 @@ namespace App\Services\Payment;
 use App\DTOs\PaymentRequestDTO;
 use App\DTOs\PaymentResponseDTO;
 use App\Exceptions\PaymentGatewayException;
+use App\Models\Order;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -24,15 +25,15 @@ class ClickPayGateway implements PaymentGatewayInterface
     /**
      * @throws PaymentGatewayException
      */
-    public function createPayment(PaymentRequestDTO $request): PaymentResponseDTO
+    public function createPayment(PaymentRequestDTO $request, Order $order): PaymentResponseDTO
     {
         try {
             $response = Http::withHeaders([
                 'authorization' => $this->serverKey,
                 'content-type' => 'application/json',
-            ])->post($this->baseUrl . 'payment/request', $this->buildPaymentPayload($request));
+            ])->post($this->baseUrl . 'payment/request', $this->buildPaymentPayload($request, $order));
 
-            if (!$response->successful()) {
+            if (!$response->ok()) {
                 throw new PaymentGatewayException(
                     "ClickPay API error: " . ($response['message'] ?? 'Unknown error'),
                     $response->status()
@@ -40,6 +41,7 @@ class ClickPayGateway implements PaymentGatewayInterface
             }
 
             $data = $response->json();
+            Log::info('ClickPay payment created', $data);
 
             // If redirect URL exists, payment needs additional steps
             if (isset($data['redirect_url'])) {
@@ -170,8 +172,9 @@ class ClickPayGateway implements PaymentGatewayInterface
         }
     }
 
-    private function buildPaymentPayload(PaymentRequestDTO $request): array
+    private function buildPaymentPayload(PaymentRequestDTO $request, Order $order): array
     {
+        $client = $order->user;
         return [
             'profile_id' => $this->profileId,
             'tran_type' => 'sale',
@@ -180,7 +183,17 @@ class ClickPayGateway implements PaymentGatewayInterface
             'cart_description' => $request->description,
             'cart_currency' => 'SAR',
             'cart_amount' => $request->amount,
-            'callback' => 'https://example.com/callback',
+            'callback' => route('payment.callback'),
+            'return' => route('payment.status'),
+            'customer_details' => [
+                'name' => $client->name,
+                'email' => $client->email,
+                'street1' => $order->address?->address,
+                'city' => '',
+                'state' => '',
+                'country' => 'SA',
+                'ip' => request()->ip(),
+            ]
         ];
     }
 

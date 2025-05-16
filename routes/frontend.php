@@ -107,7 +107,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('{order_id}/show', [F_OrderController::class, 'show']);
         Route::post('{order_id}/cancel', [F_OrderController::class, 'cancel']);
         Route::post('{order_id}/submit-review', F_StoreReviewController::class);
-        Route::get('{order_id}/pay', F_PayController::class);
+        Route::post('{order_id}/pay', F_PayController::class);
     });
 
     Route::prefix('rep-orders')->group(function () {

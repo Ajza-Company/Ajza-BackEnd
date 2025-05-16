@@ -12,6 +12,5 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-        broadcast(new F_OrderCreatedEvent($order))->toOthers();
     }
 }

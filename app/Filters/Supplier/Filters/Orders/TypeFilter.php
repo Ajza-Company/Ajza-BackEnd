@@ -22,7 +22,7 @@ class TypeFilter
             }elseif ($value === 'previous') {
                 return $builder->whereIn('status', [OrderStatusEnum::REJECTED, OrderStatusEnum::CANCELLED, OrderStatusEnum::COMPLETED]);
             }elseif ($value === 'new') {
-                return $builder->whereIn('status', [OrderStatusEnum::PENDING]);
+                return $builder->whereIn('status', [OrderStatusEnum::ACCEPTED]);
             }
         }
         return null;

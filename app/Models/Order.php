@@ -31,7 +31,8 @@ class Order extends Model
         'amount',
         'status',
         'cancel_reason',
-        'delivery_method'
+        'delivery_method',
+        'order_id'
     ];
 
     /**
