@@ -14,19 +14,44 @@ return [
     |
     */
 
+    // Enable CORS for all API routes and authentication endpoints
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    // Allow common HTTP methods (GET, POST, PUT, PATCH, DELETE, OPTIONS)
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 
-    'allowed_origins' => ['*'],
+    // Specify the origins that are allowed to access your API
+    // Include both your frontend domain and any development domains
+    'allowed_origins' => [
+        'http://127.0.0.1:8000',
+        'https://ajza.net',
+        'https://www.ajza.net',
+        'https://dev.ajza.net',
+        'http://dev.ajza.net',
+    ],
 
-    'allowed_origins_patterns' => [],
+    // You can use patterns if you have multiple subdomains
+    'allowed_origins_patterns' => [
+        // Uncomment if you have multiple subdomains
+        // '#^https://(.+\.)?ajza\.net$#',
+    ],
 
-    'allowed_headers' => ['*'],
+    // Allow common headers that are typically sent in API requests
+    'allowed_headers' => [
+        'Accept',
+        'Content-Type',
+        'X-Requested-With',
+        'X-CSRF-TOKEN',
+        'Authorization',
+        'X-XSRF-TOKEN',
+    ],
 
+    // Headers that you want to expose to the client
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    // Cache preflight requests (in seconds, 0 = disabled)
+    'max_age' => 86400, // 24 hours
 
-    'supports_credentials' => false,
+    // Enable cookies and authentication headers (important for auth endpoints)
+    'supports_credentials' => true,
 ];
