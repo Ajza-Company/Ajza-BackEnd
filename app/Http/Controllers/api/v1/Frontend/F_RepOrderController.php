@@ -141,7 +141,7 @@ class F_RepOrderController extends Controller
         }
 
         $offer = $message->chat?->order?->offers()->where('status', 'accepted')->first();
-        $deliveryPrice = 30;
+        $deliveryPrice = ajzaSetting()->delivery_initial_cost_rep_order;
         $tax = 10;
         $total = $offer?->price + $deliveryPrice + $tax;
 
