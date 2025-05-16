@@ -7,6 +7,6 @@ if (!function_exists('userCompany')) {
     function userCompany()
     {
         Log::info('userCompany: ' . json_encode(auth('api')->user()?->company));
-        return auth('api')->user()?->company;
+        return auth('api')?->user()?->company;
     }
 }

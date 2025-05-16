@@ -9,6 +9,7 @@ use App\Http\Resources\v1\Supplier\Team\S_TeamResource;
 use App\Services\Supplier\Team\S_CreateTeamMemberService;
 use App\Services\Supplier\Team\S_UpdateTeamMemberService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class S_TeamController extends Controller
 {
@@ -27,7 +28,11 @@ class S_TeamController extends Controller
      */
     public function index()
     {
-        return S_TeamResource::collection(userCompany()->users()->with(['permissions', 'store'])->get());
+        $company = userCompany();
+        if (!$company) {
+            return response()->json(['message' => 'Company not found'], Response::HTTP_NOT_FOUND);
+        }
+        return S_TeamResource::collection($company?->users()->with(['permissions', 'store'])->get());
     }
 
     /**

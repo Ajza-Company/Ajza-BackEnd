@@ -21,6 +21,7 @@ use App\Services\Supplier\Product\A_DeleteProductService;
 use App\Http\Resources\v1\Admin\Product\A_ShortProductResource;
 use App\Services\Supplier\Product\A_CreateProductService;
 use App\Repositories\Admin\Product\Fetch\A_FetchProductInterface;
+use Illuminate\Http\Response;
 
 class S_ProductController extends Controller
 {
@@ -40,16 +41,19 @@ class S_ProductController extends Controller
      */
     public function index(string $store_id)
     {
-        $store = $this->findStore->find(decodeString($store_id));
-        return S_ShortStoreProductResource::collection(
-            $store
-                ->storeProducts()
-                ->whereHas('product.localized')
-                ->with(['product' => ['localized']])
-                ->filter(\request())
-                ->adaptivePaginate());
+        try {
+            $store = $this->findStore->find(decodeString($store_id));
+            return S_ShortStoreProductResource::collection(
+                $store
+                    ->storeProducts()
+                    ->whereHas('product.localized')
+                    ->with(['product' => ['localized']])
+                    ->filter(\request())
+                    ->adaptivePaginate());
+        } catch (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e) {
+            return response()->json(['message' => "No query results for model [App\\Models\\Store] $store_id"], Response::HTTP_NOT_FOUND);
+        }
     }
-
     public function store(S_CreateProductRequest $request,string $store_id)
     {
         $data = $request->validated();
