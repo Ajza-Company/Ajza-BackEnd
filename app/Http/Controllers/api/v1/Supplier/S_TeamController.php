@@ -27,7 +27,7 @@ class S_TeamController extends Controller
      */
     public function index()
     {
-        return S_TeamResource::collection(userCompany()->users()->with(['permissions', 'store'])->get());
+        return S_TeamResource::collection(userCompany()?->users()->with(['permissions', 'store'])->get());
     }
 
     /**
