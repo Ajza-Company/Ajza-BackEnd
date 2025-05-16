@@ -22,13 +22,7 @@ return [
 
     // Specify the origins that are allowed to access your API
     // Include both your frontend domain and any development domains
-    'allowed_origins' => [
-        'http://127.0.0.1:8000',
-        'https://ajza.net',
-        'https://www.ajza.net',
-        'https://dev.ajza.net',
-        'http://dev.ajza.net',
-    ],
+    'allowed_origins' => ['*'],
 
     // You can use patterns if you have multiple subdomains
     'allowed_origins_patterns' => [

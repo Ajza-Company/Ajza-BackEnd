@@ -11,6 +11,7 @@ use App\Repositories\Supplier\Store\Find\S_FindStoreInterface;
 use App\Services\Supplier\Store\S_CreateStoreService;
 use App\Services\Supplier\Store\S_UpdateStoreService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class S_StoreController extends Controller
 {
@@ -34,9 +35,15 @@ class S_StoreController extends Controller
      */
     public function index()
     {
+        $category = userCompany();
+
+        if(!$category) {
+            return response()->json(['message' => 'Company not found'], Response::HTTP_NOT_FOUND);
+        }
+
         return S_ShortStoreResource::collection(
             userCompany()
-                ->stores()
+                ?->stores()
                 ->with(['company' => ['localized'], 'area' => ['localized', 'state' => ['localized']],'category'])
                 ->adaptivePaginate()
         );
