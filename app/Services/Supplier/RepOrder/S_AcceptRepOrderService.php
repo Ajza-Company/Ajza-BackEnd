@@ -40,7 +40,7 @@ class S_AcceptRepOrderService
             $repOrder = $this->findRepOrder->find(decodeString($rep_order_id));
 
             if ($repOrder->status != 'pending') {
-                return response()->json(errorResponse(trans(trans(ErrorMessageEnum::FOUND))));
+                return response()->json(errorResponse(trans(ErrorMessageEnum::FOUND)));
             }
 
             RepChat::create([

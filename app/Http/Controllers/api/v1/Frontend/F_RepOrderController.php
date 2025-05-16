@@ -81,12 +81,14 @@ class F_RepOrderController extends Controller
                 'status' => RepOrderStatusEnum::CANCELLED
             ]);
 
-            $message = $order->repChat->messages()->create([
-                'sender_id' => auth('api')->id(),
-                'message_type' => MessageTypeEnum::CANCELLED
-            ]);
+            if ($order->repChat) {
+                $message = $order->repChat->messages()->create([
+                    'sender_id' => auth('api')->id(),
+                    'message_type' => MessageTypeEnum::CANCELLED
+                ]);
 
-            broadcast(new G_RepMessageSent($message))->toOthers();
+                broadcast(new G_RepMessageSent($message))->toOthers();
+            }
 
             return response()->json(successResponse(message: trans(SuccessMessagesEnum::UPDATED)));
         } catch (\Exception $ex) {
