@@ -5,7 +5,7 @@ namespace App\Filters\General;
 use App\Filters\FilterClass;
 use App\Filters\Frontend\Filters\Product\CarBrandFilter;
 use App\Filters\Frontend\Filters\Product\CarModelFilter;
-use App\Filters\Frontend\Filters\Product\CategoryFilter;
+use App\Filters\General\Filters\Product\CategoryFilter;
 use App\Filters\Frontend\Filters\Product\YearFilter;
 use App\Filters\General\Filters\Product\NameFilter;
 use App\Filters\General\Filters\Product\StoreProductOutOfQuantityFilter;
