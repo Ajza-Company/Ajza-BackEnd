@@ -27,12 +27,7 @@ class S_TeamController extends Controller
      */
     public function index()
     {
-        try {
-            dd(userCompany());
-            return S_TeamResource::collection(userCompany()?->users()->with(['permissions', 'store'])->get());
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
-        }
+        return S_TeamResource::collection(userCompany()?->users()->with(['permissions', 'store'])->get());
     }
 
     /**
