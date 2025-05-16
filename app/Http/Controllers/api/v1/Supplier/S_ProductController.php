@@ -45,13 +45,13 @@ class S_ProductController extends Controller
             $store = $this->findStore->find(decodeString($store_id));
             return S_ShortStoreProductResource::collection(
                 $store
-                    ->storeProducts()
+                    ?->storeProducts()
                     ->whereHas('product.localized')
                     ->with(['product' => ['localized']])
                     ->filter(\request())
                     ->adaptivePaginate());
         } catch (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e) {
-            return response()->json(['message' => "No query results for model [App\\Models\\Store] $store_id"], Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => "Store not found"], Response::HTTP_NOT_FOUND);
         }
     }
     public function store(S_CreateProductRequest $request,string $store_id)
