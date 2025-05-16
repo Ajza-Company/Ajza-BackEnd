@@ -9,7 +9,6 @@ use App\Services\Admin\Setting\F_CreateSettingService;
 use App\Http\Requests\v1\Admin\Setting\A_CreateSettingRequest;
 use App\Http\Requests\v1\Admin\Setting\A_UpdateSettingRequest;
 use App\Http\Resources\v1\Admin\Setting\A_ShortSettingResource;
-use Illuminate\Http\Response;
 
 class A_SettingController extends Controller
 {
@@ -22,9 +21,9 @@ class A_SettingController extends Controller
         $setting = Setting::latest()->first();
 
         if (!$setting) {
-            return response()->json([
-                'message' => 'Setting not found'
-            ], Response::HTTP_NOT_FOUND);
+            return [
+                'setting' => []
+            ];
         }
 
        return A_ShortSettingResource::make($setting);
