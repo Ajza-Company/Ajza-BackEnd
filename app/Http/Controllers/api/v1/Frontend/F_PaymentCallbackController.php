@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers\api\v1\Frontend;
 
+use App\Enums\OrderDeliveryMethodEnum;
 use App\Enums\OrderStatusEnum;
 use App\Events\v1\Frontend\F_OrderCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\TransactionAttempt;
+use App\Services\Delivery\OtoGateway;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 
 class F_PaymentCallbackController extends Controller
 {
+    public function __construct(private OtoGateway $otoGateway)
+    {
+
+    }
+
     /**
      * Handle the incoming request.
+     * @throws ConnectionException
      */
     public function __invoke(Request $request)
     {
@@ -33,6 +42,17 @@ class F_PaymentCallbackController extends Controller
                 $transaction->order->update([
                     'status' => OrderStatusEnum::ACCEPTED
                 ]);
+
+                // decrement product quantity
+                foreach ($transaction->order->orderProducts as $orderProduct) {
+                    $orderProduct->storeProduct->decrement('quantity', $orderProduct->quantity);
+                }
+
+                // create delivery shipment
+                if ($transaction->order->delivery_method == OrderDeliveryMethodEnum::DELIVERY) {
+                    // $shipment = $this->otoGateway->createShipment($transaction->order);
+                    //\Log::info('shipment: '.json_encode($shipment));
+                }
 
                 return response()->json([
                     'status' => true,

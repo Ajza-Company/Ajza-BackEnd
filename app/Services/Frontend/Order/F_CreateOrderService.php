@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Notifications\OrderNotification;
 use App\Repositories\Frontend\Order\Create\F_CreateOrderInterface;
 use App\Repositories\Frontend\OrderProduct\Insert\F_InsertOrderProductInterface;
+use App\Services\Delivery\OtoGateway;
 use App\Services\Payment\ClickPayGateway;
 use App\Services\Payment\PaymentService;
 use Carbon\Carbon;
@@ -30,10 +31,12 @@ class F_CreateOrderService
     /**
      * @param F_CreateOrderInterface $createOrder
      * @param F_InsertOrderProductInterface $insertOrderProduct
+     * @param OtoGateway $otoGateway
      */
     public function __construct(
         private F_CreateOrderInterface $createOrder,
-        private F_InsertOrderProductInterface $insertOrderProduct
+        private F_InsertOrderProductInterface $insertOrderProduct,
+        private OtoGateway $otoGateway
     ) {
     }
 
@@ -94,6 +97,12 @@ class F_CreateOrderService
                 'paymob_iframe_token' => $result->redirectUrl
             ]);
 
+            // create delivery shipment
+            if ($transaction->order->delivery_method == OrderDeliveryMethodEnum::DELIVERY) {
+                \Log::info('start creating shipment');
+                $shipment = $this->otoGateway->createShipment($transaction->order);
+                \Log::info('shipment: '.json_encode($shipment));
+            }
             \DB::commit();
             return response()->json(
                 successResponse(
