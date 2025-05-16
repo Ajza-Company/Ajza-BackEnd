@@ -15,4 +15,5 @@ return [
     'products_created_successfully'=>'تم انشاء المنتج بنجاح',
     'Insufficient_wallet_balance'=>'المحفظة غير كافية',
     'products_quantity_updated_successfully'=>'تم تحديث كمية المنتج بنجاح',
+    'products_price_updated_successfully'=>'تم تحديث سعر المنتج بنجاح',
 ];

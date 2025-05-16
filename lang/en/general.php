@@ -15,4 +15,5 @@ return [
     'products_created_successfully'=>'Product Created Successfully',
     'Insufficient_wallet_balance'=>'Insufficient wallet balance',
     'products_quantity_updated_successfully'=>'Product Quantity Updated Successfully',
+    'products_price_updated_successfully'=>'Product Price Updated Successfully',
 ];

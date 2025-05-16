@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::get('/', [S_StoreController::class, 'index']);
         Route::post('create', [S_StoreController::class, 'store']);
         Route::post('update/quantity', [S_SelectProductController::class, 'updateQuantity']);
+        Route::post('update/price', [S_SelectProductController::class, 'updatePrice']);
         Route::prefix('{store_id}')->group(function () {
             Route::post('update', [S_StoreController::class, 'update']);
             Route::get('transactions', S_TransactionController::class);

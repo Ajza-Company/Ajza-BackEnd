@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\api\v1\Supplier;
 
+use App\Http\Requests\v1\Supplier\Product\UpdatePriceProductRequest;
 use App\Http\Requests\v1\Supplier\Product\UpdateQuantityProductRequest;
+use App\Services\Supplier\Product\S_UpdateProductPriceService;
 use App\Services\Supplier\Product\S_UpdateProductQuantityService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,6 +24,7 @@ class S_SelectProductController extends Controller
      */
     public function __construct(private S_FindStoreInterface $findStore,
                                 private S_UpdateProductQuantityService $updateProductQuantity,
+                                private S_UpdateProductPriceService $updateProductPrice,
                                 private S_CreateSelectProductService $createProduct)
     {
 
@@ -77,5 +80,9 @@ class S_SelectProductController extends Controller
 
     public function updateQuantity(UpdateQuantityProductRequest $request){
         return $this->updateProductQuantity->updateQuantity($request->validated());
+    }
+
+    public function updatePrice(UpdatePriceProductRequest $request){
+        return $this->updateProductPrice->updatePrice($request->validated());
     }
 }
