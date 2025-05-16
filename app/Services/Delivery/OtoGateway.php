@@ -27,7 +27,6 @@ class OtoGateway
     public function createShipment(Order $order)
     {
         $accessToken = $this->generateAccessToken();
-        dd($accessToken);
         return $this->createOrder($accessToken, $order);
     }
 
@@ -36,14 +35,11 @@ class OtoGateway
      */
     public function generateAccessToken()
     {
-        dd($this->baseUrl . 'refreshToken');
         $response = Http::withHeaders([
             'Accept' => 'application/json',
         ])->post($this->baseUrl . 'refreshToken', [
             'refresh_token' => $this->refreshToken
         ]);
-
-        dd($response->json());
 
         if ($response->successful() && $response->json()->success) {
             return $response->json()->access_token;
