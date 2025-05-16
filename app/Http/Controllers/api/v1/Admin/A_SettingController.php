@@ -20,6 +20,12 @@ class A_SettingController extends Controller
     public function index()  {
         $setting = Setting::latest()->first();
 
+        if (!$setting) {
+            return [
+                'setting' => []
+            ];
+        }
+
        return A_ShortSettingResource::make($setting);
     }
 
