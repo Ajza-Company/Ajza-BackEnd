@@ -45,6 +45,14 @@ return [
         ]
 
     ],
+    'delivery' => [
+        'default' => env('DEFAULT_DELIVERY_GATEWAY', 'oto'),
+        'oto' => [
+            'base_url' => env('OTO_BASE_URL'),
+            'refresh_token' => env('OTO_REFRESH_TOKEN')
+        ]
+
+    ],
     'sms' => [
         'default' => env('SMS_PROVIDER', 'provider1'),
 
