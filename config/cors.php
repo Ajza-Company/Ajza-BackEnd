@@ -47,5 +47,5 @@ return [
     'max_age' => 86400, // 24 hours
 
     // Enable cookies and authentication headers (important for auth endpoints)
-    'supports_credentials' => true,
+    'supports_credentials' => true
 ];
