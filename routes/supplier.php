@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\Supplier\{S_AuthController,
+    S_CompanyCarBrandController,
     S_CompanyController,
     S_LocationTrackingController,
     S_OfferController,
@@ -38,6 +39,7 @@ Route::middleware(['guest:sanctum', SetLocale::class])->group(function () {
 Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('permissions', S_PermissionController::class);
     Route::get('store-details', S_CompanyController::class);
+    Route::get('company-car-brands', S_CompanyCarBrandController::class);
     Route::post('orders/{order_id}/take-action', [S_OrderController::class, 'takeAction']);
     Route::get('orders/{order_id}/details', [S_OrderController::class, 'details']);
     Route::prefix('stores')->group(function () {
