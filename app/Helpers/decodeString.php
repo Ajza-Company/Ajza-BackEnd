@@ -11,6 +11,7 @@ if (!function_exists('decodeString')) {
      */
     function decodeString(string $encodedValue, string $method = EncodingMethodsEnum::HASHID): ?string
     {
+        return (string)$encodedValue;
         return match ($method) {
             'hashid' => decodeHashid($encodedValue),
             'crypt' => decodeCrypt($encodedValue),
