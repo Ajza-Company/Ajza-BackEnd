@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->json('car_brand_id')->nullable()->after('parent_id');
+        Schema::table('companies', function (Blueprint $table) {
+            $table->json('car_brand_id')->nullable()->after('category_id');
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
             $table->dropColumn('car_brand_id');
         });
     }
