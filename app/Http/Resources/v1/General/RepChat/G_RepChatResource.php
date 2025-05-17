@@ -23,6 +23,7 @@ class G_RepChatResource extends JsonResource
             'user1' => $this->getUserResource($this->user1, $this->order),
             'user2' => $this->getUserResource($this->user2, $this->order),
             'latest_message' => G_RepChatMessageResource::make($this->whenLoaded('latestMessage')),
+            'tracking_started' => $this->order->tracking !== null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

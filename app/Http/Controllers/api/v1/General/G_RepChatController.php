@@ -75,7 +75,7 @@ class G_RepChatController extends Controller
 
         $chat->load(['user1', 'user2']);
 
-        return G_RepChatResource::make($chat);
+        return G_RepChatResource::make($chat->load('order.tracking'));
     }
 
     /**
