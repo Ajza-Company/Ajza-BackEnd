@@ -34,9 +34,9 @@ class S_LocationTrackingController extends Controller
     {
         $order = $this->findOrder->find(decodeString($rep_order_id));
 
-        $trackingFirst = $order->tracking()->latest()->first();
+        $trackingFirst = $order->tracking()->first();
         $trackingLast = $order->address;
-        $trackingCurrent = $order->tracking()->first();
+        $trackingCurrent = $order->tracking()->latest()->first();
 
         return[
             'first' => [
