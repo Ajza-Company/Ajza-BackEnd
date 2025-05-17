@@ -9,7 +9,7 @@ if (!function_exists('decodeString')) {
     /**
      * Returns decoded Item
      */
-    function decodeString(string $encodedValue, string $method = EncodingMethodsEnum::HASHID): ?string
+    function decodeString(string $encodedValue, string $method = EncodingMethodsEnum::HASHID)
     {
         return (int)$encodedValue;
         return match ($method) {
