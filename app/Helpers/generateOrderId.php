@@ -16,14 +16,14 @@ if (!function_exists('generateOrderId')) {
         $timestamp = now()->format('YmdHis');
 
         // Generate a random number between 1000000-9999999
-        $random = rand(10000, 99999);
+        $random = rand(1000, 9999);
 
         // Combine prefix, timestamp and random number
         $orderId = '#'. strtoupper($categoryPrefix) . $timestamp . $random;
 
         // Check if order ID already exists (just to be extra safe)
         while (Order::where('order_id', $orderId)->exists()) {
-            $random = rand(10000, 99999);
+            $random = rand(1000, 9999);
             $orderId = strtoupper($categoryPrefix) . '_' . $timestamp . $random;
         }
 
