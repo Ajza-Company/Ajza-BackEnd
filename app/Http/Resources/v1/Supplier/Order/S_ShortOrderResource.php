@@ -18,6 +18,7 @@ class S_ShortOrderResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
+            'order_number' => $this->order_id,
             'status' => $this->status,
             'delivery_method' => $this->delivery_method,
             'date' => $this->created_at,
