@@ -58,6 +58,8 @@ class A_CreateCompanyRequest extends FormRequest
 
             'company.country_id' => 'required|integer|exists:countries,id',
             'company.email' => 'required|email|max:50|unique:companies,email',
+            'company.car_brand_id' => 'required|array|min:1',
+            'company.car_brand_id.*' => 'required_with:company.car_brand_id|integer|exists:car_brands,id',
             'company.phone' => 'sometimes|string|max:20|unique:companies,phone',
             'company.logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'company.cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -80,5 +82,6 @@ class A_CreateCompanyRequest extends FormRequest
         $this->decodeInput('company.country_id');
         $this->decodeInput('company.localized.*.local_id');
         $this->decodeInput('company.category_id');
+        $this->decodeSimpleArrayInput('company.car_brand_id.*');
     }
 }
