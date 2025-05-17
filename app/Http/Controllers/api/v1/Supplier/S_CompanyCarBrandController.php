@@ -15,6 +15,10 @@ class S_CompanyCarBrandController extends Controller
     {
         $company = userCompany();
 
+        if (is_null($company->car_brand_id)) {
+            return response()->json(['message' => 'Company has no car brands'], 404);
+        }
+
         $brandIds = json_decode($company->car_brand_id, true);
 
         return  F_CarBrandResource::collection(CarBrand::whereIn('id', $brandIds)->get());
