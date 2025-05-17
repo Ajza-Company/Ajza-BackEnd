@@ -97,12 +97,6 @@ class F_CreateOrderService
                 'paymob_iframe_token' => $result->redirectUrl
             ]);
 
-            // create delivery shipment
-            if ($transaction->order->delivery_method == OrderDeliveryMethodEnum::DELIVERY) {
-                \Log::info('start creating shipment');
-                $shipment = $this->otoGateway->createShipment($transaction->order);
-                \Log::info('shipment: '.json_encode($shipment));
-            }
             \DB::commit();
             return response()->json(
                 successResponse(
