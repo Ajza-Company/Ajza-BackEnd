@@ -9,6 +9,7 @@ if (!function_exists('encodeString')) {
      */
     function encodeString(?string $value, string $method = EncodingMethodsEnum::HASHID): ?string
     {
+        return (string)$value;
         if (!$value) {
             return null;
         }
