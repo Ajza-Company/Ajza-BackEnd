@@ -58,7 +58,7 @@ class CreateCompanyServices
             $user = $this->createUser($data['user']);
 
             \Log::info('create company user: '.json_encode($user));
-
+            $data['company']['car_brand_id'] = json_encode($data['company']['car_brand_id']);
             $company = $this->createCompany($data['company'],$user);
             \Log::info('create company company: '.json_encode($company));
 
@@ -128,6 +128,7 @@ class CreateCompanyServices
             'commercial_register'=>$data['commercial_register'],
             'vat_number'=>$data['vat_number'],
             'commercial_register_file'=>$commercialRegisterFile,
+            'car_brand_id'=>$data['car_brand_id'],
         ]);
 
         foreach($data['localized'] as $local){

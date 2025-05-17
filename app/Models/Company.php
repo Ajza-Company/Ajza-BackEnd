@@ -79,6 +79,12 @@ class Company extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function getCarBrandIdsAttribute()
+    {
+        return json_decode($this->attributes['car_brand_id'] ?? '[]', true);
+    }
+
+
     /**
      * Filter Scope
      *

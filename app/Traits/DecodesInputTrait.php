@@ -62,10 +62,10 @@ trait DecodesInputTrait
         foreach ($array as $index => $value) {
             if ($value && function_exists('decodeString')) {
                 $decoded = decodeString($value);
-                $array[$index] = $decoded;
+                $array[$index] =(int) $decoded;
             }
         }
-
+        
         // Update the request with the modified array
         $this->merge([$arrayKey => $array]);
     }
