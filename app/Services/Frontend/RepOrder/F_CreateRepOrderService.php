@@ -35,7 +35,7 @@ class F_CreateRepOrderService
         try {
             $order = $this->createRepOrder->create([
                 'user_id' => $user->id,
-                'order_number' => generateOrderId('REP'),
+                'order_number' => generateOrderId('REP', 'rep'),
                 ...$data['data']
             ]);
 

@@ -60,6 +60,7 @@ class F_CreateOrderService
                 'store_id' => $store->id,
                 'status' => OrderStatusEnum::PENDING,
                 'delivery_method' => $data['delivery_method'],
+                'payment_method' => $data['payment_method'],
                 'amount' => 0, // Initial amount set to 0
                 'address_id' => $data['delivery_method'] == OrderDeliveryMethodEnum::DELIVERY ? $data['address_id'] : null,
                 'ajza_percentage' => ajzaSetting()->order_percentage

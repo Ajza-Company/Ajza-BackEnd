@@ -40,6 +40,15 @@ class Company extends Model
 
     /**
      *
+     * @return HasManyThrough
+     */
+    public function orders(): HasManyThrough
+    {
+        return $this->hasManyThrough(Order::class, Store::class, 'company_id', 'id', 'id', 'store_id');
+    }
+
+    /**
+     *
      * @return BelongsTo
      */
     public function user(): BelongsTo
