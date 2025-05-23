@@ -20,18 +20,18 @@ if (!function_exists('generateOrderId')) {
         $random = rand(100, 999);
 
         // Combine prefix, timestamp and random number
-        $orderId = '#'. strtoupper($categoryPrefix) . $timestamp . $random;
+        $orderId = strtoupper($categoryPrefix) . $timestamp . $random;
 
         // Check if order ID already exists (just to be extra safe)
         if ($type === 'normal') {
             while (Order::where('order_id', $orderId)->exists()) {
                 $random = rand(100, 999);
-                $orderId = '#'. strtoupper($categoryPrefix) . $timestamp . $random;
+                $orderId = strtoupper($categoryPrefix) . $timestamp . $random;
             }
         }elseif ($type === 'rep') {
             while (RepOrder::where('order_number', $orderId)->exists()) {
                 $random = rand(100, 999);
-                $orderId = '#'. strtoupper($categoryPrefix) . $timestamp . $random;
+                $orderId = strtoupper($categoryPrefix) . $timestamp . $random;
             }
         }
 
