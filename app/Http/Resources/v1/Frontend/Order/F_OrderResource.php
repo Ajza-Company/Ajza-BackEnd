@@ -21,8 +21,8 @@ class F_OrderResource extends JsonResource
                 return [
                     'amount' => $this->orderProducts->sum('amount'),
                     'discount' => $this->orderProducts->sum('discount'),
-                    'delivery_fees' => 10.00,
-                    'total' => $this->orderProducts->sum('amount') + 10.00,
+                    'delivery_fees' => 0.0,
+                    'total' => $this->orderProducts->sum('amount'),
                 ];
             }),
             'delivery_method' => $this->delivery_method
