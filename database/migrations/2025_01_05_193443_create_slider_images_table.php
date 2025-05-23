@@ -15,7 +15,7 @@ return new class extends Migration
             $table->engine = "InnoDB";
 
             $table->id();
-            $table->foreignId('locale_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('locale_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('image', 255)->nullable();
             $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);

@@ -76,7 +76,7 @@ class F_CreateOrderService
             // Update the order with the total amount
             $order = tap($order)->update(['amount' => $totalAmount]);
 
-            $transaction = TransactionAttempt::create([
+            /*$transaction = TransactionAttempt::create([
                 'order_id' => $order->id,
                 'amount' => $totalAmount,
                 'type' => 'manual',
@@ -96,16 +96,13 @@ class F_CreateOrderService
 
             $transaction->update([
                 'paymob_iframe_token' => $result->redirectUrl
-            ]);
+            ]);*/
 
             \DB::commit();
             return response()->json(
                 successResponse(
                     message: trans(SuccessMessagesEnum::CREATED),
-                    data: F_ShortOrderResource::make($order),
-                    additional_data: [
-                        'redirectUrl' => $result->redirectUrl
-                    ]));
+                    data: F_ShortOrderResource::make($order)));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(

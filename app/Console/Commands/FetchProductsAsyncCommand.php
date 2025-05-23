@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Category;
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Http;
 use App\Models\CarModel;
 use App\Models\CarBrand;
@@ -29,7 +28,7 @@ class FetchProductsAsyncCommand extends Command
         $subCategories = Category::whereNotNull('parent_id')->get();
         $this->info('Starting to fetch products...');
 
-        $activeBrands = CarBrand::where('is_active', true)->where('id', '>', 8)->get();
+        $activeBrands = CarBrand::all();
         $this->info("Found " . $activeBrands->count() . " active car brands");
 
         $enLocaleId = 1;
@@ -64,12 +63,15 @@ class FetchProductsAsyncCommand extends Command
                     $this->info("    Processing year: {$year} (ID: {$yearData['id']})");
 
                     foreach ($subCategories as $category) {
+                        $this->info("      Processing category: {$category->name} (ID: {$category->external_id})");
                         $pool->add(function () use ($category, $carModel, $brand, $year, $yearData, $enLocaleId, $arLocaleId) {
                             $currentPage = 1;
                             $totalPages = 1;
 
                             while ($currentPage <= $totalPages) {
+                                $this->info("        Fetching page {$currentPage}...");
                                 try {
+                                    $this->info("        Fetching page {$currentPage}...");
                                     $response = $this->fetchProducts($category->external_id, $yearData['id'], $currentPage);
 
                                     if (!isset($response['data']['products'])) {
@@ -146,6 +148,7 @@ class FetchProductsAsyncCommand extends Command
                                     }
                                 } catch (\Exception $e) {
                                     // Log or handle error
+                                    $this->error("Error: Brand {$brand->id}, Model {$carModel->id}, Year {$year}, Category {$category->id}: " . $e->getMessage());
                                     continue;
                                 }
                             }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->foreignId('car_brand_id')->constrained()->cascadeOnDelete();
             $table->foreignId('car_model_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('car_type_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('car_type_id')->nullable()->constrained()->cascadeOnDelete();
 
             $table->timestamps();
         });
