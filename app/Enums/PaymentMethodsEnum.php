@@ -11,6 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class PaymentMethodsEnum extends Enum
 {
-    const VISA = 'visa';
+    const CARD = 'card';
+    const APPLE_PAY = 'apple_pay';
     const WALLET = 'wallet';
 }

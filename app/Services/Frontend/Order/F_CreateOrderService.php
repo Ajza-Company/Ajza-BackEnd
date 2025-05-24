@@ -60,6 +60,7 @@ class F_CreateOrderService
                 'store_id' => $store->id,
                 'status' => OrderStatusEnum::PENDING,
                 'delivery_method' => $data['delivery_method'],
+                'payment_method' => $data['payment_method'],
                 'amount' => 0, // Initial amount set to 0
                 'address_id' => $data['delivery_method'] == OrderDeliveryMethodEnum::DELIVERY ? $data['address_id'] : null,
                 'ajza_percentage' => ajzaSetting()->order_percentage
@@ -75,7 +76,7 @@ class F_CreateOrderService
             // Update the order with the total amount
             $order = tap($order)->update(['amount' => $totalAmount]);
 
-            $transaction = TransactionAttempt::create([
+            /*$transaction = TransactionAttempt::create([
                 'order_id' => $order->id,
                 'amount' => $totalAmount,
                 'type' => 'manual',
@@ -95,16 +96,13 @@ class F_CreateOrderService
 
             $transaction->update([
                 'paymob_iframe_token' => $result->redirectUrl
-            ]);
+            ]);*/
 
             \DB::commit();
             return response()->json(
                 successResponse(
                     message: trans(SuccessMessagesEnum::CREATED),
-                    data: F_ShortOrderResource::make($order),
-                    additional_data: [
-                        'redirectUrl' => $result->redirectUrl
-                    ]));
+                    data: F_ShortOrderResource::make($order)));
         } catch (\Exception $ex) {
             \DB::rollBack();
             return response()->json(

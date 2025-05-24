@@ -25,6 +25,7 @@ class CategorySeeder extends Seeder
             [
                 "name" => "Car Parts",
                 "name_ar" => "قطع غيار السيارات",
+                "order_prefix" => "CP",
                 "subCategory" => [
                     [
                         "name" => "Oil Filters",
@@ -102,21 +103,25 @@ class CategorySeeder extends Seeder
             ],
             [
                 "name" => "Oils and filters",
-                "name_ar" => "الزيوت والفلاتر"
+                "name_ar" => "الزيوت والفلاتر",
+                "order_prefix" => "OF"
             ],
             [
                 "name" => "Car Covers",
-                "name_ar" => "كفرات السيارات"
+                "name_ar" => "كفرات السيارات",
+                "order_prefix" => "CC"
             ],
             [
                 "name" => "Decorations and accessories",
-                "name_ar" => "الزينة والاكسسوارات"
+                "name_ar" => "الزينة والاكسسوارات",
+                "order_prefix" => "DA"
             ]
         ];
 
         foreach ($categories as $category) {
             // Insert parent category
             $categoryId = DB::table('categories')->insertGetId([
+                'order_prefix' => $category['order_prefix'],
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);

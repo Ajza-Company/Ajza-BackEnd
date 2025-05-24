@@ -21,8 +21,7 @@ class PermissionSeeder extends Seeder
 
         foreach ($roles as $value) {
             Permission::updateOrCreate(
-                ['name' => $value->name,
-                    "friendly_name" => $value->friendly_name],
+                ['name' => $value->name, "friendly_name" => $value->friendly_name],
                 [
                     "group_name" => $value->group_name,
                     "guard_name" => $value->guard_name,

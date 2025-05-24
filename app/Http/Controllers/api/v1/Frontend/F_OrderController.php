@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\api\v1\Frontend;
 
 use App\Enums\ErrorMessageEnum;
+use App\Enums\OrderDeliveryMethodEnum;
+use App\Enums\OrderStatusEnum;
 use App\Enums\SuccessMessagesEnum;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Frontend\Order\F_CancelOrderRequest;
 use App\Http\Requests\v1\Frontend\Order\F_CreateOrderRequest;
 use App\Http\Requests\v1\Frontend\Order\F_GetInvoiceRequest;
+use App\Http\Requests\v1\Frontend\Order\F_SuccessPayRequest;
 use App\Http\Resources\v1\Frontend\Order\F_OrderResource;
 use App\Http\Resources\v1\Frontend\Order\F_ShortOrderResource;
+use App\Models\Order;
 use App\Models\PromoCode;
 use App\Models\StoreProduct;
+use App\Models\TransactionAttempt;
 use App\Repositories\Frontend\Order\Find\F_FindOrderInterface;
 use App\Repositories\Frontend\Store\Find\F_FindStoreInterface;
 use App\Services\Frontend\Order\F_CancelOrderService;
@@ -195,5 +200,47 @@ class F_OrderController extends Controller
     {
         $orders = auth('api')->user()->orders()->with(['orderProducts' => ['storeProduct'], 'store'])->filter(\request())->latest()->get();
         return new OrderExport($orders);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function successPay(string $order_id, F_SuccessPayRequest $request)
+    {
+        $data = $request->validated();
+        $order = Order::whereOrderId($order_id)->first();
+        if (!$order) {
+            return response()->json(
+                errorResponse(message: trans('Order not found')),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        TransactionAttempt::create([
+            'order_id' => $order->id,
+            'amount' => $data['amount'],
+            'type' => 'manual',
+            'currency_code' => 'SAR',
+            'payment_status' => true,
+            'status' => 'paid',
+            'paymob_transaction_id' => $data['transaction_id']
+        ]);
+
+        $order->update([
+            'status' => OrderStatusEnum::ACCEPTED
+        ]);
+
+        foreach ($order->orderProducts as $orderProduct) {
+            $orderProduct->storeProduct->decrement('quantity', $orderProduct->quantity);
+        }
+
+        if ($order->delivery_method == OrderDeliveryMethodEnum::DELIVERY) {
+            // $shipment = $this->otoGateway->createShipment($transaction->order);
+            //\Log::info('shipment: '.json_encode($shipment));
+        }
+        return response()->json(
+            successResponse(message: trans(SuccessMessagesEnum::VERIFIED)),
+            Response::HTTP_OK
+        );
     }
 }

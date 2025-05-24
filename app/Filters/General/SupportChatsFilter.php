@@ -4,7 +4,7 @@ namespace App\Filters\General;
 
 use App\Filters\FilterClass;
 use App\Filters\General\Filters\SupportChatStatusFilter;
-use App\Filters\Admin\Filters\User\SupportChatUserRoleFilter;
+use App\Filters\General\Filters\SupportChatUserRoleFilter;
 
 class SupportChatsFilter extends FilterClass
 {

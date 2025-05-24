@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use Faker\Factory as Faker;
 class UserSeeder extends Seeder
 {
@@ -16,52 +15,21 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $store_owner = User::create([
+        $permissions = json_decode(File::get("database/data/permissions.json"));
+
+        $admin = User::create([
             "name" => 'store',
             'email' => 'store@ajza.net',
-            'full_mobile' => '+966553275000',
+            'full_mobile' => '+966553275003',
             'password' => '1Alqarawi1',
             'is_active' => true,
             'is_registered' => true,
         ]);
 
-        $store_owner->assignRole(RoleEnum::SUPPLIER);
-
-        // Assign all supplier permissions
-        $permissions = [
-            PermissionEnum::SHOW_ALL_PERMISSIONS,
-            PermissionEnum::VIEW_ORDERS,
-            PermissionEnum::ACCEPT_ORDERS,
-            PermissionEnum::VIEW_OFFERS,
-            PermissionEnum::CONTROL_OFFER,
-            PermissionEnum::VIEW_USERS,
-            PermissionEnum::EDIT_USERS,
-            PermissionEnum::VIEW_STORES,
-            PermissionEnum::EDIT_STORES,
-            PermissionEnum::VIEW_CATEGORIES,
-            PermissionEnum::EDIT_CATEGORIES,
-            PermissionEnum::VIEW_PRODUCTS,
-            PermissionEnum::EDIT_PRODUCTS,
-            PermissionEnum::VIEW_ORDERS_STATISTICS,
-        ];
+        $admin->assignRole(RoleEnum::ADMIN);
 
         foreach ($permissions as $permission) {
-            $store_owner->givePermissionTo($permission);
+            $admin->syncPermissions([$permission->name]);
         }
-
-        // Create representative user
-        $representative = User::create([
-            "name" => 'representative',
-            'email' => 'representative@ajza.net',
-            'full_mobile' => '+966553275001',
-            'password' => '1Alqarawi1',
-            'is_active' => true,
-            'is_registered' => true,
-        ]);
-
-        $representative->assignRole(RoleEnum::REPRESENTATIVE);
-
-        User::factory()->count(100)->create();
-
     }
 }
