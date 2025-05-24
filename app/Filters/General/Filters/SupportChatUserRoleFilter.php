@@ -17,11 +17,12 @@ class SupportChatUserRoleFilter
      */
     public function filter(Builder $builder, $value): ?Builder
     {
-        if (in_array($value, RoleEnum::asArray())) {
-            return $builder->whereHas('user', function ($q) use ($value) {
-                $q->whereHas('roles', fn ($q) => $q->where('name', $value));
+
+            return $builder->whereHas('user', function ($userQuery) use ($value) {
+                $userQuery->whereHas('roles', function ($roleQuery) use ($value) {
+                    $roleQuery->where('name', 'LIKE', "%{$value}%");
+                });
             });
-        }
-        return null;
+
     }
 }
