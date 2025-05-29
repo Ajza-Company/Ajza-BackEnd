@@ -34,7 +34,7 @@ class A_CreateCategoryService
         \DB::beginTransaction();
         try {
 
-            $existingCategory = CategoryLocale::where(function($query) use ($data) {
+            /*$existingCategory = CategoryLocale::where(function($query) use ($data) {
                 $query->where(['name' => $data['localized'][0]['name'], 'locale_id' => $data['localized'][0]['local_id']])
                     ->orWhere(['name' => $data['localized'][1]['name'], 'locale_id' => $data['localized'][1]['local_id']]);
             })->first();
@@ -44,7 +44,7 @@ class A_CreateCategoryService
                     message: 'Category already exists',
                     error: 'category already exists'),
                     Response::HTTP_BAD_REQUEST);
-            }
+            }*/
 
             $category = Category::create([
                 'parent_id' => isset($data['parent_id']) ? $data['parent_id'] : null,
