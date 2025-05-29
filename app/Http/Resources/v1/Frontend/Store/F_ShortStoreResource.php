@@ -29,7 +29,7 @@ class F_ShortStoreResource extends JsonResource
             'id' => encodeString($this->id),
             'name' => $this->company?->localized?->name,
             'rate' => 4.3,
-            'image' => $this->image,
+            'image' => getFullUrl($this->company?->cover_image),
             'distanceAndTime' => '',
             'address' => $localizedDistance,
             'is_open' => true
