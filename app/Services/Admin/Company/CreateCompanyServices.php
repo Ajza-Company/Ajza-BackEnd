@@ -109,13 +109,13 @@ class CreateCompanyServices
         $coverImage = null;
         $commercialRegisterFile = null;
         if (isset($data['logo'])) {
-            $logo = uploadFile('company/logo',$data['logo'],);
+            $logo = uploadFile('company/logo', $data['logo'], 'public');
         }
         if (isset($data['cover_image'])) {
-            $coverImage = uploadFile('company/cover_image',$data['cover_image'],);
+            $coverImage = uploadFile('company/cover_image', $data['cover_image'], 'public');
         }
         if (isset($data['commercial_register_file'])) {
-            $commercialRegisterFile = uploadFile('company/commercial_register_file',$data['commercial_register_file'],);
+            $commercialRegisterFile = uploadFile('company/commercial_register_file', $data['commercial_register_file'], 'public');
         }
 
         $company = $this->createCompany->create([
