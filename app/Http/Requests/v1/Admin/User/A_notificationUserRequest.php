@@ -39,6 +39,8 @@ class A_notificationUserRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->decodeInput('users.*');
+        if (isset($this->users)) {
+            $this->decodeInput('users.*');
+        }
     }
 }
