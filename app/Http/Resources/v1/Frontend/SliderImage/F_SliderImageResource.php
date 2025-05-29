@@ -16,7 +16,7 @@ class F_SliderImageResource extends JsonResource
     {
         return [
             'id' => encodeString($this->id),
-            'image' => $this->image,
+            'image' => $this->getFirstMediaUrl('sliders'),
         ];
     }
 }
