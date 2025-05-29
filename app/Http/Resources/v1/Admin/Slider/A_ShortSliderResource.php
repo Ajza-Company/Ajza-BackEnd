@@ -14,7 +14,6 @@ class A_ShortSliderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        dd($this->getFirstMediaUrl('sliders'));
         return [
             'id' => encodeString($this->id),
             'image' => $this->getFirstMediaUrl('sliders'),
