@@ -39,6 +39,8 @@ class F_UpdateRepSalesRequest extends FormRequest
             ],
             'password' => 'sometimes|min:8',
             'avatar' => 'sometimes|nullable|file|max:2408',
+            'gender' => 'sometimes|string|in:male,female',
+            // 'country_id' => 'sometimes|integer|exists:countries,id',
             'city_id' => 'required|integer|exists:states,id',
         ];
     }
@@ -49,6 +51,7 @@ class F_UpdateRepSalesRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->decodeInput('city_id');
+        // $this->decodeInput('country_id');
         $this->merge([
             'id' => decodeString($this->route('id')), // Decode the ID and merge it back into the request
         ]);

@@ -108,12 +108,14 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
         Route::delete('{id}', [A_SliderController::class, 'destroy']);
     });
 
+    // Category Routes
     Route::get('categories', [A_CategoryController::class, 'index']);
     Route::post('category/create', [A_CategoryController::class, 'store']);
     Route::post('category/update/{id}', [A_CategoryController::class, 'update']);
     Route::post('category/destroy/{id}', [A_CategoryController::class, 'destroy']);
     Route::get('category/show/{id}', [A_CategoryController::class, 'show']);
 
+    // Sub Category Routes
     Route::get('sub-categories/{category_id}', [A_SubCategoryController::class, 'index']);
     Route::post('sub-category/create', [A_SubCategoryController::class, 'store']);
     Route::post('sub-category/update/{id}', [A_SubCategoryController::class, 'update']);

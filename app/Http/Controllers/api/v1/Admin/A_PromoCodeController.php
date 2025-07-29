@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Admin\PromoCode\CreatePromoCodeServices;
 use App\Services\Admin\PromoCode\DeletePromoCodeServices;
 use App\Http\Requests\v1\Admin\PromoCode\A_CreatePromoCodeRequest;
+use App\Http\Requests\v1\Admin\PromoCode\A_UpdatePromoCodeRequest;
 use App\Http\Resources\v1\Admin\PromoCode\A_ShortPromoCodeResource;
 use App\Repositories\Admin\PromoCode\Fetch\A_FetchPromoCodeInterface;
 use App\Repositories\Admin\PromoCode\Find\A_FindPromoCodeInterface;
@@ -57,9 +58,17 @@ class A_PromoCodeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(A_UpdatePromoCodeRequest $request, string $id)
     {
-        //
+        $promoCode = $this->findPromoCode->find(decodeString($id));
+        
+        $promoCode->update($request->validated());
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'تم تحديث كود الخصم بنجاح',
+            'data' => A_ShortPromoCodeResource::make($promoCode)
+        ]);
     }
 
     /**
