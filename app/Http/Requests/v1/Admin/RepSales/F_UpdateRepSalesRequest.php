@@ -46,6 +46,32 @@ class F_UpdateRepSalesRequest extends FormRequest
     }
 
     /**
+     * Get the validation error messages.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'الاسم مطلوب',
+            'name.string' => 'الاسم يجب أن يكون نص',
+            'email.required' => 'البريد الإلكتروني مطلوب',
+            'email.email' => 'البريد الإلكتروني غير صحيح',
+            'email.unique' => 'البريد الإلكتروني مستخدم من قبل',
+            'full_mobile.string' => 'رقم الهاتف يجب أن يكون نص',
+            'full_mobile.unique' => 'رقم الهاتف مستخدم من قبل',
+            'password.min' => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
+            'avatar.file' => 'الصورة الشخصية يجب أن تكون ملف',
+            'avatar.max' => 'حجم الصورة الشخصية يجب ألا يتجاوز 2408 كيلوبايت',
+            'gender.string' => 'الجنس يجب أن يكون نص',
+            'gender.in' => 'الجنس يجب أن يكون ذكر أو أنثى',
+            'city_id.required' => 'المدينة مطلوبة',
+            'city_id.integer' => 'المدينة يجب أن تكون رقم صحيح',
+            'city_id.exists' => 'المدينة المحددة غير موجودة',
+        ];
+    }
+
+    /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation(): void

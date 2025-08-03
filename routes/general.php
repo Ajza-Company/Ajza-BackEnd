@@ -7,6 +7,7 @@ use App\Http\Controllers\api\v1\General\{
     G_CancelOrderController,
     G_NotificationController,
     G_RepChatController,
+    G_SettingsController,
     G_SupportChatController,
     G_StateController,
     G_CountryController,
@@ -65,6 +66,19 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::get('Statistics',G_StatisticsController::class);
+
+    // Settings Routes
+    Route::prefix('settings')->group(function () {
+        Route::get('/', [G_SettingsController::class, 'index']);
+        Route::post('/', [G_SettingsController::class, 'store']);
+        Route::get('/terms', [G_SettingsController::class, 'getTerms']);
+        Route::get('/order-settings', [G_SettingsController::class, 'getOrderSettings']);
+        Route::post('/multiple', [G_SettingsController::class, 'updateMultiple']);
+        Route::post('/order-settings', [G_SettingsController::class, 'updateOrderSettings']);
+        Route::get('/{key}', [G_SettingsController::class, 'show']);
+        Route::put('/{key}', [G_SettingsController::class, 'update']);
+        Route::delete('/{key}', [G_SettingsController::class, 'destroy']);
+    });
 
     // Support Chat Routes
     Route::prefix('support')->middleware(['auth:sanctum'])->group(function () {

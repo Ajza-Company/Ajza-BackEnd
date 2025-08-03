@@ -88,13 +88,18 @@ if (!function_exists('uploadFiles')) {
      */
     function storeFile(string $directory, UploadedFile $file, string $disk = null): string
     {
+               Log::alert('Disk ->  amr : ' . $file);
+ 
         // Store file in local storage and return the file path
         Log::alert('is file an instance of UploadedFile: ' . $file instanceof UploadedFile);
         $disk = $disk ?? config('filesystems.default');
         Log::alert('Disk: ' . $disk);
+        Log::alert('Directory before put: ' . $directory);
         $path = Storage::disk($disk )->put($directory, $file);
         Log::alert('Uploaded File: ' . $path);
         return str_replace('public/', '', $path);
+        // return '/storage/' . str_replace('public/', '', $path);
+
     }
 
     /**

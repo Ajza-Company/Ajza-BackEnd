@@ -20,7 +20,7 @@ class A_ShortRepSalesResource extends JsonResource
             'email' => $this->email,
             'full_mobile' => $this->full_mobile,
             'gender' => $this->gender,
-            'avatar' => $this->avatar,
+            'avatar' => $this->avatar ? getFullUrl($this->avatar) : null,
             'is_active' => (bool) $this->is_active,
             'order_rep_count' => $this->offers->count(),
             'order_rep_prices' => $this->whenLoaded('offers', function () {

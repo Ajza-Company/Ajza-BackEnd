@@ -48,8 +48,8 @@ class F_CreateRepSalesService
                 'preferred_language' => app()->getLocale()
             ]);
 
-            if (isset($data['avatar'])) {
-                $path = uploadFile("user-$user->id", $data['avatar']);
+            if (isset($data['avatar']) && $data['avatar'] instanceof \Illuminate\Http\UploadedFile) {
+                $path = uploadFile("user-{$user->id}", $data['avatar']);
                 $user->update(['avatar' => $path]);
             }
 
