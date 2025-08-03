@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             LocaleSeeder::class,
             UserSeeder::class,
+            SupplierSeeder::class,
             // CompanySeeder::class,
             // CompanyLocaleSeeder::class,
             CarBrandSeeder::class,

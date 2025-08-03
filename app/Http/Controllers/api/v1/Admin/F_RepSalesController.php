@@ -47,7 +47,6 @@ class F_RepSalesController extends Controller
     {
         return $this->createRepSales->create($request->validated());
     }
-
     public function update(F_UpdateRepSalesRequest $request,string $id)
     {
         $repSales =  $this->findRepSales->find(decodeString($id));

@@ -4,8 +4,9 @@ namespace App\Http\Requests\v1\Admin\PromoCode;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class A_CreatePromoCodeRequest extends FormRequest
+class A_UpdatePromoCodeRequest extends FormRequest
 {
 
     /**
@@ -23,8 +24,15 @@ class A_CreatePromoCodeRequest extends FormRequest
      */
     public function rules(): array
     {
+        $promoCodeId = $this->route('promo_code'); // assuming the route parameter is 'promo_code'
+        
         return [
-            'code' => 'required|string|max:255|unique:promo_codes,code',
+            'code' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('promo_codes', 'code')->ignore($promoCodeId)
+            ],
             'description' => 'nullable|string|max:255',
             'type' => 'required|in:percentage,fixed',
             'value' => 'required|numeric|min:0',

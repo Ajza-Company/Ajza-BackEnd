@@ -33,7 +33,7 @@ class A_UpdateUserService
             ]);
 
             if (isset($data['avatar'])) {
-                $path = uploadFile("user-$user->id", $data['avatar']);
+                $path = uploadFile("user-{$user->id}", $data['avatar']);
                 $user->update(['avatar' => $path]);
             }
 

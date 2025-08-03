@@ -45,10 +45,14 @@ class F_UpdateRepSalesService
                 $updateArray['state_id'] = $data['city_id'];
             }
 
+            // if (isset($data['country_id'])) {
+            //     $updateArray['country_id'] = $data['country_id'];
+            // }
+
             $user->update($updateArray);
 
-            if (isset($data['avatar'])) {
-                $path = uploadFile("user-$user->id", $data['avatar']);
+            if (isset($data['avatar']) && $data['avatar'] instanceof \Illuminate\Http\UploadedFile) {
+                $path = uploadFile("user-{$user->id}", $data['avatar']);
                 $user->update(['avatar' => $path]);
             }
 
