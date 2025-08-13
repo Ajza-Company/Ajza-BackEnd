@@ -22,11 +22,13 @@ class Area extends Model
     }
 
     /**
+     * Define the localized relationship
      *
      * @return HasOne
      */
     public function localized(): HasOne
     {
+        // Use the trait method but ensure it works correctly
         return $this->localizedRelation(AreaLocale::class);
     }
 }

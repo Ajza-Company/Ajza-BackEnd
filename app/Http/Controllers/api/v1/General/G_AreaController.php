@@ -23,6 +23,8 @@ class G_AreaController extends Controller
      */
     public function __invoke(string $city_id)
     {
-        return F_AreaResource::collection($this->fetchArea->fetch(data: ['state_id' => decodeString($city_id)]));
+
+        
+        return F_AreaResource::collection($this->fetchArea->fetch(['state_id' => decodeString($city_id)]));
     }
 }

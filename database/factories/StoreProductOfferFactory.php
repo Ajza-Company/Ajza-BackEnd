@@ -14,8 +14,11 @@ class StoreProductOfferFactory extends Factory
 
     public function definition(): array
     {
+        $storeProduct = StoreProduct::inRandomOrder()->first();
+        
         return [
-            'store_product_id' => StoreProduct::inRandomOrder()->first()->id ?? 1,
+            'store_product_id' => $storeProduct->id ?? 1,
+            'store_id' => $storeProduct->store_id ?? 1,
             'type' => fake()->randomElement(['fixed', 'percentage']),
             'discount' => fake()->numberBetween(0, 100)
         ];

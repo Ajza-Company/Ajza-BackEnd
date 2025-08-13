@@ -17,7 +17,7 @@ class RoleSeeder extends Seeder
         $roles = json_decode(File::get("database/data/roles.json"));
 
         foreach ($roles as $value) {
-            Role::create([
+            Role::firstOrCreate([
                 "name" => $value->name,
                 "guard_name" => $value->guard_name
             ]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\v1\Admin\User;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateUserRequest extends FormRequest
@@ -23,8 +24,36 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'full_mobile' => 'required|string|unique:users,full_mobile',
+            'email' => [
+                'required',
+                'email',
+                function ($attribute, $value, $fail) {
+                    // Check if an active user exists with the same email
+                    $existingActiveUser = User::where('email', $value)
+                        ->where('is_active', true)
+                        ->whereNull('deleted_at')
+                        ->first();
+                        
+                    if ($existingActiveUser) {
+                        $fail('This email is already registered to an active user.');
+                    }
+                },
+            ],
+            'full_mobile' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    // Check if an active user exists with the same mobile number
+                    $existingActiveUser = User::where('full_mobile', $value)
+                        ->where('is_active', true)
+                        ->whereNull('deleted_at')
+                        ->first();
+                        
+                    if ($existingActiveUser) {
+                        $fail('This mobile number is already registered to an active user.');
+                    }
+                },
+            ],    
             'password' => 'required|min:8',
             'gender' => 'required|string|in:male,female',
             'avatar' => 'sometimes|file|max:2408',

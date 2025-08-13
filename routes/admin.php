@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\api\v1\Admin\{A_CompanyController,
+use App\Http\Controllers\api\v1\Admin\{A_AccountDeletionController,
+    A_CompanyController,
     A_NotificationController,
     A_SliderController,
     A_StatisticsController,
@@ -15,7 +16,8 @@ use App\Http\Controllers\api\v1\Admin\{A_CompanyController,
     F_StateController,
     A_SettingController,
     A_CategoryController,
-    A_SubCategoryController};
+    A_SubCategoryController,
+    A_CarTypeController};
 use App\Http\Controllers\api\v1\General\G_TermsController;
 use App\Http\Controllers\api\v1\Supplier\S_AuthController;
 use App\Http\Controllers\api\v1\Supplier\S_CompanyController;
@@ -96,6 +98,15 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
 
     Route::get('setting', [A_SettingController::class,'index']);
     Route::post('setting/create', [A_SettingController::class,'store']);
+    
+    // Account Deletion Routes for Admin
+    Route::prefix('account-deletions')->group(function () {
+        Route::get('/', [A_AccountDeletionController::class, 'index']);
+        Route::get('{id}', [A_AccountDeletionController::class, 'show']);
+        Route::post('{id}/cancel', [A_AccountDeletionController::class, 'cancel']);
+        Route::post('{id}/approve', [A_AccountDeletionController::class, 'approve']);
+    });
+    
     // Support Chat Routes for Admin
     Route::prefix('support')->group(function () {
         Route::get('/chats', [A_SupportChatController::class, 'index']);
@@ -126,4 +137,7 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::get('orders', [A_StatisticsController::class, 'orders']);
 
     Route::post('send-notification', A_NotificationController::class);
+
+    // Car Type Routes
+    Route::apiResource('car-types', A_CarTypeController::class);
 });

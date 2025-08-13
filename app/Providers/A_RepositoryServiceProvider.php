@@ -10,6 +10,10 @@ use App\Repositories\Admin\User\Fetch\A_FetchUserInterface;
 use App\Repositories\Admin\User\Fetch\A_FetchUserRepository;
 use App\Repositories\Admin\RepSales\Fetch\A_FetchRepSalesInterface;
 use App\Repositories\Admin\RepSales\Fetch\A_FetchRepSalesRepository;
+use App\Repositories\Admin\CarType\Fetch\A_FetchCarTypeInterface;
+use App\Repositories\Admin\CarType\Fetch\A_FetchCarTypeRepository;
+use App\Repositories\Admin\CarType\Find\A_FindCarTypeInterface;
+use App\Repositories\Admin\CarType\Find\A_FindCarTypeRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Frontend\Company\Find\F_FindCompanyInterface;
 use App\Repositories\Frontend\Company\Find\F_FindCompanyRepository;
@@ -108,6 +112,16 @@ class A_RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             A_FindStoreInterface::class,
             A_FindStoreRepository::class
+        );
+
+        $this->app->bind(
+            A_FetchCarTypeInterface::class,
+            A_FetchCarTypeRepository::class
+        );
+
+        $this->app->bind(
+            A_FindCarTypeInterface::class,
+            A_FindCarTypeRepository::class
         );
     }
 

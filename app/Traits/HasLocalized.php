@@ -14,8 +14,7 @@ trait HasLocalized
      */
     public function localizedRelation(string $relatedModel): HasOne
     {
-        return $this->hasOne($relatedModel)->whereHas('Locale', function ($query) {
-            $query->where('locale', app()->getLocale());
-        });
+        // Use a simple approach that should work with existing code
+        return $this->hasOne($relatedModel);
     }
 }

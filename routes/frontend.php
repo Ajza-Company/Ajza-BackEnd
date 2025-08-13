@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\v1\Frontend\F_AddressController;
 use App\Http\Controllers\api\v1\Frontend\F_AjzaOfferController;
 use App\Http\Controllers\api\v1\Frontend\F_AuthController;
+use App\Http\Controllers\api\v1\Frontend\F_AccountController;
 use App\Http\Controllers\api\v1\Frontend\F_CartController;
 use App\Http\Controllers\api\v1\Frontend\F_CarBrandController;
 use App\Http\Controllers\api\v1\Frontend\F_CarModelController;
@@ -96,6 +97,11 @@ Route::middleware(['auth:sanctum', SetLocale::class])->group(function () {
     Route::prefix('user')->group(function () {
         Route::post('setup-account', [F_AuthController::class, 'setupAccount']);
         Route::get('wallet-transactions', F_WalletController::class);
+    });
+
+    Route::prefix('account')->group(function () {
+        Route::post('delete-request', [F_AccountController::class, 'requestDeletion']);
+        Route::get('deletion-status', [F_AccountController::class, 'getDeletionStatus']);
     });
 
     Route::post('stores/{store_id}/orders/create', [F_OrderController::class, 'store']);

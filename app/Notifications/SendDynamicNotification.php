@@ -39,7 +39,7 @@ class SendDynamicNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return [FCMChannel::class];
+        return [FCMChannel::class, 'database'];
     }
 
     /**
@@ -68,7 +68,11 @@ class SendDynamicNotification extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'title' => $this->title,
+            'description' => $this->message,
+            'icon' => 'bell', // Default icon for admin notifications
+            'type' => 'admin_notification',
+            'data' => $this->dataObject
         ];
     }
 

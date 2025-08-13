@@ -31,6 +31,21 @@ class F_FetchRepository
 
         if ($isLocalized) {
             $query->whereHas('localized')->with('localized');
+            
+            // Add locale filtering based on current app locale
+            $currentLocale = app()->getLocale();
+            if ($currentLocale) {
+                // Filter by locale_id directly since we know the mapping
+                if ($currentLocale === 'en') {
+                    $query->whereHas('localized', function($q) {
+                        $q->where('locale_id', 1); // English
+                    });
+                } elseif ($currentLocale === 'ar') {
+                    $query->whereHas('localized', function($q) {
+                        $q->where('locale_id', 2); // Arabic
+                    });
+                }
+            }
         }
 
         if ($data) {

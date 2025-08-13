@@ -17,9 +17,10 @@ class LocaleSeeder extends Seeder
         $locales = json_decode(File::get("database/data/locales.json"));
 
         foreach ($locales as $value) {
-            Locale::create([
+            Locale::firstOrCreate([
+                "locale" => $value->locale
+            ], [
                 "name" => $value->name,
-                "locale" => $value->locale,
                 'is_default' => $value->is_default
             ]);
         }

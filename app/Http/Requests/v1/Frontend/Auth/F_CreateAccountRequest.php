@@ -27,12 +27,36 @@ class F_CreateAccountRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => [
+                'required',
+                'email',
+                function ($attribute, $value, $fail) {
+                    // Check if a client already exists with the same email
+                    $existingClient = User::where('email', $value)
+                        ->whereHas('roles', function ($query) {
+                            $query->where('name', RoleEnum::CLIENT);
+                        })
+                        ->first();
+                        
+                    if ($existingClient) {
+                        $fail('This email is already registered to a client.');
+                    }
+                },
+            ],
             'full_mobile' => [
                 'required',
                 'string',
                 function ($attribute, $value, $fail) {
-                    return User::where('full_mobile', $value)->whereDoesntHave('roles', function ($query) { $query->whereIn('name', [RoleEnum::CLIENT]); })->exists();
+                    // Check if a client already exists with the same mobile number
+                    $existingClient = User::where('full_mobile', $value)
+                        ->whereHas('roles', function ($query) {
+                            $query->where('name', RoleEnum::CLIENT);
+                        })
+                        ->first();
+                        
+                    if ($existingClient) {
+                        $fail('This mobile number is already registered to a client.');
+                    }
                 },
             ],
             'account_type' => 'sometimes|string|in:personal,workshop',
