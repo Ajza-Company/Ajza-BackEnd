@@ -107,15 +107,15 @@ class S_StatisticsRepOrderController extends Controller
      */
     private function getAjzaAmount(User $user): float
     {
-        $ajzaPercentage = json_decode(Setting::latest()->first()->setting);
+        $repOrderPercentage = Setting::getValue('rep_order_percentage', 0);
 
         return $user->repVendorOrders()
             ->dateRangeFilter(request())
             ->get()
-            ->sum(function ($repOrder) use ($ajzaPercentage) {
+            ->sum(function ($repOrder) use ($repOrderPercentage) {
                 $acceptedOffer = $repOrder->offers()->where('status', 'accepted')->first();
                 if ($acceptedOffer) {
-                    return $acceptedOffer->price * ($ajzaPercentage->rep_order_percentage / 100);
+                    return $acceptedOffer->price * ($repOrderPercentage / 100);
                 }
                 return 0;
             });
